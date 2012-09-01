@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block content%}
+    <h2>{{musico.username}}</h2>
+    <a href="/musico/{{musico.id}}/modificar/"><p>Modificar</p></a>
+
+    <br/>
+    <h3>Detalle:</h3>
+    <br/>
+    <p><b>Nombre:</b> {{ musico.first_name}}</p>
+    <p><b>Apellido:</b> {{ musico.last_name}}</p>
+    <p><b>Dirección de correo electrónico:</b> {{ musico.email}}</p>
+    <p><b>Fecha Nacimiento:</b> {{ musico.fecha_nacimiento}}</p>
+    <p><b>Direccion:</b> {{ musico.direccion}}</p>
+    <p><b>Posicion:</b> {{ musico.posicion}}</p>
+    <p><b>Estilo:</b> {{ musico.estilo}}</p>
+    <br/>
+{% endblock %}

@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block content%}
+	<h2>Bandas</h2>
+    <a href="/banda/nuevo/"><p>Nueva Banda</p></a>
+    <div class="bandas">
+		{%for composicion_banda in composiciones_banda%}
+        <div class="elemento-banda">
+            <a href="/banda/{{composicion_banda.banda.id}}/ver/"><p>{{ composicion_banda.banda.nombre}}</p></a>
+			<b>Fecha Creacion:</b> {{ composicion_banda.banda.fecha_creacion}}
+            <br/>
+            <b>Tipo:</b> {{ composicion_banda.banda.tipo_banda}}
+            <br/>
+			<b>Fecha Inicio:</b> {{ composicion_banda.fecha_inicio}}
+            <br/>
+			<b>Fecha Fin:</b> {{ composicion_banda.fecha_fin}}
+            <br/>
+            <b>Posicion:</b> {{ composicion_banda.posicion}}
+            <br/>
+            <b>Estado:</b> {{composicion_banda.estado}}
+            <br/>
+			<br/>
+			<div class="links">
+				<a href="/banda/{{composicion_banda.banda.id}}/modificar/">Modificar</a>
+				(Falta)<a href="/banda/{{composicion_banda.banda.id}}/eliminar/">Eliminar</a>
+			</div>	
+        </div>
+        {% endfor%}
+    </div>
+{% endblock %}

@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block content%}
+<h2>Modificar</h2>
+<form action="/banda/{{banda_id}}/musico/{{musico_id}}/modificar/" method="post">
+    <p><b>Musico: </b>{{ composicion_banda.musico.first_name}}, {{composicion_banda.musico.last_name}}</p>
+    <p><b>Banda: </b> {{ composicion_banda.banda.nombre}}</p>
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Modificar" />
+</form>
+<br/>
+{% endblock %}

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Gigs And Venues</title>
+    <meta charset="utf-8">
+	<link rel="stylesheet" href="css/jquery-ui.css" type="text/css" media="all">
+    <link rel="stylesheet" href="css/reset.css" type="text/css" media="all">
+    <link rel="stylesheet" href="css/layout.css" type="text/css" media="all">
+	<link rel="stylesheet" href="css/estilo.css" type="text/css" media="all">
+	<link rel="stylesheet" href="css/base.css" type="text/css" media="all">
+	
+    <script type="text/javascript" src="js/jquery.js" ></script>
+	<script type="text/javascript" src="js/jquery-ui.js" ></script>
+    <script type="text/javascript" src="js/funciones.js" ></script>
+    <script type="text/javascript" src="js/cufon-yui.js"></script>
+    <script type="text/javascript" src="js/cufon-replace.js"></script>
+    <script type="text/javascript" src="js/script.js"></script>
+    <script type="text/javascript" src="js/ITC_Busorama_500.font.js"></script>
+    <!--[if lt IE 7]>
+    <link rel="stylesheet" href="css/ie/ie6.css" type="text/css" media="screen">
+    <script type="text/javascript" src="js/ie_png.js"></script>
+    <script type="text/javascript">
+        ie_png.fix('.png, header nav ul li, header nav ul li a, h1 a');
+    </script>
+    <![endif]-->
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="js/html5.js"></script>
+    <![endif]-->
+</head>
+<body id="page2">
+<div class="wrap">
+    <!-- header -->
+    <header>
+        <div class="container">
+            
+            <nav>
+
+                <ul>
+                    <li class="menu"><a href="/" class="active"><span>home</span></a></li>
+                    <li class="menu"><a href="/noticias/index.html"><span>Noticias</span></a></li>
+                    <li class="menu"><a href="/foro/index.html"><span>Foros</span></a></li>
+                    <li class="menu"><a href="/buscador/index.html"><span>Buscador</span></a></li>
+                    {%if user.is_authenticated %}
+                        <li class="menu last"><a href="/usuario/logout"><span>Salir</span></a></li>
+                    {%else%}
+                        <li class="menu last"><a href="/usuario/login"><span>Login</span></a></li>
+                    {%endif%}
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <div class="container" id="container">
+        <!-- aside -->
+        <aside>
+            <div class="inside">
+                {%if user.is_authenticated %}
+                <h2>Usuario</h2>
+                <ul class="news">
+                    <li><b>Nick:</b> {{user.username}}</li>
+                    <li><b>Nombre:</b> {{user.first_name}}</li>
+                    <li><b>Apellido:</b> {{user.last_name}}</li>
+                </ul>
+                <h2>Menú</h2>
+                <ul class="news">
+                    <li><a href="/usuario/perfil">Perfil de Usuario</a></li>
+                    <li>(Falta) <a href="/usuario/transferencia_tipo_usuario">Transferencia de Tipo de Usuario</a></li>
+                    {%if usuario_registrado.is_fan %}
+                    <li>(Falta) <a href="/usuario/perfil">Armado de Conjunto de Eventos</a></li>
+                    <li>(Falta) <a href="/usuario/perfil">Cronogramas</a></li>
+                    <li>(Falta) <a href="/usuario/perfil">Suscripciones</a></li>
+                    {%endif%}
+                    {%if usuario_registrado.is_complejo %}
+                    <li>(Falta) <a href="/complejo/noticias">Noticias</a></li>
+                    <li>(Falta) <a href="/complejo/sedes">Sedes</a></li>
+                    {%endif%}
+                    {%if usuario_registrado.is_musico %}
+                    <li><a href="/musico/listado_bandas">Bandas</a></li>
+					<li><a href="/musico/equipos">Instrumentos</a></li>
+                    {%endif%}
+                </ul>
+                {%endif%}
+            </div>
+        </aside>
+        <!-- content -->
+        <section id="content">
+            <div class="wrapper">
+                {% block content %}{% endblock %}
+            </div>
+        </section>
+        <div class="clear"></div>
+    </div>
+</div>
+<!-- footer -->
+<footer>
+    <div class="container">
+        <div class="inside"> Copyright 2012 - GigsAndVenues.com.ar - All rights reserved</div>
+    </div>
+</footer>
+<script type="text/javascript"> Cufon.now(); </script>
+</body>
+</html>

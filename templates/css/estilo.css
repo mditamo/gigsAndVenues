@@ -1,0 +1,71 @@
+.elemento-genero {
+	border:1px solid #979797;
+	padding: 5px;
+	height: 30px;
+	width: 100px;
+    float:left;
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+.generos
+{
+    width: 100%;
+    display: block;
+    margin-bottom: 50px;
+}
+
+.elemento-disco
+ {
+     border:1px solid #979797;
+     width: 250px;
+     float:left;
+	 padding: 5px;
+     margin-right: 10px;
+     margin-bottom: 10px;
+ }
+.elemento-musico
+{
+	border:1px solid #979797;
+	padding: 5px;
+	width: 200px;
+	float:left;
+	margin-right: 10px;
+	margin-bottom: 10px;
+}
+
+.links
+{
+	text-align:right;
+}
+
+.elemento-tema
+{
+    border:1px solid #979797;
+    padding: 5px;
+    width: 200px;
+    float:left;
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+
+.elemento-banda
+{
+    border:1px solid #979797;
+    padding: 5px;
+    width: 250px;
+    float:left;
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+
+.elemento-equipo
+{
+    border:1px solid #979797;
+    padding: 5px;
+    width: 250px;
+    float:left;
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+
+

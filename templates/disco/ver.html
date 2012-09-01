@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block content%}
+    <h2>{{disco.nombre}}</h2>
+
+    <h3>Detalles:</h3>
+    <b>Fecha Publicacion:</b> {{ disco.fecha_publicacion}}
+    <br/>
+    <b>Discografica:</b> {{ disco.discografica}}
+    <br/>
+	<br/>
+    <div class="temas_disco">
+        <h3>Temas:</h3>
+        <p>(Falta) <a href="/disco/{{disco.id}}/nuevo_tema/">Agregar Tema</a></p>
+        <div class="elementos">
+            {%for composicion_disco in composiciones_disco%}
+            <div class="elemento-tema">
+                <b>Nombre:</b> {{ composicion_disco.tema_banda.tema.nombre}}
+                <br/>
+                <b>Posicion:</b> {{ composicion_disco.posicion}}
+                <br/>
+                <b>Duracion:</b> {{composicion_disco.tema_banda.duracion}}
+                <br/>
+
+                <br/>
+                <div class="links">
+                    (Falta) <a href="/disco/{{disco.id}}/tema/{{composicion_disco.tema_banda.tema.id}}/modificar/">Modificar</a>
+                    (Falta) <a href="/disco/{{disco.id}}/tema/{{composicion_disco.tema_banda.tema.id}}/eliminar/">Eliminar</a>
+
+
+                </div>
+                <br/>
+            </div>
+            {% endfor%}
+        </div>
+    </div>
+
+{% endblock %}
+
