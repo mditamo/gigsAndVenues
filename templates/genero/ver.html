@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% block content%}
+
+	<script>
+	$(function() {
+		$( "#accordion" ).accordion();
+	});
+	</script>
+	
+    <h2>{{genero.nombre}}</h2>
+    
+    {%if user.is_authenticated %}
+    	{%if cantidad_like == 0 %}	
+    		<a href="/genero/{{genero_id}}/like"><img src="images/like.png"/></a>
+    	{%else%}
+    		<a href="/genero/{{genero_id}}/no_like"><img src="images/no_like.png"/></a>
+    	{%endif%}
+	{%else%}
+		<a href="/genero/{{genero_id}}/like"><img src="images/like.png"/></a>
+	{%endif%}
+	
+	<br/>
+    <br/>
+    <b>Cantidad de Seguidores:</b>  {{cantidad_seguidores}}
+    <br/>
+    <br/>
+    <div id="accordion">
+		<p><a href="#">Bandas</a></p>
+		<div class="bandas">
+			<div class="elementos">
+				{%for banda_genero in bandas_genero%}
+				<div class="elemento-banda">
+					<p><a href="/banda/{{banda_genero.banda.id}}/ver/">{{ banda_genero.banda.nombre}}</a></p>
+					<b>Fecha Creacion:</b> {{ banda_genero.banda.fecha_creacion}}
+            		<br/>
+            		<b>Tipo:</b> {{ banda_genero.banda.tipo_banda}}
+				</div>
+				{% endfor%}
+			</div>
+		</div>
+		<p><a href="#">Noticias</a></p>
+		<div class="noticias">
+		    <div class="elementos">
+				{%for noticia in noticias %}
+				<div style="display:none">
+    				<input type="hidden" name="csrfmiddlewaretoken" value="{% csrf_token %}"/>
+				</div>
+				<div class="elemento-noticia">
+					<b>Titulo:</b> {{ noticia.titulo}}
+					<br/>
+					<b>Tipo:</b> {{ noticia.tipo_noticia}}
+					<br/>
+					<b>Fecha Publicacion:</b> {{ noticia.fecha_publicacion}}
+					<br/>
+					<b>Estado:</b> {{ noticia.estado}}
+					<br/>
+					<div class="links">
+						<a href="/noticia_banda/{{noticia.id}}/detalle/" class="detalle">Detalle</a>
+					</div>
+					<br/>
+				</div>
+				{% endfor%}
+			</div>		
+		</div>
+		<p><a href="#">Eventos</a></p>
+		<div class="eventos">
+		</div>
+	</div>
+{% endblock %}
+
+

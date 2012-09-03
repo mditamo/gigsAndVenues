@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block content%}
+<h2>Modificar</h2>
+<form action="/noticia_banda/{{noticia_id}}/modificar/" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Modificar" />
+</form>
+<br/>
+{% endblock %}
+

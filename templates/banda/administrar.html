@@ -1,0 +1,159 @@
+{% extends "base.html" %}
+{% block content%}
+
+	<script>
+	$(function() {
+		$( "#accordion" ).accordion();
+	});
+	</script>
+	
+	<h2>{{banda.nombre}}</h2>
+    <br/>
+    <b>Fecha Creacion:</b> {{ banda.fecha_creacion}}
+    <br/>
+    <b>Tipo:</b> {{ banda.tipo_banda}}
+    <br/>
+    <b>Generos:</b>
+        {%for genero_banda in generos_banda%}
+            - <a href="/genero/{{genero_banda.genero.id}}/ver">{{ genero_banda.genero.nombre}}</a> 
+        {% endfor%}	
+		
+	<br/>
+	<br/>
+	<div id="accordion">
+		<p><a href="#">Integrantes</a></p>
+		<div class="integrantes">
+			<p>(Falta) <a href="/banda/{{banda.id}}/invitar_musico">Invitar nuevo Musico</a></p>
+			<div class="elementos">
+				{%for composicion_banda in composiciones_banda%}
+				<div class="elemento-musico estado_{{ composicion_banda.estado}}">
+					<p><a href="/musico/{{composicion_banda.musico.id}}/ver/">{{ composicion_banda.musico.first_name}}, {{composicion_banda.musico.last_name}}</a></p>
+					<b>Fecha Inicio:</b> {{ composicion_banda.fecha_inicio}}
+					<br/>
+					<b>Fecha Fin:</b> {{ composicion_banda.fecha_fin}}
+					<br/>
+					<b>Posicion:</b> {{ composicion_banda.posicion}}
+					<br/>
+					<b>Estado:</b> {{composicion_banda.estado}}
+					<br/>
+
+					<br/>
+					<div class="links">
+						{%if composicion_banda.estado.is_pendiente %}
+							<a href="/banda/{{banda.id}}/musico/{{composicion_banda.musico.id}}/confirmar/">Confirmar</a>
+							<a href="/banda/{{banda.id}}/musico/{{composicion_banda.musico.id}}/denegar/">Denegar</a>
+						{%elif composicion_banda.estado.is_confirmado %}
+							<a href="/banda/{{banda.id}}/musico/{{composicion_banda.musico.id}}/denegar/">Denegar</a>
+						{%elif composicion_banda.estado.is_denegado %}
+							<a href="/banda/{{banda.id}}/musico/{{composicion_banda.musico.id}}/confirmar/">Confirmar</a>
+						{%endif %}
+						<br/>
+						<a href="/banda/{{banda.id}}/musico/{{composicion_banda.musico.id}}/modificar/">Modificar</a>
+						<a href="/banda/{{banda.id}}/musico/{{composicion_banda.musico.id}}/eliminar/">Eliminar</a>
+
+
+					</div>
+					<br/>
+				</div>
+				{% endfor%}
+			</div>
+		</div>
+		<p><a href="#">Discografia</a></p>
+		<div class="discografia">
+			<a href="/disco/banda/{{banda.id}}/nuevo/"><p>Nuevo Disco</p></a>
+			<div class="elementos">
+				{%for disco in discos%}
+				<div class="elemento-disco">
+					<a href="/disco/{{disco.id}}/administrar/"><p>{{ disco.nombre}}</p></a>
+					<b>Fecha Publicacion:</b> {{ disco.fecha_publicacion}}
+					<br/>
+					<b>Discografica:</b> {{ disco.discografica}}
+					<br/>
+					<b>Cantidad de Temas:</b>
+					<br/>
+					<br/>
+					<div class="links">
+						<a href="/disco/{{disco.id}}/modificar/">Modificar</a>
+						(Falta) <a href="/disco/{{disco.id}}/eliminar/">Eliminar</a>
+					</div>
+					<br/>
+				</div>
+				{% endfor%}
+			</div>
+		</div>
+	
+		<p><a href="#">Temas Banda</a></p>
+		<div class="temas">
+			<p>(Falta) <a href="/tema/banda/{{banda.id}}/nuevo/">Nuevo Tema</a></p>
+			<div class="elementos">
+				{%for tema_banda in temas_banda%}
+				<div class="elemento-disco">
+					<b>Tema:</b> {{ tema_banda.tema.nombre}}
+					<br/>
+					<b>Duracion:</b> {{ tema_banda.duracion}}
+					<br/>
+					<div class="links">
+						(Falta) <a href="/tema/{{tema_banda.tema.id}}/banda/{{banda.id}}/modificar/">Modificar</a>
+						(Falta) <a href="/tema/{{tema_banda.tema.id}}/banda/{{banda.id}}/eliminar/">Eliminar</a>
+					</div>
+					<br/>
+				</div>
+				{% endfor%}
+			</div>
+		</div>
+		<p><a href="#">Noticias</a></p>
+		<div class="noticias">
+		    <div style="display:none">
+    			<input type="hidden" name="csrfmiddlewaretoken" value="{% csrf_token %}"/>
+			</div>
+			<p><a href="/noticia_banda/banda/{{banda.id}}/nuevo/">Nueva Noticia</a></p>
+			<div class="elementos">
+				{%for noticia in noticias_banda %}
+				<div class="elemento-noticia">
+					<b>Titulo:</b> {{ noticia.titulo}}
+					<br/>
+					<b>Tipo:</b> {{ noticia.tipo_noticia}}
+					<br/>
+					<b>Fecha Publicacion:</b> {{ noticia.fecha_publicacion}}
+					<br/>
+					<b>Estado:</b> {{ noticia.estado}}
+					<br/>
+					<div class="links">
+						{%if noticia.estado.is_borrador %}
+							<a href="/noticia_banda/{{noticia.id}}/publicar/">Publicar</a>
+							<a href="/noticia_banda/{{noticia.id}}/archivar/">Archivar</a>
+						{%elif noticia.estado.is_publicado %}
+							<a href="/noticia_banda/{{noticia.id}}/archivar/">Archivar</a>
+							<a href="/noticia_banda/{{noticia.id}}/borrador/">Borrador</a>
+						{%elif noticia.estado.is_archivado %}
+							<a href="/noticia_banda/{{noticia.id}}/publicar/">Publicar</a>
+							<a href="/noticia_banda/{{noticia.id}}/borrador/">Borrador</a>
+						{%endif %}
+						<br/>
+					
+						<a href="/noticia_banda/{{noticia.id}}/detalle/" class="detalle">Detalle</a>
+						{%if noticia.estado.is_borrador %}
+							<a href="/noticia_banda/{{noticia.id}}/modificar/">Modificar</a>
+						{%else %}
+							Modificar	
+						{%endif %}							
+						<a href="/noticia_banda/{{noticia.id}}/eliminar/">Eliminar</a>
+					</div>
+					<br/>
+				</div>
+				{% endfor%}
+			</div>		
+		</div>
+		<p><a href="#">Negociaciones y Eventos</a></p>
+		<div class="eventos">
+			(FALTA COMPLETAR) 
+		</div>
+		
+		<p><a href="#">Recursos Multimedia</a></p>
+		<div class="recursos_multimedia">
+			(FALTA COMPLETAR) 
+		</div>
+		
+	</div>
+{% endblock %}
+

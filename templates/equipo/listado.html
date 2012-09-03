@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block content%}
+	<h2>Instrumentos</h2>
+    <p><a href="/equipo/nuevo">Nuevo Equipo</a></p>
+    <div class="equipos">
+		{%for equipo_musico in equipos_musico%}
+        <div class="elemento-equipo">
+            <b>{{ equipo_musico.equipo.nombre}}</b>
+            <br/>
+            <b>Clasificacion:</b> {{ equipo_musico.equipo.clasificacion_equipo.nombre}}
+            <br/>
+			<div class="links">
+				<a href="/equipo/{{equipo_musico.id}}/modificar">Modificar</a>
+				<a href="/equipo/{{equipo_musico.id}}/eliminar">Eliminar</a>
+			</div>	
+        </div>
+        {% endfor%}
+    </div>
+{% endblock %}

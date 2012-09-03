@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+{% block content%}
+
+	<script>
+	$(function() {
+		$( "#accordion" ).accordion();
+	});
+	</script>
+	
+    <h2>{{musico.username}} ({{ musico.first_name}}, {{ musico.last_name}})</h2>
+    <br/>
+    <b>Generos:</b>
+        {%for genero in generos%}
+            - <a href="/genero/{{genero.id}}/ver">{{ genero.nombre}}</a> 
+        {% endfor%}	
+		
+	<br/>
+	<br/>
+	<div id="accordion">
+		<p><a href="#">Bandas Suscriptas</a></p>
+		<div class="bandas_suscriptas">
+			(FALTA COMPLETAR)
+		</div>
+		<p><a href="#">Generos Suscriptos</a></p>
+		<div class="generos_suscriptos">
+			(FALTA COMPLETAR)
+		</div>
+		<p><a href="#">Eventos</a></p>
+		<div class="eventos">
+			(FALTA COMPLETAR)
+		</div>
+		
+		<p><a href="#">Bandas Actuales</a></p>
+		<div class="bandas">
+			<div class="elementos">
+				{%for composicion_banda in composiciones_banda_actuales%}
+				<div class="elemento-banda">
+					<a href="/banda/{{composicion_banda.banda.id}}/administrar/"><p>{{ composicion_banda.banda.nombre}}</p></a>
+					<b>Fecha Creacion:</b> {{ composicion_banda.banda.fecha_creacion}}
+            		<br/>
+            		<b>Tipo:</b> {{ composicion_banda.banda.tipo_banda}}
+            		<br/>
+					<b>Fecha Inicio:</b> {{ composicion_banda.fecha_inicio}}
+            		<br/>
+					<b>Fecha Fin:</b> {{ composicion_banda.fecha_fin}}
+            		<br/>
+            		<b>Posicion:</b> {{ composicion_banda.posicion}}
+            		<br/>
+				</div>
+				{% endfor%}
+			</div>
+		</div>
+		<p><a href="#">Ex-Bandas</a></p>
+		<div class="bandas">
+			<div class="elementos">
+				{%for composicion_banda in composiciones_banda_anteriores%}
+				<div class="elemento-banda">
+					<a href="/banda/{{composicion_banda.banda.id}}/administrar/"><p>{{ composicion_banda.banda.nombre}}</p></a>
+					<b>Fecha Creacion:</b> {{ composicion_banda.banda.fecha_creacion}}
+            		<br/>
+            		<b>Tipo:</b> {{ composicion_banda.banda.tipo_banda}}
+            		<br/>
+					<b>Fecha Inicio:</b> {{ composicion_banda.fecha_inicio}}
+            		<br/>
+					<b>Fecha Fin:</b> {{ composicion_banda.fecha_fin}}
+            		<br/>
+            		<b>Posicion:</b> {{ composicion_banda.posicion}}
+            		<br/>
+            		<b>Estado:</b> {{composicion_banda.estado}}
+            		<br/>
+				</div>
+				{% endfor%}
+			</div>
+		</div>
+		<p><a href="#">Equipos</a></p>
+		<div class="equipos">
+			<div class="elementos">
+				{%for equipo_musico in equipos_musico%}
+		        <div class="elemento-equipo">
+		            <b>{{ equipo_musico.equipo.nombre}}</b>
+		            <br/>
+		            <b>Clasificacion:</b> {{ equipo_musico.equipo.clasificacion_equipo.nombre}}	
+		        </div>
+		        {% endfor%}
+			</div>
+		</div>
+	</div>	
+	
+{% endblock %}	
