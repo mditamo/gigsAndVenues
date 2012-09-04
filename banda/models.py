@@ -1,13 +1,7 @@
 from django.db import models
 from musico.models import Musico, Posicion
-
-class Genero(models.Model):
-    nombre=models.CharField(max_length=200)
-    class Meta:
-        db_table="GENERO"
-
-    def __unicode__(self):
-        return self.nombre
+from genero.models import Genero
+from usuario.models import UsuarioRegistrado
 
 class TipoBanda(models.Model):
     nombre=models.CharField(max_length=200)
@@ -66,3 +60,9 @@ class BandaGenero(models.Model):
         db_table="BANDA_GENERO"
 
 
+class LikeBanda(models.Model):
+    banda=models.ForeignKey(Banda)
+    usuario=models.ForeignKey(UsuarioRegistrado)
+    
+    class Meta:
+        db_table="LIKE_BANDA"

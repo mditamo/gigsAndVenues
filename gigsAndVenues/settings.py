@@ -11,6 +11,9 @@ MANAGERS = ADMINS
 
 CURRENT_PATH = os.path.dirname(__file__)
 
+#forum
+PROJECT_ROOT = os.path.dirname(os.path.realpath(__file__))
+
 LOGIN_REDIRECT_URL="/usuario/perfil"
 
 
@@ -53,12 +56,18 @@ USE_TZ = True
 
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 # Example: "/home/media/media.lawrence.com/media/"
-MEDIA_ROOT = ''
+#MEDIA_ROOT = ''
+
+#forum
+MEDIA_ROOT = os.path.join(PROJECT_ROOT, 'media')
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash.
 # Examples: "http://media.lawrence.com/media/", "http://example.com/media/"
-MEDIA_URL = ''
+#MEDIA_URL = ''
+
+#forum
+MEDIA_URL = '/media/'
 
 # Absolute path to the directory static files should be collected to.
 # Don't put anything in this directory yourself; store your static files
@@ -69,6 +78,24 @@ STATIC_ROOT = 'C:/gigsAndVenues/'
 # URL prefix for static files.
 # Example: "http://media.lawrence.com/static/"
 STATIC_URL = '/static/'
+
+#forum
+if not hasattr(globals(), 'SECRET_KEY'):
+    SECRET_FILE = os.path.join(PROJECT_ROOT, 'secret.txt')
+    try:
+        SECRET_KEY = open(SECRET_FILE).read().strip()
+    except IOError:
+        try:
+            from random import choice
+            import string
+            symbols = ''.join((string.lowercase, string.digits, string.punctuation ))
+            SECRET_KEY = ''.join([choice(symbols) for i in range(50)])
+            secret = file(SECRET_FILE, 'w')
+            secret.write(SECRET_KEY)
+            secret.close()
+        except IOError:
+            raise Exception('Please create a %s file with random characters to generate your secret key!' % SECRET_FILE)
+
 
 # Additional locations of static files
 STATICFILES_DIRS = (
@@ -96,16 +123,28 @@ TEMPLATE_LOADERS = (
 )
 
 MIDDLEWARE_CLASSES = (
+    #'django.middleware.common.CommonMiddleware',
+    #'django.contrib.sessions.middleware.SessionMiddleware',
+    #'django.middleware.csrf.CsrfViewMiddleware',
+    #'django.contrib.auth.middleware.AuthenticationMiddleware',
+    #'django.contrib.messages.middleware.MessageMiddleware',
+    'django.middleware.cache.UpdateCacheMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    # Uncomment the next line for simple clickjacking protection:
-    # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
+    'pagination.middleware.PaginationMiddleware',
+    'django_authopenid.middleware.OpenIDMiddleware',
+    'django.middleware.cache.FetchFromCacheMiddleware',
+    'django.middleware.transaction.TransactionMiddleware',
+    'djangobb_forum.middleware.LastLoginMiddleware',
+    'djangobb_forum.middleware.UsersOnline',
 )
 
 ROOT_URLCONF = 'gigsAndVenues.urls'
+
 APPEND_SLASH=False
 
 # Python dotted path to the WSGI application used by Django's runserver.
@@ -125,15 +164,26 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    # Uncomment the next line to enable the admin:
     'django.contrib.admin',
-    # Uncomment the next line to enable admin documentation:
-    # 'django.contrib.admindocs',
+    
+    #forum
+    'django.contrib.sitemaps',
+    'django.contrib.admindocs',
+    'django.contrib.humanize',
+    'pagination',
+    'django_authopenid',
+    'djangobb_forum',
+    'haystack',
+    'django_messages',
+    'genero',
     'usuario',
     'direccion',
     'musico',
     'banda',
     'disco',
+    'noticia',
+    'equipo',
+    'forum',
     'registration'
     )
 
@@ -166,3 +216,52 @@ LOGGING = {
         },
     }
 }
+
+#forum
+try:
+    import mailer
+    INSTALLED_APPS += ('mailer',)
+    EMAIL_BACKEND = "mailer.backend.DbBackend"
+except ImportError:
+    pass
+
+try:
+    import south
+    INSTALLED_APPS += ('south',)
+    SOUTH_TESTS_MIGRATE = False
+except ImportError:
+    pass
+
+FORCE_SCRIPT_NAME = ''
+
+TEMPLATE_CONTEXT_PROCESSORS = (
+    'django.contrib.auth.context_processors.auth',
+    'django.core.context_processors.debug',
+    'django.core.context_processors.i18n',
+    'django.core.context_processors.media',
+    'django.core.context_processors.static',
+    'django.core.context_processors.request',
+    'django.contrib.messages.context_processors.messages',
+    'django_authopenid.context_processors.authopenid',
+    'django_messages.context_processors.inbox',
+    'djangobb_forum.context_processors.forum_settings',
+)
+
+# Haystack settings
+HAYSTACK_SITECONF = 'search_sites'
+HAYSTACK_SEARCH_ENGINE = 'whoosh'
+HAYSTACK_WHOOSH_PATH = os.path.join(PROJECT_ROOT, 'djangobb_index')
+
+# Account settings
+ACCOUNT_ACTIVATION_DAYS = 10
+LOGIN_REDIRECT_URL = '/forum/'
+LOGIN_URL = '/forum/account/signin/'
+
+#Cache settings
+CACHE_MIDDLEWARE_ANONYMOUS_ONLY = True
+
+try:
+    from local_settings import *
+except ImportError:
+    pass
+

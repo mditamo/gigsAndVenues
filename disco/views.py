@@ -7,6 +7,12 @@ from disco.models import *
 from usuario.models import UsuarioRegistrado
 from disco.forms import DiscoForm
 
+def administrar(request,disco_id):
+    usuario_registrado=UsuarioRegistrado.objects.get(pk=request.user.id)
+    disco=Disco.objects.get(pk=disco_id)
+    composiciones_disco=ComposicionDisco.objects.filter(disco__id=disco_id)
+    return render_to_response("disco/administrar.html", locals(), context_instance=RequestContext(request))
+
 def ver(request,disco_id):
     usuario_registrado=UsuarioRegistrado.objects.get(pk=request.user.id)
     disco=Disco.objects.get(pk=disco_id)

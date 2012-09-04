@@ -32,14 +32,12 @@
     <!-- header -->
     <header>
         <div class="container">
-            
             <nav>
-
                 <ul>
                     <li class="menu"><a href="/" class="active"><span>home</span></a></li>
-                    <li class="menu"><a href="/noticias/index.html"><span>Noticias</span></a></li>
-                    <li class="menu"><a href="/foro/index.html"><span>Foros</span></a></li>
-                    <li class="menu"><a href="/buscador/index.html"><span>Buscador</span></a></li>
+                    <li class="menu"><a href="/noticia/listado"><span>Noticias</span></a></li>
+                    <li class="menu"><a href="/forum"><span>Foros</span></a></li>
+                    <li class="menu"><a href="/buscador"><span>Buscador</span></a></li>
                     {%if user.is_authenticated %}
                         <li class="menu last"><a href="/usuario/logout/"><span>Salir</span></a></li>
                     {%else%}
@@ -63,15 +61,15 @@
                 <h2>Menú</h2>
                 <ul class="news">
                     <li><a href="/usuario/perfil">Perfil de Usuario</a></li>
-                    <li>(Falta) <a href="/usuario/transferencia_tipo_usuario">Transferencia de Tipo de Usuario</a></li>
+                    <li>(Falta) <a href="#">Transferencia de Tipo de Usuario</a></li>
+                    <li>(Falta) <a href="#">Suscripciones</a></li>
                     {%if usuario_registrado.is_fan %}
-                    <li>(Falta) <a href="/usuario/perfil">Armado de Conjunto de Eventos</a></li>
-                    <li>(Falta) <a href="/usuario/perfil">Cronogramas</a></li>
-                    <li>(Falta) <a href="/usuario/perfil">Suscripciones</a></li>
+                    <li>(Falta) <a href="#">Armado de Conjunto de Eventos</a></li>
+                    <li>(Falta) <a href="#">Cronogramas</a></li>
                     {%endif%}
                     {%if usuario_registrado.is_complejo %}
-                    <li>(Falta) <a href="/complejo/noticias">Noticias</a></li>
-                    <li>(Falta) <a href="/complejo/sedes">Sedes</a></li>
+                    <li>(Falta) <a href="#">Noticias</a></li>
+                    <li>(Falta) <a href="#">Sedes</a></li>
                     {%endif%}
                     {%if usuario_registrado.is_musico %}
                     <li><a href="/banda/listado">Bandas</a></li>

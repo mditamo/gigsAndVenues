@@ -9,7 +9,6 @@ class DiscoAdmin(admin.ModelAdmin):
     search_fields = ['nombre']
     inlines = [ComposicionDiscoInline]
 
-admin.site.register(Tema)
 admin.site.register(Disco,DiscoAdmin)
 
 

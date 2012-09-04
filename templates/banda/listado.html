@@ -5,7 +5,7 @@
     <div class="bandas">
 		{%for composicion_banda in composiciones_banda%}
         <div class="elemento-banda">
-            <a href="/banda/{{composicion_banda.banda.id}}/ver/"><p>{{ composicion_banda.banda.nombre}}</p></a>
+            <a href="/banda/{{composicion_banda.banda.id}}/administrar/"><p>{{ composicion_banda.banda.nombre}}</p></a>
 			<b>Fecha Creacion:</b> {{ composicion_banda.banda.fecha_creacion}}
             <br/>
             <b>Tipo:</b> {{ composicion_banda.banda.tipo_banda}}

@@ -8,16 +8,40 @@ from disco.models import Disco,TemaBanda
 from musico.models import Musico
 from usuario.models import UsuarioRegistrado
 from banda.forms import *
+from noticia.models import NoticiaBanda
+from django.db.models import Q
+from django.contrib.auth.decorators import login_required
 
-def ver(request,banda_id):
+
+def listado(request):
+    """composiciones_banda=ComposicionBanda.objects.filter(musico=request.user).filter(estado!=EstadoComposicionBanda.objects.get(nombre="Eliminado"))"""
+    estado=EstadoComposicionBanda.objects.get(nombre="Eliminado")
+    composiciones_banda=ComposicionBanda.objects.filter(Q(musico=request.user), ~Q(estado_id=estado))
+    usuario_registrado=UsuarioRegistrado.objects.get(pk=request.user.id)
+    return render_to_response("banda/listado.html", locals(), context_instance=RequestContext(request))
+
+def administrar(request,banda_id):
     usuario_registrado=UsuarioRegistrado.objects.get(pk=request.user.id)
     banda=Banda.objects.get(pk=banda_id)
     generos_banda=BandaGenero.objects.filter(banda__id=banda_id)
     composiciones_banda=ComposicionBanda.objects.filter(banda__id=banda_id)
     temas_banda=TemaBanda.objects.filter(banda__id=banda_id)
     discos=Disco.objects.filter(banda__id=banda_id)
+    noticias_banda=NoticiaBanda.objects.filter(banda__id=banda_id)
+    return render_to_response("banda/administrar.html", locals(), context_instance=RequestContext(request))
+
+def ver(request,banda_id):
+    usuario_registrado=UsuarioRegistrado.objects.get(pk=request.user.id)
+    banda=Banda.objects.get(pk=banda_id)
+    cantidad_like=LikeBanda.objects.filter(banda__id=banda_id, usuario__id=request.user.id).count()
+    cantidad_seguidores=LikeBanda.objects.filter(banda__id=banda_id).count()
+    generos_banda=BandaGenero.objects.filter(banda__id=banda_id)
+    composiciones_banda=ComposicionBanda.objects.filter(banda__id=banda_id)
+    temas_banda=TemaBanda.objects.filter(banda__id=banda_id)
+    discos=Disco.objects.filter(banda__id=banda_id)
+    noticias_banda=NoticiaBanda.objects.filter(banda__id=banda_id)
     return render_to_response("banda/ver.html", locals(), context_instance=RequestContext(request))
-	
+
 def confirmar(request,banda_id,musico_id):
     composicion_banda=ComposicionBanda.objects.get(banda__id=banda_id, musico__id=musico_id)
     composicion_banda.estado=EstadoComposicionBanda.objects.get(nombre="Confirmado")
@@ -85,3 +109,14 @@ def modificar_composicion_banda(request,banda_id,musico_id):
         form = ComposicionBandaForm(instance=composicion_banda)
         return render_to_response("banda/modificar_composicion_banda.html", locals(), context_instance=RequestContext(request))
 
+@login_required(login_url='/usuario/login/')
+def like(request,banda_id):
+    like_banda = LikeBanda.objects.create(banda_id=banda_id, usuario_id=request.user.id)
+    like_banda.save()
+    return HttpResponseRedirect(reverse('banda.views.ver', kwargs={'banda_id':banda_id}))
+
+@login_required(login_url='/usuario/login/')
+def no_like(request,banda_id):
+    like_banda=LikeBanda.objects.filter(banda__id=banda_id, usuario__id=request.user.id)
+    like_banda.delete()
+    return HttpResponseRedirect(reverse('banda.views.ver', kwargs={'banda_id':banda_id}))

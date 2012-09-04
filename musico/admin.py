@@ -1,5 +1,6 @@
 from musico.models import *
 from django.contrib import admin
+from equipo.models import EquipoMusico
 
 class EquipoMusicoInline(admin.StackedInline):
     model = EquipoMusico
@@ -10,8 +11,6 @@ class MusicoAdmin(admin.ModelAdmin):
     inlines = [EquipoMusicoInline]
 
 admin.site.register(Estilo)
-admin.site.register(Equipo)
 admin.site.register(Posicion)
-admin.site.register(ClasificacionEquipo)
 admin.site.register(Musico,MusicoAdmin)
 

@@ -18,7 +18,6 @@ class BandaAdmin(admin.ModelAdmin):
     inlines = [BandaGeneroInline,ComposicionBandaInline, TemaBandaInline]
 
 
-admin.site.register(Genero)
 admin.site.register(TipoBanda)
 admin.site.register(Banda,BandaAdmin)
 admin.site.register(EstadoComposicionBanda)

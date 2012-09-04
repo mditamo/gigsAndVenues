@@ -1,6 +1,5 @@
 from django.db import models
-
-from banda.models import *
+from banda.models import Banda
 
 class Tema(models.Model):
     nombre=models.CharField(max_length=200)
@@ -9,7 +8,7 @@ class Tema(models.Model):
 
     def __unicode__(self):
         return self.nombre
-
+    
 class TemaBanda(models.Model):
     tema=models.ForeignKey(Tema)
     banda=models.ForeignKey(Banda)
@@ -31,7 +30,7 @@ class Disco(models.Model):
 
     def __unicode__(self):
         return self.nombre
-		
+
 class ComposicionDisco(models.Model):
     tema_banda=models.ForeignKey(TemaBanda)
     disco=models.ForeignKey(Disco)
