@@ -41,9 +41,9 @@
                     <li class="menu"><a href="/foro/index.html"><span>Foros</span></a></li>
                     <li class="menu"><a href="/buscador/index.html"><span>Buscador</span></a></li>
                     {%if user.is_authenticated %}
-                        <li class="menu last"><a href="/usuario/logout"><span>Salir</span></a></li>
+                        <li class="menu last"><a href="/usuario/logout/"><span>Salir</span></a></li>
                     {%else%}
-                        <li class="menu last"><a href="/usuario/login"><span>Login</span></a></li>
+                        <li class="menu last"><a href="/usuario/login/"><span>Login</span></a></li>
                     {%endif%}
                 </ul>
             </nav>
