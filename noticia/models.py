@@ -1,7 +1,7 @@
 from django.db import models
 from banda.models import Banda
-from usuario.models import Complejo
-
+from complejo.models import Complejo
+        
 class TipoNoticia(models.Model):
     nombre=models.CharField(max_length=200)
     class Meta:
@@ -52,3 +52,4 @@ class NoticiaComplejo(models.Model):
 
     def __unicode__(self):
             return self.titulo
+        

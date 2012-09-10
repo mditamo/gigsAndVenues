@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block content%}
+   <!--<h2>Buscador</h2>
+   <form id="" action="/noticia/buscador/" method="post">
+            		<div style='display:none'>
+	    				{% csrf_token %}
+	    			</div>
+            		<label for="id_username">Titulo:</label> <input type="text" name="titulo" /><br/>
+					<input type="submit" value="Buscar" />
+        </form>
+        <br/><br/>-->
+   <h2>Noticias</h2>
+	<div class="noticias">
+		<div class="elementos">
+			{%for noticia in noticias_banda %}
+				<div class="elemento-home-noticia">
+					<p class="fecha-noticia">{{ noticia.fecha_publicacion}}</p>
+					<p class="objeto-noticia">Banda:{{ noticia.banda.nombre}}</p>
+					<p class="titulo-noticia">{{ noticia.titulo}}</p>
+					{% autoescape off %} 
+					{{noticia.contenido|truncatewords:30}} 
+					{% endautoescape %}
+					<a href="/noticia_banda/{{ noticia.id}}/ver/">seguir leyendo</a>
+				</div>
+			{% endfor%}
+			{%for noticia in noticias_complejo %}
+				<div class="elemento-home-noticia">
+					<p class="fecha-noticia">{{ noticia.fecha_publicacion}}</p>
+					<p class="objeto-noticia">Complejo:{{ noticia.complejo.nombre}}</p>
+					<p class="titulo-noticia">{{ noticia.titulo}}</p>
+					{% autoescape off %} 
+					{{noticia.contenido|truncatewords:30}} 
+					{% endautoescape %}
+					<a href="/noticia_complejo/{{ noticia.id}}/ver/">seguir leyendo</a>
+				</div></div>
+			{% endfor%}
+		</div>		
+	</div>
+{% endblock %}
+

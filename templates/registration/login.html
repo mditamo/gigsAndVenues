@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block content%}
 <h2>Ingresar</h2>
-<form id="contacts-form" action="." method="post">
+<form id="contacts-form" action="/usuario/login/" method="post">
     {% csrf_token %}
     {{ form.as_p }}
     <input type="submit" value="Entrar" />

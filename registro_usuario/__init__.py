@@ -7,7 +7,8 @@ from django.contrib.sites.models import Site
 from registration import signals
 from registration.forms import RegistrationForm
 from registration.models import RegistrationManager, RegistrationProfile
-from usuario.models import Fan, Complejo
+from usuario.models import Fan
+from complejo.models import Complejo
 from musico.models import Musico
 from direccion.models import Direccion
 

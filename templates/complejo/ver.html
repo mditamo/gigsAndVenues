@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block content%}
+	<script>
+		$(function() {
+			$( "#accordion" ).accordion();
+		});
+	</script>
+	
+    <h2>{{complejo.username}} ({{ complejo.first_name}}, {{ complejo.last_name}})</h2>
+    <br/>
+	<br/>
+	<div id="accordion">
+		<p><a href="#">Nombre 1</a></p>
+		<div class="nombre">
+			(FALTA COMPLETAR)
+		</div>
+		<p><a href="#">Nombre 2</a></p>
+		<div class="nombre">
+			(FALTA COMPLETAR)
+		</div>
+	</div>	
+	
+{% endblock %}	

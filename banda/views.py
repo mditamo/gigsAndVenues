@@ -71,7 +71,7 @@ def modificar(request,banda_id):
                 banda_genero = BandaGenero.objects.create(banda_id=banda_id, genero_id=genero_id)
                 banda_genero.save()
         banda.save()
-        return HttpResponseRedirect(reverse('musico.views.listado_bandas'))
+        return HttpResponseRedirect(reverse('banda.views.listado'))
     else:
         form = BandaForm(instance=banda)
         return render_to_response("banda/modificar.html", locals(), context_instance=RequestContext(request))
@@ -90,7 +90,7 @@ def nuevo(request):
             estado=EstadoComposicionBanda.objects.get(nombre="Confirmado")
             composicion_banda=ComposicionBanda(musico_id=musico.id,banda_id=banda.id,estado=estado)
             composicion_banda.save()
-        return HttpResponseRedirect(reverse('musico.views.listado_bandas'))
+        return HttpResponseRedirect(reverse('banda.views.listado'))
     else:
         form = BandaForm()
         return render_to_response("banda/nuevo.html", locals(), context_instance=RequestContext(request))

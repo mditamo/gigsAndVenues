@@ -1,6 +1,6 @@
 from django.conf.urls import patterns, include, url
 from usuario.forms import UsuarioRegistradoForm
-from gigsAndVenues import settings
+
 
 from django.contrib import admin
 admin.autodiscover()
@@ -8,6 +8,7 @@ admin.autodiscover()
 from django.conf import settings
 from forum.sitemap import SitemapForum, SitemapTopic
 from djangobb_forum import settings as forum_settings
+from gigsAndVenues import settings
 
 sitemaps = {
     'forum': SitemapForum,
@@ -27,6 +28,8 @@ urlpatterns = patterns('',
     (r'^', include('noticia.urls')),
     (r'^', include('equipo.urls')),
     (r'^', include('genero.urls')),
+    (r'^', include('complejo.urls')),
+    (r'^', include('buscador.urls')),
     
     url(r'^admin/', include(admin.site.urls)),
     (r'css/(?P<path>.*)$', 'django.views.static.serve',

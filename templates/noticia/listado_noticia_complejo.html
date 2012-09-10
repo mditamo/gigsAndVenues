@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block content%}
+<h2>Noticias</h2>
+<p><a href="/noticia_complejo/nuevo">Nueva Noticia</a></p>
+<div class="elementos">
+	{%for noticia in noticias_complejo %}
+		<div class="elemento-noticia">
+			<b>Titulo:</b> {{ noticia.titulo}}
+			<br/>
+			<b>Tipo:</b> {{ noticia.tipo_noticia}}
+			<br/>
+			<b>Fecha Publicacion:</b> {{ noticia.fecha_publicacion}}
+			<br/>
+			<b>Estado:</b> {{ noticia.estado}}
+			<br/>
+			<div class="links">
+				{%if noticia.estado.is_borrador %}
+					<a href="/noticia_complejo/{{noticia.id}}/publicar/">Publicar</a>
+					<a href="/noticia_complejo/{{noticia.id}}/archivar/">Archivar</a>
+				{%elif noticia.estado.is_publicado %}
+					<a href="/noticia_complejo/{{noticia.id}}/archivar/">Archivar</a>
+					<a href="/noticia_complejo/{{noticia.id}}/borrador/">Borrador</a>
+				{%elif noticia.estado.is_archivado %}
+					<a href="/noticia_complejo/{{noticia.id}}/publicar/">Publicar</a>
+					<a href="/noticia_complejo/{{noticia.id}}/borrador/">Borrador</a>
+				{%endif %}
+				<br/>
+				<a href="/noticia_complejo/{{noticia.id}}/detalle/" class="detalle">Detalle</a>
+				{%if noticia.estado.is_borrador %}
+					<a href="/noticia_complejo/{{noticia.id}}/modificar/">Modificar</a>
+				{%else %}
+					Modificar	
+				{%endif %}							
+				<a href="/noticia_complejo/{{noticia.id}}/eliminar/">Eliminar</a>
+			</div>
+			<br/>
+		</div>
+	{% endfor%}
+</div>		
+{% endblock %}

@@ -184,7 +184,8 @@ INSTALLED_APPS = (
     'noticia',
     'equipo',
     'forum',
-    'registration'
+    'registration',
+    'complejo'
     )
 
 

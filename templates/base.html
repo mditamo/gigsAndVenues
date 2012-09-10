@@ -10,6 +10,8 @@
 	<link rel="stylesheet" href="css/base.css" type="text/css" media="all">
 	
     <script type="text/javascript" src="js/jquery.js" ></script>
+    <script type="text/javascript" src="js/ckeditor.js" ></script>
+    <script type="text/javascript" src="js/config.js" ></script>
 	<script type="text/javascript" src="js/jquery-ui.js" ></script>
     <script type="text/javascript" src="js/funciones.js" ></script>
     <script type="text/javascript" src="js/cufon-yui.js"></script>
@@ -32,19 +34,20 @@
     <!-- header -->
     <header>
         <div class="container">
+        	<img src="images/logo.png"/>
+        
             <nav>
                 <ul>
                     <li class="menu"><a href="/" class="active"><span>home</span></a></li>
-                    <li class="menu"><a href="/noticia/listado"><span>Noticias</span></a></li>
-                    <li class="menu"><a href="/forum"><span>Foros</span></a></li>
-                    <li class="menu"><a href="/buscador"><span>Buscador</span></a></li>
-                    {%if user.is_authenticated %}
-                        <li class="menu last"><a href="/usuario/logout/"><span>Salir</span></a></li>
-                    {%else%}
-                        <li class="menu last"><a href="/usuario/login/"><span>Login</span></a></li>
-                    {%endif%}
+                    <li class="menu"><a href="/noticia/listado/"><span>Noticias</span></a></li>
+                    <li class="menu"><a href="/forum/"><span>Foros</span></a></li>
+                    <li class="menu"><a href="/buscador/index"><span>Buscador</span></a></li>
+                    <li class="menu last"><a href="/usuario/register/"><span>Registrarse</span></a></li>
                 </ul>
             </nav>
+            <div class="publicidad">
+            	<p> PUBLICIDAD </p>
+			</div>            
         </div>
     </header>
     <div class="container" id="container">
@@ -52,13 +55,19 @@
         <aside>
             <div class="inside">
                 {%if user.is_authenticated %}
-                <h2>Usuario</h2>
-                <ul class="news">
-                    <li><b>Nick:</b> {{user.username}}</li>
-                    <li><b>Nombre:</b> {{user.first_name}}</li>
-                    <li><b>Apellido:</b> {{user.last_name}}</li>
-                </ul>
-                <h2>Menú</h2>
+                <div class="login">
+	            	<h2>Usuario</h2>
+	            	<form id="contacts-form" action="/usuario/logout/" method="post">
+	            		<div style='display:none'>
+		    				{% csrf_token %}
+		    			</div>
+	            		<strong>{{user.username}} ({{user.first_name}}, {{user.last_name}})</strong>
+	            		<br/><br/>
+	            		<input type="submit" value="Salir" />
+	            	</form>
+            	</div>
+            	<br/><br/>
+                <h2>Menu</h2>
                 <ul class="news">
                     <li><a href="/usuario/perfil">Perfil de Usuario</a></li>
                     <li>(Falta) <a href="#">Transferencia de Tipo de Usuario</a></li>
@@ -68,14 +77,26 @@
                     <li>(Falta) <a href="#">Cronogramas</a></li>
                     {%endif%}
                     {%if usuario_registrado.is_complejo %}
-                    <li>(Falta) <a href="#">Noticias</a></li>
-                    <li>(Falta) <a href="#">Sedes</a></li>
+                    <li><a href="/noticia_complejo/listado">Noticias</a></li>
+                    <li>(Falta) <a href="/sede/listado">Sedes</a></li>
                     {%endif%}
                     {%if usuario_registrado.is_musico %}
                     <li><a href="/banda/listado">Bandas</a></li>
 					<li><a href="/equipo/listado">Instrumentos</a></li>
                     {%endif%}
                 </ul>
+                {%else%}
+                <div class="login">
+            		<h2>Usuario</h2>
+					<form id="contacts-form" action="/usuario/login/" method="post">
+		    			<div style='display:none'>
+		    				{% csrf_token %}
+		    			</div>	
+		    			<label for="id_username">Nombre de Usuario:</label><br/> <input id="id_username" type="text" name="username" maxlength="30" /><br/>
+						<label for="id_password">Password:</label> <br/><input type="password" name="password" id="id_password" /><br/><br/>
+						<input type="submit" value="Entrar" />
+					</form>
+            	</div>
                 {%endif%}
             </div>
         </aside>
@@ -88,7 +109,7 @@
         <div class="clear"></div>
     </div>
 </div>
-<!-- footer -->
+
 <footer>
     <div class="container">
         <div class="inside"> Copyright 2012 - GigsAndVenues.com.ar - All rights reserved</div>

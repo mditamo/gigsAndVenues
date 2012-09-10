@@ -29,8 +29,3 @@ class UsuarioRegistrado(User):
 class Fan(UsuarioRegistrado):
     class Meta:
         db_table="FAN"
-
-class Complejo(UsuarioRegistrado):
-    nombre=models.CharField(max_length=200)
-    class Meta:
-        db_table="COMPLEJO"

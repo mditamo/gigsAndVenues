@@ -23,9 +23,9 @@ time {
 
 /* Global properties ======================================================== */
 body { 
-	background:#000;
+	background: url("images/ui-bg_diagonal-maze_25_000000_10x10.png") repeat scroll 50% 50% #000000;
 	font-family:Arial, Helvetica, sans-serif;
-	font-size:100%; 
+	font-size:90%; 
 	line-height:1em;
 	color:#979797;
 }
@@ -43,38 +43,40 @@ body {
 .container {
 	margin:0 auto;
 	position:relative;
-	width:1000px;
 	font-size:.814em;
 }
 
 	/* Header */
 	header {
 		position:relative;
-		background:url(../images/header.jpg) no-repeat center top;
-		margin-bottom:-20px;
 	}
 	
 	/* Content */
 	section#content {
-		float:left;
-		width:700px;
 		padding-bottom:50px;
+		padding-left:0px;
 	}
 	
 	/* Sidebar */
 	aside {
 		float:left;
-		width:300px;
+		width:390px;
 		position:relative;
 		z-index:10;
 	}
 			
 	/* Footer */
 	footer {
-		background:url(../images/footer.jpg) no-repeat center top;
+		background-image:url('../images/fondo.png');
+		background-repeat:repeat-y;
 		color:#fff;
 		font-size:.92em;
 		line-height:1.667em;
+	    position: relative;
+    	z-index: 10;
+    	border-right: 3px solid;
+		border-color:#6b2c8b;
+		width:90%;
 	}
 
 
@@ -106,14 +108,22 @@ body {
 }	
 
 .wrapper { 
-	width:100%;
+	padding-left:10px;
 	overflow:hidden;
 }
+
+
+
 .wrap {
 	position:relative;
 	height:auto !important;
 	height:100%;
+	width:90%;
 	min-height:100%;
+	background-image:url('../images/fondo.png');
+	background-repeat:repeat-y;
+	border-right: 3px solid;
+	border-color:#6b2c8b;
 }
 
 /*---- tailings ----*/
@@ -138,6 +148,7 @@ textarea {
 	font-weight:normal;
 }
 
+
 /*----- lists -----*/
 
 .news li {
@@ -151,6 +162,7 @@ textarea {
 	.news li a {
 		text-decoration:none;
 		font-weight:bold;
+		color:#000000;
 	}
 	.news li a:hover {
 		text-decoration:underline;
@@ -233,7 +245,7 @@ textarea {
 }
 
 p {
-	margin-bottom:20px;
+	margin-bottom:5px;
 	line-height:1.538em;
 }
 	.p0 {
@@ -271,10 +283,15 @@ h1 {
 	}
 h2 {
 	color:#fff;
-	font-size:25px;
+	font-size:20px;
 	line-height:1.2em;
 	text-transform:uppercase;
 	margin-bottom:20px;
+	margin-left: -10px;
+	background-color:#6b2c8b;
+	 width: 101%;
+	 display: block;
+    float: left;
 }
 
 h3 {
@@ -316,11 +333,20 @@ h3 {
 
 /*===== header =====*/
 header .container {
-	height:200px;
+	height:170px;
+	overflow: hidden;
+	
 }
+
+header img {
+	padding-left :140px;
+}
+
 	header nav {
 		
-		float:right
+		float:right;
+		background-color:#6b2c8b;
+		
 	}
 		header nav ul {
 			width:100%;
@@ -365,28 +391,29 @@ header .container {
 
 /*===== Sidebar =====*/
 aside .inside {
-	padding:0 25px 180px 59px;
+	padding:0 0 180px 155px;
 }
 
 /*===== footer =====*/
 footer .container {
-	height:104px;
+	height:50px;
 	position:relative;
 }
 footer .inside {
+	border-top: 3px solid;
+	border-color:#6b2c8b;
 	text-align:center;
-	padding-top:70px;
+	padding-top:10px;
+	margin-left:390px;
+	
 }
 
 
 /*----- forms -----*/
 
-#contacts-form { clear:right; width:100%; overflow:hidden;}
-#contacts-form fieldset { border:none; float:left; }
-#contacts-form .field { clear:both;}
-#contacts-form label { float:left; width:150px; line-height:18px; padding-bottom:8px;}
-#contacts-form input { width:295px; padding:1px 0 1px 3px; border:1px solid #4d4d4d; color:#979797; background:none;}
-#contacts-form textarea { width:444px; height:285px; padding:1px 0 1px 3px; border:1px solid #4d4d4d; color:#979797; margin-bottom:19px; overflow:auto; background:none;}
+#contacts-form label { line-height:18px; padding-bottom:8px; color:#ffffff; font-weight: bold;}
+#contacts-form p { color:#ffffff; line-height:18px; padding-bottom:8px; font-weight: bold;}
+#contacts-form input { width:100px; padding:1px 0 1px 3px; border:1px solid #ffffff; font-weight: bold; color:#6B2C8B; background:#ffffff;}
 
 /*==========================================*/
     

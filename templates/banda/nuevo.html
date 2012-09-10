@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% block content%}
-<h2>Nuevo</h2>
+<h2>Nueva Banda</h2>
+
 <form action="/banda/nuevo/" method="post">
     {% csrf_token %}
     {{ form.as_p }}
