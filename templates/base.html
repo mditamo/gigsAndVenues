@@ -79,6 +79,16 @@
                     {%if usuario_registrado.is_complejo %}
                     <li><a href="/noticia_complejo/listado">Noticias</a></li>
                     <li>(Falta) <a href="/sede/listado">Sedes</a></li>
+                    
+                    <li>
+                     (Falta) <a HREF="javascript:Ayuda(prueba)">Adm. de Negociaciones y Eventos</a>
+                    	<div id="prueba" Style = "visibility:hidden;">
+                    	<ul>
+                    		<li>(Falta) <a href="/complejo/nuevo_evento/sinNegociacion">----->Crear evento sin negociacion</a></li>	          	
+                    	</ul>
+                    	</div>
+                    </li>
+                    
                     {%endif%}
                     {%if usuario_registrado.is_musico %}
                     <li><a href="/banda/listado">Bandas</a></li>
@@ -116,5 +126,16 @@
     </div>
 </footer>
 <script type="text/javascript"> Cufon.now(); </script>
+
+<SCRIPT Language="JavaScript">
+<!--
+
+function Ayuda(identificador)
+{
+identificador.style.visibility='visible';
+}
+
+//-->
+</SCRIPT>
 </body>
 </html>

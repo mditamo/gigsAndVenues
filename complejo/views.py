@@ -34,3 +34,8 @@ def no_like(request,complejo_id):
     like_complejo=LikeComplejo.objects.filter(banda__id=complejo_id, usuario__id=request.user.id)
     like_complejo.delete()
     return HttpResponseRedirect(reverse('complejo.views.ver', kwargs={'complejo_id':complejo_id}))
+
+@login_required(login_url='/usuario/login/')
+def evento_sin_negociacion(request,complejo_id):
+        return render_to_response("complejo/modificar.html", locals(), context_instance=RequestContext(request))
+    
