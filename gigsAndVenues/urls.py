@@ -30,6 +30,7 @@ urlpatterns = patterns('',
     (r'^', include('genero.urls')),
     (r'^', include('complejo.urls')),
     (r'^', include('buscador.urls')),
+    (r'^', include('evento.urls')),
     
     url(r'^admin/', include(admin.site.urls)),
     (r'css/(?P<path>.*)$', 'django.views.static.serve',

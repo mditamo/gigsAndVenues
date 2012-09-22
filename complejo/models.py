@@ -37,7 +37,9 @@ class Sede(models.Model):
     
     class Meta:
         db_table="SEDE"
-
+    def __unicode__(self):
+        return self.nombre
+    
 class ConfiguracionSede(models.Model):
     nombre=models.CharField(max_length=200)
     cantidad_entradas_disponibles=models.IntegerField()
