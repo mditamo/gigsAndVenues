@@ -38,7 +38,7 @@ class EstadoComposicionBanda(models.Model):
 
     def is_denegado(self):
         return self.nombre=="Denegado"
-		
+
 class ComposicionBanda(models.Model):
     musico=models.ForeignKey(Musico)
     banda=models.ForeignKey(Banda)

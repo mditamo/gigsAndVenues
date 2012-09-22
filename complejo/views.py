@@ -36,6 +36,6 @@ def no_like(request,complejo_id):
     return HttpResponseRedirect(reverse('complejo.views.ver', kwargs={'complejo_id':complejo_id}))
 
 @login_required(login_url='/usuario/login/')
-def evento_sin_negociacion(request,complejo_id):
-        return render_to_response("complejo/modificar.html", locals(), context_instance=RequestContext(request))
+def evento_sin_negociacion(request):
+        return render_to_response("complejo/creacion_eventos.html", locals(), context_instance=RequestContext(request))
     

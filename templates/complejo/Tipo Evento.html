@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block content%}
+    <h2>Administracion de Negociaciones y Eventos</h2>
+    <h3>{{complejo.username}}</h3>
+    
+    <a href="/complejo/{{complejo.id}}/modificar"><p>Crear un Evento sin Negociaci&oacute;n</p></a>
+    
+    <p><b>Nombre:</b> {{ complejo.first_name}}</p>
+    <p><b>Apellido:</b> {{ complejo.last_name}}</p>
+    <p><b>Direcci&oacute;n de correo electr&oacute;nico:</b> {{ complejo.email}}</p>
+    <p><b>Fecha Nacimiento:</b> {{ complejo.fecha_nacimiento}}</p>
+    <p><b>Direccion:</b> {{ complejo.direccion}}</p>
+    <br/>
+{% endblock %}
