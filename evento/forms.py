@@ -6,4 +6,4 @@ class EventoForm(ModelForm):
     formfield_callback = make_custom_datefield
     class Meta:
         model = Evento
-        exclude = ('fans','nombre_complejo')
+        exclude = ('fans','nombre_complejo','complejo')
