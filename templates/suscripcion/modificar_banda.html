@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block content%}
+<h2>Modificar Suscripci&oacute;n</h2>
+<form action="/suscripcion/banda/{{banda_id}}/modificar" method="post">
+    {% csrf_token %}
+    <p><label>Banda:</label> {{suscripcion.banda.nombre}}</p>
+    {{ form.as_p }}
+    <input type="submit" value="Modificar" />
+</form>
+<br/>
+{% endblock %}

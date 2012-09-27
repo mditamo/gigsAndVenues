@@ -1,6 +1,5 @@
 {% extends "base.html" %}
 {% block content%}
-
 	<script>
 	$(function() {
 		$( "#accordion" ).accordion();
@@ -8,6 +7,13 @@
 	</script>
 	
 	<h2>{{banda.nombre}}</h2>
+	{% if messages %}
+	    {% for message in messages %}
+		    <div class='mensaje_respuesta  ui-corner-all {% if message.tags %} {{ message.tags }}{% endif %}' style='text-align: left'>
+		    	{{ message }}
+		    </div>
+		{% endfor %}
+	{% endif %}
     <br/>
     <b>Fecha Creacion:</b> {{ banda.fecha_creacion}}
     <br/>
@@ -23,7 +29,7 @@
 	<div id="accordion">
 		<p><a href="#">Integrantes</a></p>
 		<div class="integrantes">
-			<p>(Falta) <a href="/banda/{{banda.id}}/invitar_musico">Invitar nuevo Musico</a></p>
+			<p><a href="/banda/{{banda.id}}/invitar_musico/">Invitar nuevo Musico</a></p>
 			<div class="elementos">
 				{%for composicion_banda in composiciones_banda%}
 				<div class="elemento-musico estado_{{ composicion_banda.estado}}">
@@ -74,7 +80,7 @@
 					<br/>
 					<div class="links">
 						<a href="/disco/{{disco.id}}/modificar/">Modificar</a>
-						(Falta) <a href="/disco/{{disco.id}}/eliminar/">Eliminar</a>
+						<a href="/disco/{{disco.id}}/eliminar/">Eliminar</a>
 					</div>
 					<br/>
 				</div>
@@ -84,7 +90,7 @@
 	
 		<p><a href="#">Temas Banda</a></p>
 		<div class="temas">
-			<p>(Falta) <a href="/tema/banda/{{banda.id}}/nuevo/">Nuevo Tema</a></p>
+			<p><a href="/tema/banda/{{banda.id}}/nuevo/">Nuevo Tema</a></p>
 			<div class="elementos">
 				{%for tema_banda in temas_banda%}
 				<div class="elemento-disco">
@@ -93,8 +99,8 @@
 					<b>Duracion:</b> {{ tema_banda.duracion}}
 					<br/>
 					<div class="links">
-						(Falta) <a href="/tema/{{tema_banda.tema.id}}/banda/{{banda.id}}/modificar/">Modificar</a>
-						(Falta) <a href="/tema/{{tema_banda.tema.id}}/banda/{{banda.id}}/eliminar/">Eliminar</a>
+						<a href="/tema/{{tema_banda.tema.id}}/banda/{{banda.id}}/modificar/">Modificar</a>
+						<a href="/tema/{{tema_banda.tema.id}}/banda/{{banda.id}}/eliminar/">Eliminar</a>
 					</div>
 					<br/>
 				</div>
@@ -103,9 +109,6 @@
 		</div>
 		<p><a href="#">Noticias</a></p>
 		<div class="noticias">
-		    <div style="display:none">
-    			<input type="hidden" name="csrfmiddlewaretoken" value="{% csrf_token %}"/>
-			</div>
 			<p><a href="/noticia_banda/banda/{{banda.id}}/nuevo/">Nueva Noticia</a></p>
 			<div class="elementos">
 				{%for noticia in noticias_banda %}
@@ -131,7 +134,7 @@
 						{%endif %}
 						<br/>
 					
-						<a href="/noticia_banda/{{noticia.id}}/detalle/" class="detalle">Detalle</a>
+						<a href="/noticia_banda/{{noticia.id}}/ver/" >Detalle</a>
 						{%if noticia.estado.is_borrador %}
 							<a href="/noticia_banda/{{noticia.id}}/modificar/">Modificar</a>
 						{%else %}

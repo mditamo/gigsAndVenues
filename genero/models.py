@@ -15,3 +15,4 @@ class LikeGenero(models.Model):
     
     class Meta:
         db_table="LIKE_GENERO"
+            

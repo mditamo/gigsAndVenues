@@ -14,14 +14,14 @@ CURRENT_PATH = os.path.dirname(__file__)
 #forum
 PROJECT_ROOT = os.path.dirname(os.path.realpath(__file__))
 
-LOGIN_REDIRECT_URL="/usuario/perfil"
+LOGIN_REDIRECT_URL="/"
 
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.oracle', # Add 'postgresql_psycopg2', 'mysql', 'oracle'.
         'NAME': '127.0.0.1/XE',                      # Or path to database file if using sqlite3.
-        'USER': 'system',                      # Not used with sqlite3.
+        'USER': 'proyecto',                      # Not used with sqlite3.
         'PASSWORD': 'proyecto',                  # Not used with sqlite3.
         'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
         'PORT': '',# Set to empty string for default. Not used with sqlite3.
@@ -77,7 +77,7 @@ STATIC_ROOT = 'C:/gigsAndVenues/'
 
 # URL prefix for static files.
 # Example: "http://media.lawrence.com/static/"
-STATIC_URL = '/static/'
+STATIC_URL = 'static/'
 
 #forum
 if not hasattr(globals(), 'SECRET_KEY'):
@@ -186,7 +186,12 @@ INSTALLED_APPS = (
     'forum',
     'registration',
     'complejo',
-    'evento'
+    'sede',
+    'general',
+    'suscripcion',
+    'fan',
+    'tema',
+	'evento'
     )
 
 
@@ -256,8 +261,7 @@ HAYSTACK_WHOOSH_PATH = os.path.join(PROJECT_ROOT, 'djangobb_index')
 
 # Account settings
 ACCOUNT_ACTIVATION_DAYS = 10
-LOGIN_REDIRECT_URL = '/forum/'
-LOGIN_URL = '/forum/account/signin/'
+LOGIN_URL = '/usuario/login/'
 
 #Cache settings
 CACHE_MIDDLEWARE_ANONYMOUS_ONLY = True

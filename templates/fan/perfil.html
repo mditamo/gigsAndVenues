@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block content%}
+    <h2>{{fan.username}}
+    <a class="accion" href="/fan/{{fan.id}}/modificar/">&raquo; Modificar</a>
+    </h2>
+    {% if messages %}
+	    {% for message in messages %}
+		    <div class='mensaje_respuesta  ui-corner-all {% if message.tags %} {{ message.tags }}{% endif %}' style='text-align: left'>
+		    	{{ message }}
+		    </div>
+		{% endfor %}
+	{% endif %}
+    
+
+	<div class="detalle">
+	    <p><label>Nombre:</label> {{ fan.first_name}}</p>
+	    <p><label>Apellido:</label> {{ fan.last_name}}</p>
+	    <p><label>Direcci&oacute;n de correo electr&oacute;nico:</label> {{ fan.email}}</p>
+	    <p><label>Fecha Nacimiento:</label> {{ fan.fecha_nacimiento}}</p>
+	    <p><label>Direccion:</label> {{ fan.direccion}}</p>
+    </div>
+{% endblock %}

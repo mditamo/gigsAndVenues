@@ -1,12 +1,24 @@
 {% extends "base.html" %}
 {% block content%}
-    <h2>Perfil Complejo</h2>
-    <a href="/complejo/{{complejo.id}}/modificar"><p>Modificar</p></a>
-    <h3>{{complejo.username}}</h3>
-    <p><b>Nombre:</b> {{ complejo.first_name}}</p>
-    <p><b>Apellido:</b> {{ complejo.last_name}}</p>
-    <p><b>Direcci&oacute;n de correo electr&oacute;nico:</b> {{ complejo.email}}</p>
-    <p><b>Fecha Nacimiento:</b> {{ complejo.fecha_nacimiento}}</p>
-    <p><b>Direccion:</b> {{ complejo.direccion}}</p>
+    <h2>
+    	{{complejo.username}}
+    	<a class="accion" href="/complejo/{{complejo.id}}/modificar">&raquo; Modificar</a>
+    </h2>
+    {% if messages %}
+	    {% for message in messages %}
+		    <div class='mensaje_respuesta  ui-corner-all {% if message.tags %} {{ message.tags }}{% endif %}' style='text-align: left'>
+		    	{{ message }}
+		    </div>
+		{% endfor %}
+	{% endif %}
+    
+    <div class="detalle">
+    <p><label>Nombre:</label> {{ complejo.first_name}}</p>
+    <p><label>Apellido:</label> {{ complejo.last_name}}</p>
+    <p><label>Direcci&oacute;n de correo electr&oacute;nico:</label> {{ complejo.email}}</p>
+    <p><label>Fecha Nacimiento:</label> {{ complejo.fecha_nacimiento}}</p>
+    <p><label>Direccion:</label> {{ complejo.direccion}}</p>
+    <p><label>Nombre del Complejo:</label> {{ complejo.nombre}}</p>
     <br/>
+    </div>
 {% endblock %}

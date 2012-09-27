@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block content%}
+	<h2>Solicitudes Pendientes</h2>
+	{% if messages %}
+	    {% for message in messages %}
+		    <div class='mensaje_respuesta  ui-corner-all {% if message.tags %} {{ message.tags }}{% endif %}' style='text-align: left'>
+		    	{{ message }}
+		    </div>
+		{% endfor %}
+	{% endif %}
+	{%if composiciones_banda.count != 0 %}
+    <div class="solicitudes">
+     	{%for composicion_banda in composiciones_banda%}
+        <div class="elemento-banda">
+            <a href="/banda/{{composicion_banda.banda.id}}/ver/"><p>{{ composicion_banda.banda.nombre}}</p></a>
+			<b>Fecha Creacion:</b> {{ composicion_banda.banda.fecha_creacion}}
+            <br/>
+            <b>Tipo:</b> {{ composicion_banda.banda.tipo_banda}}
+            <br/>
+			<div class="links">
+				<a href="/banda/{{composicion_banda.banda.id}}/confirmar_solicitud/">Confirmar</a>
+			</div>	
+        </div>
+        {% endfor%}
+    </div>
+    {%else%}
+		<p>Usted no tiene solictudes pendientes</p>
+	{%endif%}
+{% endblock %}

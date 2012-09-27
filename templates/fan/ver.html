@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block content%}
+
+	<script>
+	$(function() {
+		$( "#accordion" ).accordion();
+	});
+	</script>
+	
+    <h2>{{fan.username}} ({{ fan.first_name}}, {{ fan.last_name}})</h2>
+    <br/><br/><br/>
+	<div id="accordion">
+		<p><a href="#">Bandas Suscriptas</a></p>
+		<div class="suscripcion-bandas">
+			{%if  suscripciones_banda.count != 0 %}
+			<div class="elementos">
+				{%for suscripcion_banda in suscripciones_banda%}
+				<div class="elemento-suscripcion-banda">
+					<p><a href="/banda/{{suscripcion_banda.banda.id}}/ver/">{{suscripcion_banda.banda.nombre}}</a></p>
+					<b>Periodicidad:</b> {{ suscripcion_banda.periodicidad}}
+					<br/>
+				</div>
+				{% endfor%}
+			</div>
+			{%else%}
+				<p>El fan no tiene suscripciones de bandas</p>
+			{%endif%}
+		</div>
+		<p><a href="#">G&eacute;neros Suscriptos</a></p>
+		<div class="suscripcion-generos">
+			{%if  suscripciones_genero.count != 0 %}
+			<div class="elementos">
+				{%for suscripcion_genero in suscripciones_genero%}
+				<div class="elemento-suscripcion-genero">
+					<p><a href="/genero/{{suscripcion_genero.genero.id}}/ver/">{{suscripcion_genero.genero.nombre}}</a></p>
+					<b>Periodicidad:</b> {{ suscripcion_genero.periodicidad}}
+					<br/>
+				</div>
+				{% endfor%}
+			</div>
+			{%else%}
+				<p>El fan no tiene suscripciones de g&eacute;neros</p>
+			{%endif%}
+		</div>
+		<p><a href="#">Eventos</a></p>
+		<div class="eventos">
+			(FALTA COMPLETAR)
+		</div>
+	</div>	
+	
+{% endblock %}	

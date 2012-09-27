@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+{% block content%}
+	<script>
+	$(function() {
+		$( "#accordion" ).accordion();
+	});
+	</script>
+
+	<h2>Suscripciones</h2>
+	
+	{% if messages %}
+	    {% for message in messages %}
+		    <div class='mensaje_respuesta  ui-corner-all {% if message.tags %} {{ message.tags }}{% endif %}' style='text-align: left'>
+		    	{{ message }}
+		    </div>
+		{% endfor %}
+	{% else %}
+		<br/><br/>
+	{% endif %}
+   	<div id="accordion">
+   		<p><a href="#">G&eacute;neros</a></p>
+		<div class="suscripcion-generos">
+			{%if suscripciones_genero.count != 0 %}
+			<div class="elementos">
+				{%for suscripcion_genero in suscripciones_genero%}
+				<div class="elemento-suscripcion-genero">
+					<p><a href="/genero/{{suscripcion_genero.genero.id}}/ver/">{{suscripcion_genero.genero.nombre}}</a></p>
+					<b>Periodicidad:</b> {{ suscripcion_genero.periodicidad}}
+					<br/>
+					<div class="links">
+						<a href="/suscripcion/genero/{{suscripcion_genero.genero.id}}/modificar">Modificar</a>
+						<a href="/suscripcion/genero/{{suscripcion_genero.genero.id}}/eliminar">Eliminar</a>
+					</div>
+					<br/>
+				</div>
+				{% endfor%}
+			</div>
+			{%else%}
+				<p>Usted no tiene niguna suscripci&oacute;n a g&eacute;neros</p>
+			{%endif%}
+		</div>
+		<p><a href="#">Bandas</a></p>
+		<div class="suscripcion-bandas">
+			{%if suscripciones_banda.count != 0 %}
+			<div class="elementos">
+				{%for suscripcion_banda in suscripciones_banda%}
+				<div class="elemento-suscripcion-banda">
+					<p><a href="/banda/{{suscripcion_banda.banda.id}}/ver/">{{suscripcion_banda.banda.nombre}}</a></p>
+					<b>Periodicidad:</b> {{ suscripcion_banda.periodicidad}}
+					<br/>
+					<div class="links">
+						<a href="/suscripcion/banda/{{suscripcion_banda.banda.id}}/modificar">Modificar</a>
+						<a href="/suscripcion/banda/{{suscripcion_banda.banda.id}}/eliminar">Eliminar</a>
+					</div>
+					<br/>
+				</div>
+				{% endfor%}
+			</div>
+			{%else%}
+				<p>Usted no tiene ninguna suscripci&oacute;n a bandas</p>
+			{%endif%}
+		</div>
+		<p><a href="#">M&uacute;sicos</a></p>
+		<div class="suscripcion-musico">
+			{%if suscripciones_musico.count != 0 %}
+			<div class="elementos">
+				{%for suscripcion_musico in suscripciones_musico%}
+				<div class="elemento-suscripcion-musico">
+					<p><a href="/musico/{{suscripcion_musico.musico.id}}/ver/">{{ suscripcion_musico.musico.first_name}}, {{suscripcion_musico.musico.last_name}}</a></p>
+					<b>Periodicidad:</b> {{ suscripcion_musico.periodicidad}}
+					<br/>
+					<div class="links">
+						<a href="/suscripcion/musico/{{suscripcion_musico.musico.id}}/modificar">Modificar</a>
+						<a href="/suscripcion/musico/{{suscripcion_musico.musico.id}}/eliminar">Eliminar</a>
+					</div>
+					<br/>
+				</div>
+				{% endfor%}
+			</div>
+			{%else%}
+				<p>Usted no tiene ninguna suscripci&oacute;n a m&uacute;sicos</p>
+			{%endif%}
+		</div>
+		<p><a href="#">Complejos</a></p>
+		<div class="suscripcion-complejo">
+			{%if suscripciones_complejo.count != 0 %}
+			<div class="elementos">
+				{%for suscripcion_complejo in suscripciones_complejo%}
+				<div class="elemento-suscripcion-complejo">
+					<p><a href="/complejo/{{suscripcion_complejo.complejo.id}}/ver/">{{ suscripcion_complejo.complejo.first_name}}, {{suscripcion_complejo.complejo.last_name}}</a></p>
+					<b>Periodicidad:</b> {{ suscripcion_complejo.periodicidad}}
+					<br/>
+					<div class="links">
+						<a href="/suscripcion/complejo/{{suscripcion_complejo.complejo.id}}/modificar">Modificar</a>
+						<a href="/suscripcion/complejo/{{suscripcion_complejo.complejo.id}}/eliminar">Eliminar</a>
+					</div>
+					<br/>
+				</div>
+				{% endfor%}
+			</div>
+			{%else%}
+				<p>Usted no tiene ninguna suscripci&oacute;n a complejos</p>
+			{%endif%}
+		</div>
+	</div>
+{% endblock %}

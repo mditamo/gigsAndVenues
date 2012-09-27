@@ -1,38 +1,45 @@
 {% extends "base.html" %}
 {% block content%}
-	<h2>Noticias</h2>
-	<div class="noticias">
-		<div class="elementos">
-			{%for noticia in noticias_banda %}
-				<div class="elemento-home-noticia">
-					<p class="fecha-noticia">{{ noticia.fecha_publicacion}}</p>
-					<p class="objeto-noticia">Banda:{{ noticia.banda.nombre}}</p>
-					<p class="titulo-noticia">{{ noticia.titulo}}</p>
-					{% autoescape off %} 
-					{{noticia.contenido|truncatewords:30}} 
-					{% endautoescape %}
-					<a href="/noticia_banda/{{ noticia.id}}/ver/">seguir leyendo</a>
+	<div class="content-home">
+		<h2>Noticias</h2>
+		<div class="noticias">
+			<div class="elementos">
+				{%for noticia in noticias_banda %}
+					<div class="elemento-home-noticia">
+						<p class="fecha-noticia">{{ noticia.fecha_publicacion}}</p>
+						<p class="objeto-noticia">Banda:{{ noticia.banda.nombre}}</p>
+						<p class="titulo-noticia">{{ noticia.titulo}}</p>
+						{% autoescape off %} 
+						{{noticia.contenido|truncatewords:30}} 
+						{% endautoescape %}
+						<br/>
+						<a href="/noticia_banda/{{ noticia.id}}/ver/">seguir leyendo</a>
+					</div>
+				{% endfor%}
+				{%for noticia in noticias_complejo %}
+					<div class="elemento-home-noticia">
+						<p class="fecha-noticia">{{ noticia.fecha_publicacion}}</p>
+						<p class="objeto-noticia">Complejo:{{ noticia.complejo.nombre}}</p>
+						<p class="titulo-noticia">{{ noticia.titulo}}</p>
+						{% autoescape off %} 
+						{{noticia.contenido|truncatewords:30}} 
+						{% endautoescape %}
+						<br/>
+						<a href="/noticia_complejo/{{ noticia.id}}/ver/">seguir leyendo</a>
+					</div>
+				{% endfor%}
+			</div>		
+		</div>
+		<h2>Proximos Eventos</h2>
+		<div class="proximos-eventos">
+			<div class="elementos">
+				<div class="elemento-home-proximo-evento">
+					<p>FALTA COMPLETAR</p>
 				</div>
-			{% endfor%}
-			{%for noticia in noticias_complejo %}
-				<div class="elemento-home-noticia">
-					<p class="fecha-noticia">{{ noticia.fecha_publicacion}}</p>
-					<p class="objeto-noticia">Complejo:{{ noticia.complejo.nombre}}</p>
-					<p class="titulo-noticia">{{ noticia.titulo}}</p>
-					{% autoescape off %} 
-					{{noticia.contenido|truncatewords:30}} 
-					{% endautoescape %}
-					<a href="/noticia_complejo/{{ noticia.id}}/ver/">seguir leyendo</a>
-				</div></div>
-			{% endfor%}
-		</div>		
+			</div>		
+		</div>
 	</div>
-	<h2>Proximos Eventos</h2>
-	<div class="proximos-eventos">
-		<div class="elementos">
-			<div class="elemento-home-proximo-evento">
-				<p>FALTA COMPLETAR</p>
-			</div>
-		</div>		
+	<div class="publicidad-home">
+		PUBLICIDAD
 	</div>
 {% endblock %}

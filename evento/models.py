@@ -1,6 +1,7 @@
 from django.db import models
-from complejo.models import Sede,Complejo
-from usuario.models import Fan
+from complejo.models import Complejo
+from sede.models import Sede
+from fan.models import Fan
 
 
 class Evento(models.Model):

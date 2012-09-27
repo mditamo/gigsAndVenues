@@ -8,34 +8,68 @@
 	</script>
 	
     <h2>{{banda.nombre}}</h2>
-     {%if user.is_authenticated %}
-    	{%if cantidad_like == 0 %}	
-    		<a href="/banda/{{banda_id}}/like"><img src="images/like.png"/></a>
-    	{%else%}
-    		<a href="/banda/{{banda_id}}/no_like"><img src="images/no_like.png"/></a>
-    	{%endif%}
-	{%else%}
-		<a href="/banda/{{banda_id}}/like"><img src="images/like.png"/></a>
-	{%endif%}
+    
+    
+    
+	<div class="suscripcion">
+		<h2>Suscripcion</h2>
+		
+		{%if cantidad_suscripcion == 0 %}
+			<form action="/banda/{{banda_id}}/suscribirme/" method="post">
+				{% csrf_token %}
+		   		{{ form_suscripcion.as_p }}
+		   		{%if user.is_authenticated %}
+					<input type="submit" value="Suscribirme" />
+				{%else%}
+					<input class="open-mensaje" type="submit" value="Suscribirme" />
+				{%endif%}
+			</form>
+		{%else%}
+			<form action="/banda/{{banda_id}}/no_suscribirme/" method="post">
+				{% csrf_token %}
+				<p><label for="id_periodicidad">Periodicidad:</label> {{suscripcion.periodicidad.nombre}}</p>
+				<input type="submit" value="Quitar Suscripci&oacute;n" />
+			</form>	
+		{%endif%}
+	</div>	
 	
-	<br/>
-    <br/>
-    <b>Cantidad de Seguidores:</b>  {{cantidad_seguidores}}
+    <div class="like">
+    	<h2>Like</h2>
+	    {%if user.is_authenticated %}
+	    	{%if cantidad_like == 0 %}	
+	    		<a href="/banda/{{banda_id}}/like"><img src="images/like.png"/></a>
+	    	{%else%}
+	    		<a href="/banda/{{banda_id}}/no_like"><img src="images/no_like.png"/></a>
+	    	{%endif%}
+		{%else%}
+			<a href="#" class="open-mensaje"><img src="images/like.png"/></a>
+		{%endif%}
+		<br/>
+		<b>Cantidad de Seguidores:</b>  {{cantidad_seguidores}}
+    </div>
+	
+	
+	<div id="dialog-message" title="Mensaje">
+	<p>Necesitas estar logueado para poder disponer de estas funciones</p>
+	</div>
+    
+
     <br/>
     <b>Fecha Creacion:</b> {{ banda.fecha_creacion}}
-    <br/>
+    <br/><br/>
     <b>Tipo:</b> {{ banda.tipo_banda}}
-    <br/>
+    <br/><br/>
     <b>Generos:</b>
         {%for genero_banda in generos_banda%}
-            - <a href="/musico/{{genero_banda.genero.id}}/ver/">{{ genero_banda.genero.nombre}}</a>
+            - <a href="/genero/{{genero_banda.genero.id}}/ver">{{ genero_banda.genero.nombre}}</a>
         {% endfor%}	
 		
-	<br/>
+	<br/><br/>
 	<br/>
 	<div id="accordion">
 		<p><a href="#">Integrantes</a></p>
 		<div class="integrantes">
+			{%if  composiciones_banda.count != 0 %}
 			<div class="elementos">
 				{%for composicion_banda in composiciones_banda%}
 				<div class="elemento-musico estado_{{ composicion_banda.estado}}">
@@ -51,9 +85,13 @@
 				</div>
 				{% endfor%}
 			</div>
+			{%else%}
+				<p>La banda no tiene integrantes actualmente</p>
+			{%endif%}
 		</div>
 		<p><a href="#">Discografia</a></p>
 		<div class="discografia">
+			{%if  discos.count != 0 %}
 			<div class="elementos">
 				{%for disco in discos%}
 				<div class="elemento-disco">
@@ -66,10 +104,14 @@
 				</div>
 				{% endfor%}
 			</div>
+			{%else%}
+				<p>La banda no tiene ning&uacute;n disco publicado actualmente</p>
+			{%endif%}
 		</div>
 	
 		<p><a href="#">Temas Banda</a></p>
 		<div class="temas">
+			{%if  discos.count != 0 %}
 			<div class="elementos">
 				{%for tema_banda in temas_banda%}
 				<div class="elemento-disco">
@@ -79,32 +121,37 @@
 				</div>
 				{% endfor%}
 			</div>
+			{%else%}
+				<p>La banda no tiene ning&uacute;n tema publicado actualmente</p>
+			{%endif%}
 		</div>
 		<p><a href="#">Negociaciones y Eventos</a></p>
 		<div class="eventos">
+			(FALTA COMPLETAR)
 		</div>
 		<p><a href="#">Noticias</a></p>
 		<div class="noticias">
-		    <div style="display:none">
-    			<input type="hidden" name="csrfmiddlewaretoken" value="{% csrf_token %}"/>
-			</div>
+		    {%if noticias_banda.count != 0 %}
 			<div class="elementos">
 				{%for noticia in noticias_banda %}
-				<div class="elemento-noticia">
-					<b>Titulo:</b> {{ noticia.titulo}}
-					<br/>
-					<b>Tipo:</b> {{ noticia.tipo_noticia}}
-					<br/>
-					<b>Fecha Publicacion:</b> {{ noticia.fecha_publicacion}}
-					<br/>
-					<b>Estado:</b> {{ noticia.estado}}
-					<br/>
+				<div class="elemento-home-noticia">
+					<p class="fecha-noticia">{{ noticia.fecha_publicacion}}</p>
+					<p class="objeto-noticia">Banda:{{ noticia.banda.nombre}}</p>
+					<p class="titulo-noticia">{{ noticia.titulo}}</p>
+					{% autoescape off %} 
+					{{noticia.contenido|truncatewords:20}} 
+					{% endautoescape %}
+					<a href="/noticia_banda/{{ noticia.id}}/ver/">seguir leyendo</a>
 				</div>
 				{% endfor%}
 			</div>		
+			{%else%}
+				<p>La banda no tiene ninguna noticia publicada actualmente</p>
+			{%endif%}
 		</div>
 		<p><a href="#">Recursos Multimedia</a></p>
 		<div class="recursos">
+			(FALTA COMPLETAR)
 		</div>
 		
 	</div>

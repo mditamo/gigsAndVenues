@@ -1,15 +1,21 @@
 {% extends "base.html" %}
 {% block content%}
     <h2>{{disco.nombre}}</h2>
-
-    <b>Fecha Publicacion:</b> {{ disco.fecha_publicacion}}
+    {% if messages %}
+	    {% for message in messages %}
+		    <div class='mensaje_respuesta  ui-corner-all {% if message.tags %} {{ message.tags }}{% endif %}' style='text-align: left'>
+		    	{{ message }}
+		    </div>
+		{% endfor %}
+	{% endif %}
+	<b>Fecha Publicacion:</b> {{ disco.fecha_publicacion}}
     <br/>
     <b>Discografica:</b> {{ disco.discografica}}
     <br/>
 	<br/>
     <div class="temas_disco">
         <h3>Temas:</h3>
-        <p>(Falta) <a href="/disco/{{disco.id}}/nuevo_tema/">Agregar Tema</a></p>
+        <p><a href="/disco/{{disco.id}}/nuevo_composicion_disco/">Agregar Tema</a></p>
         <div class="elementos">
             {%for composicion_disco in composiciones_disco%}
             <div class="elemento-tema">
@@ -19,13 +25,10 @@
                 <br/>
                 <b>Duracion:</b> {{composicion_disco.tema_banda.duracion}}
                 <br/>
-
                 <br/>
                 <div class="links">
-                    (Falta) <a href="/disco/{{disco.id}}/tema/{{composicion_disco.tema_banda.tema.id}}/modificar/">Modificar</a>
-                    (Falta) <a href="/disco/{{disco.id}}/tema/{{composicion_disco.tema_banda.tema.id}}/eliminar/">Eliminar</a>
-
-
+                    <a href="/composicion_disco/{{composicion_disco.id}}/modificar/">Modificar</a>
+                    <a href="/composicion_disco/{{composicion_disco.id}}/eliminar/">Eliminar</a>
                 </div>
                 <br/>
             </div>

@@ -1,0 +1,166 @@
+{% load forum_extras %}
+{% load i18n %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Gigs And Venues</title>
+    <meta charset="utf-8">
+	<link rel="stylesheet" href="css/jquery-ui.css" type="text/css" media="all">
+    <link rel="stylesheet" href="css/reset.css" type="text/css" media="all">
+    <link rel="stylesheet" href="css/layout.css" type="text/css" media="all">
+	<link rel="stylesheet" href="css/estilo.css" type="text/css" media="all">
+	<link rel="stylesheet" href="css/base.css" type="text/css" media="all">
+	
+    <script type="text/javascript" src="js/jquery.js" ></script>
+    <script type="text/javascript" src="js/ckeditor.js" ></script>
+    <script type="text/javascript" src="js/config.js" ></script>
+	<script type="text/javascript" src="js/jquery-ui.js" ></script>
+    <script type="text/javascript" src="js/funciones.js" ></script>
+    <script type="text/javascript" src="js/cufon-yui.js"></script>
+    <script type="text/javascript" src="js/cufon-replace.js"></script>
+    <script type="text/javascript" src="js/script.js"></script>
+    <script type="text/javascript" src="js/ITC_Busorama_500.font.js"></script>
+    <!--[if lt IE 7]>
+    <link rel="stylesheet" href="css/ie/ie6.css" type="text/css" media="screen">
+    <script type="text/javascript" src="js/ie_png.js"></script>
+    <script type="text/javascript">
+        ie_png.fix('.png, header nav ul li, header nav ul li a, h1 a');
+    </script>
+    <![endif]-->
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="js/html5.js"></script>
+    <![endif]-->
+    
+    <title>{{ forum_settings.FORUM_BASE_TITLE }} {% block title %}{% endblock %}</title>
+	<meta name="description" content="{{ forum_settings.FORUM_META_DESCRIPTION }} " />
+	<meta name="keywords" content="{{ forum_settings.FORUM_META_KEYWORDS }}" />
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	
+	{% set_theme_style request.user %}
+
+	<link rel="alternate" type="application/atom+xml" href="{% url djangobb:forum_posts_feed %}" title="{% trans "Latest posts on forum" %}" />
+	<link rel="alternate" type="application/atom+xml" href="{% url djangobb:forum_topics_feed %}" title="{% trans "Latest topics on forum" %}" />
+
+	<link rel="shortcut icon" href="{{ STATIC_URL }}djangobb_forum/favicon.png" type="image/png" />
+	<script type="text/javascript">
+		var STATIC_URL = "{{ STATIC_URL }}";
+		var POST_PREVIEW_URL = "{% url djangobb:post_preview %}";
+	</script>
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
+	{% if post %}
+		{% set_markup_editor request.user post.markup %}
+	{% else %}
+		{% set_markup_editor request.user %}
+	{% endif %}
+	{% if user.is_authenticated %}
+		<script type="text/javascript" >
+		   $(document).ready(function() {
+			$(".markup").markItUp(mySettings);
+		   });
+		</script>
+	{% endif %}
+
+    <!-- Highlightjs goodies -->
+	<link type="text/css" rel="stylesheet" href="{{ STATIC_URL }}djangobb_forum/css/pygments.css" />
+	{% if highlight_word %}
+		<script type="text/javascript" src="{{ STATIC_URL }}djangobb_forum/js/jquery.highlight-3.pack.js"></script>
+		<script type="text/javascript">
+			$(document).ready(function(){
+				$("div.postmsg").highlight("{{ highlight_word }}");
+			});
+		</script>
+	{% endif %}
+	{% block extra_meta %}{% endblock %}
+</head>
+<body id="page2">
+<div class="wrap">
+    <!-- header -->
+    <header>
+        <div class="container">
+        	<img src="images/logo.png"/>
+        
+            <nav>
+                <ul>
+                    <li class="menu"><a href="/" class="active"><span>home</span></a></li>
+                    <li class="menu"><a href="/noticia/listado/"><span>Noticias</span></a></li>
+                    <li class="menu"><a href="/forum/"><span>Foros</span></a></li>
+                    <li class="menu"><a href="/buscador/index"><span>Buscador</span></a></li>
+                    <li class="menu last"><a href="/usuario/register/"><span>Registrarse</span></a></li>
+                </ul>
+            </nav>
+            <div class="publicidad">
+            	<p> PUBLICIDAD </p>
+			</div>            
+        </div>
+    </header>
+    <div class="container" id="container">
+        <!-- aside -->
+        <aside>
+            <div class="inside">
+                {%if user.is_authenticated %}
+                <div class="login">
+	            	<h2>Usuario</h2>
+	            	<form class="contacts-form" action="/usuario/logout/" method="post">
+	            		<div style='display:none'>
+		    				{% csrf_token %}
+		    			</div>
+	            		<strong>{{user.username}} ({{user.first_name}}, {{user.last_name}})</strong>
+	            		<br/><br/>
+	            		<input type="submit" value="Salir" />
+	            	</form>
+            	</div>
+            	<br/><br/>
+                <h2>Menu</h2>
+                <ul class="news">
+                    <li><a href="/usuario/perfil">Perfil de Usuario</a></li>
+                    <li>(Falta) <a href="#">Transferencia de Tipo de Usuario</a></li>
+                    <li><a href="/suscripcion/listado">Suscripciones</a></li>
+                    {%if usuario_registrado.is_fan %}
+                    <li>(Falta) <a href="#">Armado de Conjunto de Eventos</a></li>
+                    <li>(Falta) <a href="#">Cronogramas</a></li>
+                    {%endif%}
+                    {%if usuario_registrado.is_complejo %}
+                    <li><a href="/noticia_complejo/listado">Noticias</a></li>
+                    <li><a href="/sede/listado">Sedes</a></li>
+                    {%endif%}
+                    {%if usuario_registrado.is_musico %}
+                    <li><a href="/banda/listado">Bandas</a></li>
+                    <li><a href="/banda/solicitud">Solicitudes Pendientes</a></li>
+					<li><a href="/equipo/listado">Instrumentos</a></li>
+                    {%endif%}
+                </ul>
+                {%else%}
+                <div class="login">
+            		<h2>Usuario</h2>
+					<form class="contacts-form" action="/usuario/login/" method="post">
+		    			<div style='display:none'>
+		    				{% csrf_token %}
+		    			</div>	
+		    			<p class="label-contacts-form" for="id_username">Nombre de Usuario:</p><input class="input-contacts-form" id="id_username" type="text" name="username" maxlength="30" /><br/>
+						<p class="label-contacts-form" for="id_password">Password:</p> <input class="input-contacts-form" type="password" name="password" id="id_password" /><br/><br/>
+						<input type="submit" value="Entrar" />
+					</form>
+            	</div>
+                {%endif%}
+            </div>
+        </aside>
+        <!-- content -->
+        <section id="content">
+            <div class="wrapper">
+            	<h2>Foro</h2>
+            	{% include 'djangobb_forum/header.html' %}
+                {% block content %}{% endblock %}
+            </div>
+        </section>
+        <div class="clear"></div>
+    </div>
+</div>
+
+<footer>
+    <div class="container">
+        <div class="inside"> Copyright 2012 - GigsAndVenues.com.ar - All rights reserved</div>
+    </div>
+</footer>
+<script type="text/javascript"> Cufon.now(); </script>
+</body>
+</html>

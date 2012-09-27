@@ -1,0 +1,15 @@
+{% load forum_extras %}
+{% load cache %}
+{% load i18n %}
+
+<h3>{% link forum %} <a href="{% url djangobb:forum_forum_feed forum.id %}"><img src="{{ STATIC_URL }}djangobb_forum/img/feed-icon-small.png"  alt="[RSS Feed]" title="[RSS Feed]" class="rss" /></a></h3>
+{{ forum.description|safe }}
+{{ forum.topic_count }}
+{{ forum.post_count }}
+{% if forum.updated %}
+	{% if forum.last_post.topic %}
+		<a href="{{ forum.last_post.get_absolute_url }}">{% forum_time forum.last_post.created %}</a>
+		<span class="byuser">{% trans "by" %} {{ forum.last_post.user.username }}</span>
+	{% endif %}
+{% endif %}
+		

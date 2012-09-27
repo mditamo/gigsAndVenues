@@ -8,22 +8,91 @@
 	</script>
 	
     <h2>{{musico.username}} ({{ musico.first_name}}, {{ musico.last_name}})</h2>
+    
+     
+	<div class="suscripcion">
+		<h2>Suscripcion</h2>
+		
+		{%if cantidad_suscripcion == 0 %}
+			<form action="/musico/{{musico.id}}/suscribirme/" method="post">
+				{% csrf_token %}
+		   		{{ form_suscripcion.as_p }}
+		   		{%if user.is_authenticated %}
+					<input type="submit" value="Suscribirme" />
+				{%else%}
+					<input class="open-mensaje" type="submit" value="Suscribirme" />
+				{%endif%}
+			</form>
+		{%else%}
+			<form action="/musico/{{musico.id}}/no_suscribirme/" method="post">
+				{% csrf_token %}
+				<p><label for="id_periodicidad">Periodicidad:</label> {{suscripcion.periodicidad.nombre}}</p>
+				<input type="submit" value="Quitar Suscripci&oacute;n" />
+			</form>	
+		{%endif%}
+	</div>	
+	
+    <div class="like">
+    	<h2>Like</h2>
+	    {%if user.is_authenticated %}
+	    	{%if cantidad_like == 0 %}	
+	    		<a href="/musico/{{musico.id}}/like"><img src="images/like.png"/></a>
+	    	{%else%}
+	    		<a href="/musico/{{musico.id}}/no_like"><img src="images/no_like.png"/></a>
+	    	{%endif%}
+		{%else%}
+			<a href="#" class="open-mensaje"><img src="images/like.png"/></a>
+		{%endif%}
+		<br/>
+		<b>Cantidad de Seguidores:</b>  {{cantidad_seguidores}}
+    </div>
+	
+	
+	<div id="dialog-message" title="Mensaje">
+	<p>Necesitas estar logueado para poder disponer de estas funciones</p>
+	</div>
+    
+        
     <br/>
     <b>Generos:</b>
         {%for genero in generos%}
             - <a href="/genero/{{genero.id}}/ver">{{ genero.nombre}}</a> 
         {% endfor%}	
 		
-	<br/>
-	<br/>
+	<br/> <br/> <br/>
+	<br/> <br/> <br/>
 	<div id="accordion">
 		<p><a href="#">Bandas Suscriptas</a></p>
-		<div class="bandas_suscriptas">
-			(FALTA COMPLETAR)
+		<div class="suscripcion-bandas">
+			{%if  suscripciones_banda.count != 0 %}
+			<div class="elementos">
+				{%for suscripcion_banda in suscripciones_banda%}
+				<div class="elemento-suscripcion-banda">
+					<p><a href="/banda/{{suscripcion_banda.banda.id}}/ver/">{{suscripcion_banda.banda.nombre}}</a></p>
+					<b>Periodicidad:</b> {{ suscripcion_banda.periodicidad}}
+					<br/>
+				</div>
+				{% endfor%}
+			</div>
+			{%else%}
+				<p>El m&uacute;sico no tiene suscripciones de bandas</p>
+			{%endif%}
 		</div>
-		<p><a href="#">Generos Suscriptos</a></p>
-		<div class="generos_suscriptos">
-			(FALTA COMPLETAR)
+		<p><a href="#">G&eacute;neros Suscriptos</a></p>
+		<div class="suscripcion-generos">
+			{%if  suscripciones_genero.count != 0 %}
+			<div class="elementos">
+				{%for suscripcion_genero in suscripciones_genero%}
+				<div class="elemento-suscripcion-genero">
+					<p><a href="/genero/{{suscripcion_genero.genero.id}}/ver/">{{suscripcion_genero.genero.nombre}}</a></p>
+					<b>Periodicidad:</b> {{ suscripcion_genero.periodicidad}}
+					<br/>
+				</div>
+				{% endfor%}
+			</div>
+			{%else%}
+				<p>El m&uacute;sico no tiene suscripciones de g&eacute;neros</p>
+			{%endif%}
 		</div>
 		<p><a href="#">Eventos</a></p>
 		<div class="eventos">
@@ -32,6 +101,7 @@
 		
 		<p><a href="#">Bandas Actuales</a></p>
 		<div class="bandas">
+			{%if  composiciones_banda_actuales.count != 0 %}
 			<div class="elementos">
 				{%for composicion_banda in composiciones_banda_actuales%}
 				<div class="elemento-banda">
@@ -49,9 +119,13 @@
 				</div>
 				{% endfor%}
 			</div>
+			{%else%}
+				<p>El m&uacute;sico no pertenece a ninguna banda actualmente</p>
+			{%endif%}
 		</div>
 		<p><a href="#">Ex-Bandas</a></p>
 		<div class="bandas">
+			{%if  composiciones_banda_anteriores.count != 0 %}
 			<div class="elementos">
 				{%for composicion_banda in composiciones_banda_anteriores%}
 				<div class="elemento-banda">
@@ -71,9 +145,13 @@
 				</div>
 				{% endfor%}
 			</div>
+			{%else%}
+				<p>El m&uacute;sico no pertenecio a ninguna banda</p>
+			{%endif%}
 		</div>
-		<p><a href="#">Equipos</a></p>
+		<p><a href="#">Instrumentos</a></p>
 		<div class="equipos">
+			{%if  equipos_musico.count != 0 %}
 			<div class="elementos">
 				{%for equipo_musico in equipos_musico%}
 		        <div class="elemento-equipo">
@@ -83,6 +161,9 @@
 		        </div>
 		        {% endfor%}
 			</div>
+			{%else%}
+				<p>El m&uacute;sico no interpreta ning&uacute;n instrumento</p>
+			{%endif%}
 		</div>
 	</div>	
 	

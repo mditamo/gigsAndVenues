@@ -8,7 +8,7 @@ class Tema(models.Model):
 
     def __unicode__(self):
         return self.nombre
-
+    
 class TemaBanda(models.Model):
     tema=models.ForeignKey(Tema)
     banda=models.ForeignKey(Banda)

@@ -1,6 +1,4 @@
 from django.conf.urls import patterns, include, url
-from usuario.forms import UsuarioRegistradoForm
-
 
 from django.contrib import admin
 admin.autodiscover()
@@ -16,12 +14,9 @@ sitemaps = {
 }
 
 urlpatterns = patterns('',
-    url(r'^usuario/register/$', 'registration.views.register',
-            {'backend': 'registro_usuario.CustomBackend', 'form_class': UsuarioRegistradoForm}),
-    url(r'^usuario/logout/$', 'django.contrib.auth.views.logout', {'next_page': '/'}),
-    (r'^usuario/', include('registration.backends.default.urls')),
-    (r'^usuario/perfil', 'usuario.views.perfil'),
+    (r'^', include('usuario.urls')),
     url(r'^$', 'home.views.index'),
+    (r'^', include('celular.urls')),
     (r'^', include('banda.urls')),
     (r'^', include('musico.urls')),
     (r'^', include('disco.urls')),
@@ -30,15 +25,21 @@ urlpatterns = patterns('',
     (r'^', include('genero.urls')),
     (r'^', include('complejo.urls')),
     (r'^', include('buscador.urls')),
-    (r'^', include('evento.urls')),
-    
+    (r'^', include('sede.urls')),
+    (r'^', include('suscripcion.urls')),
+    (r'^', include('fan.urls')), 
+    (r'^', include('tema.urls')),
+	(r'^', include('evento.urls')),
     url(r'^admin/', include(admin.site.urls)),
+    (r'static/(?P<path>.*)$', 'django.views.static.serve',
+         {'document_root': settings.STATIC_ROOT + 'templates/static'}),
     (r'css/(?P<path>.*)$', 'django.views.static.serve',
          {'document_root': settings.STATIC_ROOT + 'templates/css'}),
     (r'images/(?P<path>.*)$', 'django.views.static.serve',
          {'document_root': settings.STATIC_ROOT + 'templates/images'}),
     (r'js/(?P<path>.*)$', 'django.views.static.serve',
          {'document_root': settings.STATIC_ROOT + 'templates/js'}),
+   
     # Sitemap
     (r'^sitemap.xml$', 'django.contrib.sitemaps.views.sitemap', {'sitemaps': sitemaps}),
 

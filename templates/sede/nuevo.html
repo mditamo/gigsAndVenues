@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block content%}
+<h2>Nueva Sede</h2>
+<form action="/sede/nuevo" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    {{ form_dir.as_p }}
+    <input type="submit" value="Agregar" />
+</form>
+<br/>
+{% endblock %}
+

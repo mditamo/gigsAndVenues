@@ -1,7 +1,17 @@
 {% extends "base.html" %}
 {% block content%}
-<h2>Noticias</h2>
-<p><a href="/noticia_complejo/nuevo">Nueva Noticia</a></p>
+<h2>
+	Noticias
+	<a class="accion" href="/noticia_complejo/nuevo">&raquo; Nueva</a>
+</h2>
+{% if messages %}
+	    {% for message in messages %}
+		    <div class='mensaje_respuesta  ui-corner-all {% if message.tags %} {{ message.tags }}{% endif %}' style='text-align: left'>
+		    	{{ message }}
+		    </div>
+		{% endfor %}
+{% endif %}
+
 <div class="elementos">
 	{%for noticia in noticias_complejo %}
 		<div class="elemento-noticia">
@@ -25,7 +35,7 @@
 					<a href="/noticia_complejo/{{noticia.id}}/borrador/">Borrador</a>
 				{%endif %}
 				<br/>
-				<a href="/noticia_complejo/{{noticia.id}}/detalle/" class="detalle">Detalle</a>
+				<a href="/noticia_complejo/{{noticia.id}}/ver/">Detalle</a>
 				{%if noticia.estado.is_borrador %}
 					<a href="/noticia_complejo/{{noticia.id}}/modificar/">Modificar</a>
 				{%else %}

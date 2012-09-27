@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% block content%}
+
+	<script>
+	$(function() {
+		$( "#accordion" ).accordion();
+	});
+	</script>
+	
+	<h2>{{sede.nombre}}</h2>
+    {% if messages %}
+	    {% for message in messages %}
+		    <div class='mensaje_respuesta  ui-corner-all {% if message.tags %} {{ message.tags }}{% endif %}' style='text-align: left'>
+		    	{{ message }}
+		    </div>
+		{% endfor %}
+	{% endif %}
+    <b>Direccion:</b> {{ sede.direccion}}
+    <br/><br/>
+    <b>Tipo:</b> {{ sede.tipo_sede}}
+    <br/><br/>
+	<b>Capacidad Maxima de Personas:</b> {{ sede.capaxidad_maxima_personas}}
+    <br/><br/>
+	<b>fecha_habilitacion:</b> {{ sede.fecha_habilitacion}}
+	<br/><br/>
+    <b>Telefono:</b> {{sede.telefono}}
+    <br/><br/>
+    <div id="accordion">
+    	<p><a href="#">Descripcion</a></p>
+    	<div class="descripcion">
+    		{% autoescape off %}  {{sede.descripcion}} {% endautoescape %}
+    	</div>
+		<p><a href="#">Esquemas de Entradas</a></p>
+		<div class="esquemas">
+			<p><a href="/sede/{{sede_id}}/nueva_configuracion_sede/">Nuevo Esquema</a></p>
+			<div class="elementos">
+				{%for configuracion_sede in configuraciones_sede%}
+				<div class="elemento-configuracion-sede">
+					<b>Nombre:</b> {{ configuracion_sede.nombre}}
+					<br/>
+					<b>Cantidad Entradas Disponibles:</b> {{ configuracion_sede.cantidad_entradas_disponibles}}
+					<br/>
+					<b>Cantidad Entradas Reserva:</b> {{ configuracion_sede.cantidad_entradas_reserva}}
+					<br/>
+					<div class="links">
+						<a href="/configuracion_sede/{{configuracion_sede.id}}/modificar/">Modificar</a>
+						<a href="/configuracion_sede/{{configuracion_sede.id}}/eliminar/">Eliminar</a>
+					</div>
+					<br/>
+				</div>
+				{% endfor%}
+			</div>
+		</div>
+		<p><a href="#">Negociaciones y Eventos</a></p>
+		<div class="eventos">
+			(FALTA COMPLETAR) 
+		</div>
+		<p><a href="#">Recursos Multimedia</a></p>
+		<div class="recursos_multimedia">
+			(FALTA COMPLETAR) 
+		</div>
+		<p><a href="#">Reservas</a></p>
+		<div class="reservas">
+			(FALTA COMPLETAR) 
+		</div>
+	</div>
+{% endblock %}
+

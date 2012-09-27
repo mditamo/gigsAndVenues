@@ -8,7 +8,50 @@
 	
     <h2>{{complejo.username}} ({{ complejo.first_name}}, {{ complejo.last_name}})</h2>
     <br/>
-	<br/>
+    <div class="suscripcion">
+		<h2>Suscripcion</h2>
+		
+		{%if cantidad_suscripcion == 0 %}
+			<form action="/complejo/{{complejo.id}}/suscribirme/" method="post">
+				{% csrf_token %}
+		   		{{ form_suscripcion.as_p }}
+		   		{%if user.is_authenticated %}
+					<input type="submit" value="Suscribirme" />
+				{%else%}
+					<input class="open-mensaje" type="submit" value="Suscribirme" />
+				{%endif%}
+			</form>
+		{%else%}
+			<form action="/complejo/{{complejo.id}}/no_suscribirme/" method="post">
+				{% csrf_token %}
+				<p><label for="id_periodicidad">Periodicidad:</label> {{suscripcion.periodicidad.nombre}}</p>
+				<input type="submit" value="Quitar Suscripci&oacute;n" />
+			</form>	
+		{%endif%}
+	</div>	
+	
+    <div class="like">
+    	<h2>Like</h2>
+	    {%if user.is_authenticated %}
+	    	{%if cantidad_like == 0 %}	
+	    		<a href="/complejo/{{complejo.id}}/like"><img src="images/like.png"/></a>
+	    	{%else%}
+	    		<a href="/complejo/{{complejo.id}}/no_like"><img src="images/no_like.png"/></a>
+	    	{%endif%}
+		{%else%}
+			<a href="#" class="open-mensaje"><img src="images/like.png"/></a>
+		{%endif%}
+		<br/>
+		<b>Cantidad de Seguidores:</b>  {{cantidad_seguidores}}
+    </div>
+	
+	
+	<div id="dialog-message" title="Mensaje">
+	<p>Necesitas estar logueado para poder disponer de estas funciones</p>
+	</div>
+    
+    
+	<br/><br/><br/><br/><br/><br/><br/><br/>
 	<div id="accordion">
 		<p><a href="#">Nombre 1</a></p>
 		<div class="nombre">

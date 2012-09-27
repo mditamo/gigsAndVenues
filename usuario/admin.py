@@ -1,5 +1,5 @@
-from usuario.models import TipoUsuario, Fan
+from usuario.models import TipoUsuario
 from django.contrib import admin
 
 admin.site.register(TipoUsuario)
-admin.site.register(Fan)
+

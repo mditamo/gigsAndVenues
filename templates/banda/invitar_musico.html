@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block content%}
+	<h2>Invitar Musico</h2>
+	{%if cantidad_musicos != 0 %}
+	<div class="musicos">
+		{%for musico in musicos%}
+        <div class="elemento-invitacion-musico">
+            <p><a href="/musico/{{musico.id}}/ver/">{{ musico.first_name}}, {{musico.last_name}}</a></p>
+			<b>Direcci&oacute;n de correo electr&oacute;nico:</b> {{ musico.email}}
+	    	<br/>
+	    	<b>Fecha Nacimiento:</b> {{ musico.fecha_nacimiento}}
+	    	<br/>
+	    	<b>Direcci&oacute;n:</b> {{ musico.direccion}}
+	    	<br/>
+	    	<b>Posici&oacute;n:</b> {{ musico.posicion}}
+	    	<br/>
+	    	<b>Estilo:</b> {{ musico.estilo}}
+			<div class="links">
+				<a href="/banda/{{banda_id}}/musico/{{ musico.id}}/enviar_invitacion/">Enviar Invitaci&oacute;n</a>
+			</div>	
+        </div>
+        {% endfor%}
+    </div>
+    {%else%}
+		<p>No hay m&uacute;sicos para invitar</p>
+	{%endif%}
+{% endblock %}

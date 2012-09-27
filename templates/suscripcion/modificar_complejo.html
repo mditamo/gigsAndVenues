@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block content%}
+<h2>Modificar Suscripci&oacute;n</h2>
+<form action="/suscripcion/complejo/{{complejo_id}}/modificar" method="post">
+    {% csrf_token %}
+    <p><label>Complejo:</label> {{ suscripcion.complejo.first_name}}, {{suscripcion.complejo.last_name}}</p>
+    {{ form.as_p }}
+    <input type="submit" value="Modificar" />
+</form>
+<br/>
+{% endblock %}

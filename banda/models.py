@@ -38,6 +38,10 @@ class EstadoComposicionBanda(models.Model):
 
     def is_denegado(self):
         return self.nombre=="Denegado"
+    
+    def is_solicitud(self):
+        return self.nombre=="Solicitud"
+
 
 class ComposicionBanda(models.Model):
     musico=models.ForeignKey(Musico)
@@ -66,3 +70,8 @@ class LikeBanda(models.Model):
     
     class Meta:
         db_table="LIKE_BANDA"
+
+
+
+                    
+        

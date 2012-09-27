@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% block content%}
-<h2>Modificar</h2>
+<h2>Modificar Instrumento</h2>
 <form action="/equipo/{{equipo_musico_id}}/modificar" method="post">
     {% csrf_token %}
     {{ form.as_p }}

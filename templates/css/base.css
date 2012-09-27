@@ -31,6 +31,7 @@ body {
 }
 html { 
 	min-width:1000px;
+	min-height:1000px;
 }
 html, 
 body { 
@@ -53,7 +54,6 @@ body {
 	
 	/* Content */
 	section#content {
-		padding-bottom:50px;
 		padding-left:0px;
 	}
 	
@@ -279,7 +279,6 @@ h1 {
 		width:396px;
 		float:left;
 		height:122px;
-		background:url(../images/logo.png) no-repeat left top;
 	}
 h2 {
 	color:#fff;
@@ -293,6 +292,19 @@ h2 {
 	 display: block;
     float: left;
 }
+
+h2 a {
+	color:#fff;
+	text-decoration:none;
+}
+
+h2 .accion {
+	float:right;
+	padding-right:10px;
+}
+
+
+
 
 h3 {
     color:#fff;
@@ -409,11 +421,6 @@ footer .inside {
 }
 
 
-/*----- forms -----*/
-
-#contacts-form label { line-height:18px; padding-bottom:8px; color:#ffffff; font-weight: bold;}
-#contacts-form p { color:#ffffff; line-height:18px; padding-bottom:8px; font-weight: bold;}
-#contacts-form input { width:100px; padding:1px 0 1px 3px; border:1px solid #ffffff; font-weight: bold; color:#6B2C8B; background:#ffffff;}
 
 /*==========================================*/
     

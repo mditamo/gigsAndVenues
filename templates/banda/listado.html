@@ -1,7 +1,18 @@
 {% extends "base.html" %}
 {% block content%}
-	<h2>Bandas</h2>
-	<a href="/banda/nuevo/"><p>Nueva Banda</p></a>
+	<h2>
+		Bandas
+		<a class="accion" href="/banda/nuevo/">&raquo; Nueva</a>
+	</h2>
+	{% if messages %}
+	    {% for message in messages %}
+		    <div class='mensaje_respuesta  ui-corner-all {% if message.tags %} {{ message.tags }}{% endif %}' style='text-align: left'>
+		    	{{ message }}
+		    </div>
+		{% endfor %}
+	{% endif %}
+	
+	{%if composiciones_banda.count != 0 %}
     <div class="bandas">
 		{%for composicion_banda in composiciones_banda%}
         <div class="elemento-banda">
@@ -26,4 +37,8 @@
         </div>
         {% endfor%}
     </div>
+    {%else%}
+		<p>Usted no pertenece a niguna banda actualmente</p>
+	{%endif%}
+    
 {% endblock %}

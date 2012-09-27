@@ -1,0 +1,38 @@
+{% extends 'djangobb_forum/base.html' %}
+{% load forum_extras %}
+{% load i18n %}
+
+{% block content %}
+<h2>
+	{% if forum %}
+		<a href="{% url djangobb:index %}">{% trans "Root" %}</a> &raquo; {% link forum %}
+	{% else %}
+		<a href="{% url djangobb:index %}">{% trans "Root" %}</a> &raquo; {% link topic.forum %} &raquo; {{ topic }}
+	{% endif %}
+	&raquo; {% if forum %}{% trans "New topic" %}{% else %}{% trans "New reply" %}{% endif %}
+</h2>
+<br/><br/>
+<form id="post" action="{% if forum %}{% url djangobb:add_topic forum.id %}{% else %}{% url djangobb:add_post topic.id %}{% endif %}" method="post" enctype="multipart/form-data">
+	{% csrf_token %}
+	{% if forum %}
+		{{ form.name.errors }}
+		<p>
+			<label>{% trans "Subject" %}</label>
+			{{ form.name }}
+		</p>
+	{% endif %}
+	{{ form.body.errors }}
+	<p>
+		<label>{% trans "Message" %}</label>
+		{{ form.body }}
+	</p>
+	{% if forum_settings.ATTACHMENT_SUPPORT %}
+		<p>
+			<label>{% trans "Attachment" %}</label>
+			{{ form.attachment.errors }}
+			{{ form.attachment }}
+		</p>
+	{% endif %}
+	<input type="submit" value="{% trans "Submit" %}" />
+</form>
+{% endblock %}

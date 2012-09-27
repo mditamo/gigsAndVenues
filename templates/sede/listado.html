@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block content%}
+    <h2>
+        Sedes
+        <a class="accion" href="/sede/nuevo">&raquo; Nueva</a>
+    </h2>
+    {% if messages %}
+	    {% for message in messages %}
+		    <div class='mensaje_respuesta  ui-corner-all {% if message.tags %} {{ message.tags }}{% endif %}' style='text-align: left'>
+		    	{{ message }}
+		    </div>
+		{% endfor %}
+	{% endif %}
+	
+    <div class="sedes">
+		{%for sede in sedes%}
+        <div class="elemento-sede">
+            <a href="/sede/{{sede.id}}/administrar/"><p>{{ sede.nombre}}</p></a>
+			<b>Direccion:</b> {{ sede.direccion}}
+            <br/>
+            <b>Tipo:</b> {{ sede.tipo_sede}}
+            <br/>
+			<b>Capacidad Maxima de Personas:</b> {{ sede.capaxidad_maxima_personas}}
+            <br/>
+			<b>fecha_habilitacion:</b> {{ sede.fecha_habilitacion}}
+            <br/>
+            <b>Telefono:</b> {{sede.telefono}}
+            <br/>
+			<br/>
+			<div class="links">
+				<a href="/sede/{{sede.id}}/modificar/">Modificar</a>
+				(Falta) <a href="/sede/{{sede.id}}/eliminar/">Eliminar</a>
+			</div>	
+        </div>
+        {% endfor%}
+    </div>
+{% endblock %}
+

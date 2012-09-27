@@ -1,7 +1,18 @@
 {% extends "base.html" %}
 {% block content%}
-	<h2>Instrumentos</h2>
-    <p><a href="/equipo/nuevo">Nuevo Equipo</a></p>
+	<h2>
+		Instrumentos
+		<a class="accion" href="/equipo/nuevo">&raquo; Nuevo</a>
+	</h2>
+	{% if messages %}
+	    {% for message in messages %}
+		    <div class='mensaje_respuesta  ui-corner-all {% if message.tags %} {{ message.tags }}{% endif %}' style='text-align: left'>
+		    	{{ message }}
+		    </div>
+		{% endfor %}
+	{% endif %}
+    
+    {%if equipos_musico.count != 0 %}
     <div class="equipos">
 		{%for equipo_musico in equipos_musico%}
         <div class="elemento-equipo">
@@ -16,4 +27,7 @@
         </div>
         {% endfor%}
     </div>
+    {%else%}
+		<p>Usted no interpreta ning&uacute;n instrumento actualmente</p>
+	{%endif%}
 {% endblock %}

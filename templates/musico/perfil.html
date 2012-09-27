@@ -1,17 +1,24 @@
 {% extends "base.html" %}
 {% block content%}
-    <h2>{{musico.username}}</h2>
-    <a href="/musico/{{musico.id}}/modificar/"><p>Modificar</p></a>
-
-    <br/>
-    <h3>Detalle:</h3>
-    <br/>
-    <p><b>Nombre:</b> {{ musico.first_name}}</p>
-    <p><b>Apellido:</b> {{ musico.last_name}}</p>
-    <p><b>Dirección de correo electrónico:</b> {{ musico.email}}</p>
-    <p><b>Fecha Nacimiento:</b> {{ musico.fecha_nacimiento}}</p>
-    <p><b>Direccion:</b> {{ musico.direccion}}</p>
-    <p><b>Posicion:</b> {{ musico.posicion}}</p>
-    <p><b>Estilo:</b> {{ musico.estilo}}</p>
-    <br/>
+    <h2>
+    	{{musico.username}}
+    	<a class="accion" href="/musico/{{musico.id}}/modificar/">&raquo; Modificar</a>
+    </h2>
+    {% if messages %}
+	    {% for message in messages %}
+		    <div class='mensaje_respuesta  ui-corner-all {% if message.tags %} {{ message.tags }}{% endif %}' style='text-align: left'>
+		    	{{ message }}
+		    </div>
+		{% endfor %}
+	{% endif %}
+    
+	<div class="detalle">
+	    <p><label>Nombre:</label> {{ musico.first_name}}</p>
+	    <p><label>Apellido:</label> {{ musico.last_name}}</p>
+	    <p><label>Dirección de correo electrónico:</label> {{ musico.email}}</p>
+	    <p><label>Fecha Nacimiento:</label> {{ musico.fecha_nacimiento}}</p>
+	    <p><label>Direccion:</label> {{ musico.direccion}}</p>
+	    <p><label>Posicion:</label> {{ musico.posicion}}</p>
+	    <p><label>Estilo:</label> {{ musico.estilo}}</p>
+    </div>
 {% endblock %}

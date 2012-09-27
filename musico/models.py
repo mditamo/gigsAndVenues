@@ -22,3 +22,11 @@ class Musico(UsuarioRegistrado):
     estilo=models.ForeignKey(Estilo, null=True)
     class Meta:
         db_table="MUSICO"
+        
+class LikeMusico(models.Model):
+    musico=models.ForeignKey(Musico,related_name="ID")
+    usuario=models.ForeignKey(UsuarioRegistrado)
+    
+    class Meta:
+        db_table="LIKE_MUSICO"
+              
