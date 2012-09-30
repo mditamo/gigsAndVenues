@@ -21,6 +21,8 @@ class Sede(models.Model):
     telefono=models.CharField(max_length=20)
     class Meta:
         db_table="SEDE"
+    def __unicode__(self):
+        return self.nombre
 
 class ConfiguracionSede(models.Model):
     sede=models.ForeignKey(Sede)

@@ -6,6 +6,8 @@ from usuario.models import UsuarioRegistrado
 from evento.forms import EventoForm
 from django.db.models import Q
 from evento.models import Evento
+from complejo.models import Complejo
+from evento.models import Participacion
 
 
 def evento_sin_negociacion(request):
@@ -14,8 +16,13 @@ def evento_sin_negociacion(request):
         form = EventoForm(request.POST)
         evento=form.save(commit=False)
         if form.is_valid():
+            evento=form.save(commit=False)
+            evento.complejo=Complejo.objects.get(pk=request.user.id)
             evento.save()
-            #estado=EstadoComposicionBanda.objects.get(nombre="Confirmado")
+            for banda_id in request.POST.getlist('bandas'):
+                participacion = Participacion.objects.create(evento_id=evento.id, banda_id=banda_id)
+                participacion.estado="A confirmar"
+                participacion.save()             
         return HttpResponseRedirect(reverse('evento.views.listado'))
     else:
         form = EventoForm()

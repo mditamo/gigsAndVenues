@@ -15,6 +15,12 @@
             <br/>
             <b>Descripcion:</b> {{evento.descripcion}}
             <br/>
+            {%for banda in evento.bandas.all %}
+            	<b>Banda:</b> {{banda.nombre}}  
+            	<br/>
+            {% endfor%}
+            <b>Bandas Excluyentes:</b> {{evento.banda_ex}} 
+            <br/>
         </div>
         {% endfor%}
     </div>
