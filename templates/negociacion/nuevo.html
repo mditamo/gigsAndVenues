@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block content%}
+<h2>Nueva Negociacion</h2>
+
+<form action="/negociacion/nuevo/paso1" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Siguiente" />
+</form>
+<br/>
+{% endblock %}

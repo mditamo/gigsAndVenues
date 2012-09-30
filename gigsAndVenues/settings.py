@@ -191,7 +191,9 @@ INSTALLED_APPS = (
     'suscripcion',
     'fan',
     'tema',
-	'evento'
+	'evento',
+    'negociacion',
+    'oferta'
     )
 
 

@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block content%}
+	<h2>Negociaciones</h2>
+	<a href="/negociacion/nuevo"><p>Nueva Negociacion</p></a>
+    <div class="elementos">
+		{%for negociacion in negociaciones %}
+        <div class="elemento-noticia">    
+         	<b>Id:</b> {{negociacion.id}}
+            <br/>        
+        </div>
+        {% endfor%}
+    </div>
+{% endblock %}
