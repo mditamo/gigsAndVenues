@@ -35,9 +35,9 @@ class CondicionOferta(models.Model):
     class Meta:
         db_table="Condicion_Oferta"
 
-class TipoCondicion(models.Model):
+"""class TipoCondicion(models.Model):
     nombre=models.CharField(max_length=20)
     
     class Meta:
-        db_table="Tipo_Condicion"
+        db_table="Tipo_Condicion"""
 

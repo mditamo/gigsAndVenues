@@ -193,7 +193,8 @@ INSTALLED_APPS = (
     'tema',
 	'evento',
     'negociacion',
-    'oferta'
+    'oferta',
+    'condiciones'
     )
 
 

@@ -3,7 +3,7 @@ from complejo.models import Complejo
 from banda.models import Banda
 from sede.models import Sede
 from evento.models import Evento
-from test.test_imageop import MAX_LEN
+from condiciones.models import CondicionUnitaria
 
 
 class Estado(models.Model):
@@ -17,7 +17,8 @@ class Negociacion(models.Model):
     inicio_negociacion=models.CharField(max_length=1)
     fecha=models.DateField(null=True)    
     hora=models.CharField(max_length=10);
-    banda=models.ForeignKey(Banda,null=True)
+    bandas=models.ManyToManyField(Banda,null=True,through="NegociacionBanda")
+    condiciones=models.ManyToManyField(CondicionUnitaria,null=True,through="CondicionNegociacion")
     complejo=models.ForeignKey(Complejo,null=True)
     sede=models.ForeignKey(Sede,null=True)
     evento=models.ForeignKey(Evento,null=True)
@@ -25,20 +26,22 @@ class Negociacion(models.Model):
     estado=models.ForeignKey(Estado,null=True)
 
     class Meta:
-        db_table="Negociacion"
-    
+        db_table="NEGOCIACION"
+      
 class CondicionNegociacion(models.Model):
-    valor=models.CharField(max_length=200)
-    banda=models.ForeignKey(Banda)
-    complejo=models.ForeignKey(Complejo)
-    sede=models.ForeignKey(Sede)
     negociacion=models.ForeignKey(Negociacion)
+    condicionUnitaria=models.ForeignKey(CondicionUnitaria)
     
     class Meta:
-        db_table="Condicion_Negociacion"
+        db_table="CONDICION_NEGOCIACION"        
 
-class TipoCondicion(models.Model):
-    nombre=models.CharField(max_length=20)
+class NegociacionBanda(models.Model):
+    negociacion=models.ForeignKey(Negociacion)
+    banda=models.ForeignKey(Banda)
     
     class Meta:
-        db_table="Tipo_Condicion"
+        db_table="NEGOCIACION_BANDA"    
+    
+    def __unicode__(self):
+        return self.nombre
+    
