@@ -20,7 +20,7 @@
 	    <p><label>Direccion:</label> {{ complejo.direccion}}</p>
 	    <p><label>Nombre del Complejo:</label> {{ complejo.nombre}}</p>
 	    <p>Descripcion:</p>
-	    <div class="descripcion-perfil"> {% autoescape off %} {{ fan.descripcion}}{% endautoescape %}</div>
+	    <div class="descripcion-perfil"> {% autoescape off %} {{ complejo.descripcion}}{% endautoescape %}</div>
     </div>
      <div class="avatar">
         <img src="/media/{{complejo.imagen_avatar}}" height=200px width=200px>
