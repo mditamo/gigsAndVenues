@@ -1,0 +1,38 @@
+.mapa
+{
+    width: 900px; 
+    height: 900px;
+    float:left;
+}
+
+
+.infoWindow
+{
+	border: 1px solid #6B2C8B;
+	width: 350px; 
+	height: 380px;
+}
+
+
+.infoWindow img
+{
+	height:200px;
+	width:200px;
+	display: block;
+	margin: auto;
+}
+
+.infoWindow h2 {
+    background-color: #6B2C8B;
+    color: #FFFFFF;
+    display: block;
+    float: left;
+    text-align:center;
+    font-size: 17px;
+    line-height: 1.2em;
+    margin-bottom: 20px;
+    margin-left: 0px;
+    text-transform: uppercase;
+    width: 100%;
+}
+

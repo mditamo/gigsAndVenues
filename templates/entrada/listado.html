@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block content%}
+	<h2>Entradas Reservadas</h2>
+	
+	{% if messages %}
+	    {% for message in messages %}
+		    <div class='mensaje_respuesta  ui-corner-all {% if message.tags %} {{ message.tags }}{% endif %}' style='text-align: left'>
+		    	{{ message }}
+		    </div>
+		{% endfor %}
+	{% endif %}
+    <br/>
+	<div class="elementos">
+		{%if  reservas_evento.count != 0 %}
+			{%for reserva_evento in reservas_evento %}
+	        <div class="elemento-reserva">
+	        	<p><a href="/evento/{{reserva_evento.tipo_entrada.evento.id}}/ver">{{reserva_evento.tipo_entrada.evento.nombre}}</a> ({{reserva_evento.tipo_entrada.evento.fecha}})</p>
+	         	<b>Codigo Reserva:</b> {{reserva_evento.codigo_retiro}}
+		        <br/>
+		        <b>Cantidad de Entradas: </b>{{reserva_evento.cantidad_entradas}}
+		    	<br/>
+		    	<b>Fecha de Vencimiento: </b>{{reserva_evento.fecha_vencimiento}}
+		    	<br/>
+		    	<b>Estado: </b>{{reserva_evento.estado}}
+		        <br/> <br/>     
+		        <div class="links">
+					<a href="/evento/{{reserva_evento.tipo_entrada.evento.id}}/eliminar_reserva_entrada">Eliminar</a>
+				</div>	
+	        </div>
+	        {% endfor%}
+	    {%else%}
+				<p>Usted no tiene entradas reservadas</p>
+		{%endif%}
+    </div>
+{% endblock %}

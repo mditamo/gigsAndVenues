@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block content%}
+	<h2>Cronograma</h2>
+	<div class="proximos-eventos">
+		<div class="elementos">
+			{%for asistencia in asistencias %}
+			        <div class="elemento-home-proximo-evento">
+						<div class="descripcion-evento">		        
+			         		<h2>{{asistencia.evento.nombre}}</h2>
+			         		<b>Lugar: </b>{{asistencia.evento.sede}} <a href="/complejo/{{asistencia.evento.sede.complejo.id}}/ver">({{asistencia.evento.sede.complejo}})</a>
+			         		<br/>
+			         		<b>Direccion:</b> {{ asistencia.evento.sede.direccion}}
+			         		<br/>
+			         		<b>Capacidad Maxima de Personas:</b> {{ asistencia.evento.sede.capaxidad_maxima_personas}}
+			         		<br/>
+			         		<b>Telefono:</b> {{asistencia.evento.sede.telefono}}
+			         		<br/>
+			         		<a href="/evento/{{asistencia.evento.id}}/ver">Ver</a> <a href="/evento/{{asistencia.evento.id}}/no_asistir">Eliminar</a>			         			 
+			         	</div>
+			         	<div class="bandas-evento">
+				        	<h2>Bandas</h2>
+				        	<p>
+				            {%for banda in asistencia.evento.bandas.all %}
+				            	<a href="/banda/{{banda.id}}/ver/">{{ banda.nombre}}</a> ,   
+				            {% endfor%}
+				            {{asistencia.evento.banda_ex}}
+				            </p>
+			            </div> 
+			         	<div class="fecha-evento">
+			         		<h2>Fecha y hora</h2>	
+				             <p>{{ asistencia.evento.fecha}}</p>
+    	 					 <p>{{ asistencia.evento.hora_inicio}}</p>
+				        </div>
+			        </div>
+			{% endfor%}
+		</div>		
+	</div>
+	<div id="map" class="mapa">
+	</div> 
+{% endblock %}

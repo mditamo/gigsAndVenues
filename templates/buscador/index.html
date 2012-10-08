@@ -1,4 +1,111 @@
 {% extends "base.html" %}
+{% block menu_buscador %}class="active"{% endblock %}
 {% block content%}
 	<h2>Buscador</h2>
+	<form class='estiloform' name='formulario' method="post" action="/buscador/index">
+	 	{% csrf_token %}
+		<p><label>nombre: </label><input type="text" name="nombre"></p>
+		<input type="submit" value="Buscar">
+	</form>
+	<br/><br/>
+	{%if cantidad_fans != 0 %}
+		<h2>Resultado: Fans</h2>	
+		<div class="fans">
+			{%for fan in fans%}
+			<div class="elemento-fan">
+		        <div class="detalle-ver detalle">
+		        	<p><a href="/fan/{{fan.id}}/ver/">{{fan.username}}</a></p>
+				    <p><label>Nombre:</label> {{ fan.first_name}}</p>
+				    <p><label>Apellido:</label> {{ fan.last_name}}</p>
+				    <p><label>E-mail:</label> {{ fan.email}}</p>
+				    <p><label>Fecha Nacimiento:</label> {{ fan.fecha_nacimiento}}</p>
+			    </div>
+ 
+			    <div class="avatar-ver">
+			        <img src="/media/{{fan.imagen_avatar}}" height=200px width=200px>
+			    </div>
+			</div>    
+	        {% endfor%}
+	    </div>
+	{%endif%}
+	
+	{%if cantidad_bandas != 0 %}
+		<h2>Resultado: Bandas</h2>
+		<div class="bandas">
+			{%for banda in bandas%}
+			<div class="elemento-banda">
+				<div class="detalle-perfil detalle">
+					<p><a href="/banda/{{banda.id}}/ver/">{{ banda.nombre}}</a></p>
+				    <p><label>Fecha Creacion:</label> {{banda.fecha_creacion}}</p>
+				    <p><label>Tipo:</label> {{ banda.tipo_banda}}</p>
+			    </div>
+			    <div class="avatar-ver">
+			        <img src="/media/{{banda.imagen_avatar}}" height=200px width=200px>
+			    </div>
+			 </div>   
+	        {% endfor%}
+	    </div>	
+	{%endif%}
+	
+	
+	{%if cantidad_musicos != 0 %}
+		<h2>Resultado: Musicos</h2>	
+		<div class="musicos">
+			{%for musico in musicos%}
+		        <div class="elemento-musico">
+		        	<div class="avatar-ver">
+        				<img src="/media/{{musico.imagen_avatar}}" height=200px width=200px>
+        				<br/><br/><br/>
+        			</div>
+				    <div class="detalle-ver detalle">
+				    	<p><a href="/musico/{{musico.id}}/ver/">{{musico.username}}</a></p>
+					    <p><label>Nombre:</label> {{ musico.first_name}}</p>
+					    <p><label>Apellido:</label> {{ musico.last_name}}</p>
+					    <p><label>E-mail:</label> {{ musico.email}}</p>
+					    <p><label>Fecha Nacimiento:</label> {{ musico.fecha_nacimiento}}</p>
+						<p><label>Posicion:</label> {{ musico.posicion}}&nbsp;</p>
+						<p><label>Estilo:</label> {{ musico.estilo}}&nbsp;</p>
+				     </div>
+		        </div> 
+	        {% endfor%}
+	    </div>
+	{%endif%}
+	
+	{%if cantidad_complejos != 0 %}
+		<h2>Resultado: Complejos</h2>	
+		<div class="comlejos">
+			{%for complejo in complejos%}
+		        <div class="elemento-complejo">
+			        <div class="avatar-ver">
+	        			<img src="/media/{{complejo.imagen_avatar}}" height=200px width=200px>
+	        			<br/><br/><br/>
+	        		</div>
+					<div class="detalle-ver detalle">
+					   	<p><a href="/complejo/{{complejo.id}}/ver">{{complejo.username}}</a></p>
+					    <p><label>Nombre:</label> {{ complejo.first_name}}</p>
+					    <p><label>Apellido:</label> {{ complejo.last_name}}</p>
+					    <p><label>E-mail:</label> {{ complejo.email}}</p>
+						<p><label>Fecha Nacimiento:</label>  {{ complejo.fecha_nacimiento}}</p>
+				    	<p><label>Nombre del Complejo:</label>  {{ complejo.nombre}}</p>
+					</div>
+		        </div>
+	        {% endfor%}
+	    </div>
+	{%endif%}
+	
+	
+	{%if cantidad_generos != 0 %}
+		<h2>Resultado: Generos</h2>
+		<div class="generos">
+			{%for genero in generos%}
+		        <div class="elemento-genero">
+		            <p><a href="/genero/{{genero.id}}/ver">{{ genero.nombre}}</a></p>
+		        </div>
+		    {% endfor%}
+	    </div>	
+	{%endif%}
+	
+	
+	
+	
 {% endblock %}

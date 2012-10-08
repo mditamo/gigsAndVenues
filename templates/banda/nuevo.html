@@ -2,7 +2,7 @@
 {% block content%}
 <h2>Nueva Banda</h2>
 
-<form action="/banda/nuevo/" method="post">
+<form action="/banda/nuevo/" method="post" enctype="multipart/form-data">
     {% csrf_token %}
     {{ form.as_p }}
     <input type="submit" value="Agregar" />

@@ -13,43 +13,19 @@
 		<a class="accion" href="{% url djangobb:add_topic forum.id %}">&raquo; {% trans "New topic" %}</a>
 	{% endif %}	
 </h2>
-
-<table cellspacing="0">
-			<thead>
-				<tr>
-					<th class="tcl" scope="col">{% trans "Topic" %}</th>
-					<th class="tc2" scope="col">{% trans "Replies" %}</th>
-					<th class="tc3" scope="col">{% trans "Views" %}</th>
-					<th class="tcr" scope="col">{% trans "Last post" %}</th>
-				</tr>
-			</thead>
-			<tbody>
 			{% if topics %}
 				{% for topic in topics %}
-					<tr>
-						<td class="tcl">
-							<div class="intd">
-								<div {% if topic.sticky %}class="sticky"{% else %}{% if topic.closed %}class="closed"{% else %}{% if topic|has_unreads:user %}class="inew"{% else %}class="icon"{% endif %}{% endif %}{% endif %}><div class="nosize"><!-- --></div></div>
-								<div class="tclcon">
-									{% if topic.sticky %}
-										{% trans "Sticky:" %}
-									{% endif %}
-									{% if topic|has_unreads:user %}
-										<strong>{% link topic %} <span class="byuser">{% trans "by" %} {{ topic.user.username }}</span></strong>
-									{% else %}
-										{% link topic %} <span class="byuser">{% trans "by" %} {{ topic.user.username }}</span>
-									{% endif %}
-								</div>
-							</div>
-						</td>
-						<td class="tc2">{{ topic.reply_count }}</td>
-						<td class="tc3">{{ topic.views }}</td>
-						<td class="tcr"><a href="{{ topic.last_post.get_absolute_url }}">{% forum_time topic.updated %}</a> <span class="byuser">{% trans "by" %} {{ topic.last_post.user.username }}</span></td>
-					</tr>
+				<div class="elemento-home-noticia">
+					<span class="objeto-noticia">{% link topic %} </span>
+					<span>(creado por: {{ topic.user.username }})<span>
+				</div>
 				{% endfor %}
 			{% else %}
-				<tr><td class="djangobbcon1" colspan="4">{% trans "Forum is empty." %}</td></tr>
+				<div class="elemento-home-noticia">
+					<p>{% trans "Forum is empty." %}</p>
+				</div>
 			{% endif %}
-			</tbody>
-</table>
+
+
+
 {% endblock %}

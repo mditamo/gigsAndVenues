@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block content%}
+<h2>Modificar Esquema Entrada</h2>
+<form action="/configuracion_esquema_entrada/{{configuracion_esquema_entrada_id}}/modificar" method="post" >
+    {% csrf_token %}
+    {{ form.as_p }}
+    <p><label>Cantidad Entradas Disponibles:</label> {{configuracion_esquema_entrada.cantidad_entradas_disponibles}} </p>
+    <p><label>Cantidad Entradas Reserva:</label> {{configuracion_esquema_entrada.cantidad_entradas_reserva}} </p>
+    <input type="submit" value="Modificar" />
+</form>
+<br/>
+{% endblock %}

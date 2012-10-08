@@ -8,14 +8,16 @@
 		    </div>
 		{% endfor %}
 	{% endif %}
-	<b>Fecha Publicacion:</b> {{ disco.fecha_publicacion}}
-    <br/>
-    <b>Discografica:</b> {{ disco.discografica}}
-    <br/>
+	<div class="detalle">
+		<p><label>Fecha Publicacion:</label> {{ disco.fecha_publicacion}}</p>
+		<p><label>Discografica:</label> {{ disco.discografica}}</p>
+	</div>
+    
 	<br/>
     <div class="temas_disco">
-        <h3>Temas:</h3>
-        <p><a href="/disco/{{disco.id}}/nuevo_composicion_disco/">Agregar Tema</a></p>
+        <h2>Temas
+        	<a class="accion" href="/disco/{{disco.id}}/nuevo_composicion_disco/">&raquo; Nuevo</a>
+        </h2>
         <div class="elementos">
             {%for composicion_disco in composiciones_disco%}
             <div class="elemento-tema">

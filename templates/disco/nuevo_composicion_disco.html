@@ -3,7 +3,9 @@
 <h2>Agregar Tema </h2>
 <form action="/disco/{{disco_id}}/nuevo_composicion_disco/" method="post">
     {% csrf_token %}
-    {{ form.as_p }}
+    {{ form_tema.as_p }}
+    {{ form_tema_banda.as_p }}
+    {{ form_composicion_disco.as_p }}
     <input type="submit" value="Agregar" />
 </form>
 <br/>

@@ -12,13 +12,18 @@
 		{% endfor %}
 	{% endif %}
     
-	<div class="detalle">
+	<div class="detalle-perfil detalle">
 	    <p><label>Nombre:</label> {{ musico.first_name}}</p>
 	    <p><label>Apellido:</label> {{ musico.last_name}}</p>
-	    <p><label>Dirección de correo electrónico:</label> {{ musico.email}}</p>
+	    <p><label>E-mail:</label> {{ musico.email}}</p>
 	    <p><label>Fecha Nacimiento:</label> {{ musico.fecha_nacimiento}}</p>
 	    <p><label>Direccion:</label> {{ musico.direccion}}</p>
 	    <p><label>Posicion:</label> {{ musico.posicion}}</p>
 	    <p><label>Estilo:</label> {{ musico.estilo}}</p>
+	    <p>Descripcion:</p>
+	    <div class="descripcion-perfil"> {% autoescape off %} {{ fan.descripcion}}{% endautoescape %}</div>
+    </div>
+     <div class="avatar">
+        <img src="/media/{{musico.imagen_avatar}}" height=200px width=200px>
     </div>
 {% endblock %}

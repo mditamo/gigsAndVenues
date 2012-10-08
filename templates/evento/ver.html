@@ -1,0 +1,176 @@
+{% extends "base.html" %}
+{% block content%}
+
+	<script>
+	$(function() {
+		$( "#accordion" ).accordion();
+	});
+	</script>
+	
+    <h2>{{evento.nombre}}</h2>
+    
+    {%if user.is_authenticated and usuario_registrado.is_fan  %}
+    <div class="asistencia">
+    	<h2>Asistir</h2>
+	    	{%if cantidad_asistencia == 0 %}	
+	    		<a href="/evento/{{evento_id}}/asistir"><img src="images/like.png"/></a>
+	    	{%else%}
+	    		<a href="/evento/{{evento_id}}/no_asistir"><img src="images/no_like.png"/></a>
+	    	{%endif%}
+		<br/>
+		<b>Cantidad de fan que planean asistir:</b>  {{cantidad_fan_asistir}}
+    </div>
+    {%endif%}
+    <div class="fecha-evento">
+    	<h2>Fecha y Hora</h2>
+    	 <p>{{ evento.fecha}}</p>
+    	 <p>{{ evento.hora_inicio}}</p>
+    </div>
+	
+    
+    <p>{% autoescape off %} {{ evento.descripcion}}{% endautoescape %}</p>
+    <br/>
+    <br/>
+    <br/>
+	<br/>
+    <br/>
+	
+	
+	<h2>Sede: {{evento.sede.nombre}}</h2>
+	<div class="detalle">
+		<p><label>Complejo:</label> <a href="/complejo/{{evento.complejo.id}}/ver">{{ evento.complejo.nombre}}</a></p>
+		<p><label>Direccion:</label> {{ evento.sede.direccion}}</p>
+	    <p><label>Tipo:</label> {{ evento.sede.tipo_sede}}</p>
+	    <p><label>Capacidad Maxima de Personas:</label> {{ evento.sede.capaxidad_maxima_personas}}</p>
+	    <p><label>Fecha Habilitacion:</label> {{ evento.sede.fecha_habilitacion}}</p>
+	    <p><label>Telefono:</label> {{evento.sede.telefono}}</p>
+	</div>	   
+	<h2>Listado de Bandas </h2>
+    <br/>
+		FALTA COMPLETAR
+    <br/>
+	<br/>
+	<br/>
+	{%if user.is_authenticated and usuario_registrado.is_fan  and cantidad_reserva_entrada == 0 %}
+		<h2>Reservar Entradas</h2>
+	    <form action="/evento/{{evento_id}}/reservar_entrada" method="post">
+	    	{% csrf_token %}
+	    	{{ form.as_p }}
+	    	<input type="submit" value="Reservar" />
+		</form>
+	{%else%}
+		{%if user.is_authenticated and usuario_registrado.is_fan  and cantidad_reserva_entrada != 0 %}
+		<h2>Reservar Entradas</h2>
+		<div class="detalle">
+			<p><label>Cantidad de Entradas:</label> {{reserva_evento.cantidad_entradas}}</p>
+			<p><label>C&oacute;digo de Retiro:</label>{{reserva_evento.codigo_retiro}}</p>
+			<p><label>Fecha de Vencimiento:</label>{{reserva_evento.fecha_vencimiento}}</p>
+		</div>	
+		{%endif%}	
+    {%endif%}
+	
+	<!--
+
+    <br/>
+    <b>Fecha Creacion:</b> {{ banda.fecha_creacion}}
+    <br/><br/>
+    <b>Tipo:</b> {{ banda.tipo_banda}}
+    <br/><br/>
+    <b>Generos:</b>
+        {%for genero_banda in generos_banda%}
+            - <a href="/genero/{{genero_banda.genero.id}}/ver">{{ genero_banda.genero.nombre}}</a>
+        {% endfor%}	
+		
+	<br/><br/>
+	<br/>
+	<div id="accordion">
+		<p><a href="#">Integrantes</a></p>
+		<div class="integrantes">
+			{%if  composiciones_banda.count != 0 %}
+			<div class="elementos">
+				{%for composicion_banda in composiciones_banda%}
+				<div class="elemento-musico estado_{{ composicion_banda.estado}}">
+					<p><a href="/musico/{{composicion_banda.musico.id}}/ver/">{{ composicion_banda.musico.first_name}}, {{composicion_banda.musico.last_name}}</a></p>
+					<b>Fecha Inicio:</b> {{ composicion_banda.fecha_inicio}}
+					<br/>
+					<b>Fecha Fin:</b> {{ composicion_banda.fecha_fin}}
+					<br/>
+					<b>Posicion:</b> {{ composicion_banda.posicion}}
+					<br/>
+					<b>Estado:</b> {{composicion_banda.estado}}
+					<br/>
+				</div>
+				{% endfor%}
+			</div>
+			{%else%}
+				<p>La banda no tiene integrantes actualmente</p>
+			{%endif%}
+		</div>
+		<p><a href="#">Discografia</a></p>
+		<div class="discografia">
+			{%if  discos.count != 0 %}
+			<div class="elementos">
+				{%for disco in discos%}
+				<div class="elemento-disco">
+					<a href="/disco/{{disco.id}}/ver/"><p>{{ disco.nombre}}</p></a>
+					<b>Fecha Publicacion:</b> {{ disco.fecha_publicacion}}
+					<br/>
+					<b>Discografica:</b> {{ disco.discografica}}
+					<br/>
+					<b>Cantidad de Temas:</b>
+				</div>
+				{% endfor%}
+			</div>
+			{%else%}
+				<p>La banda no tiene ning&uacute;n disco publicado actualmente</p>
+			{%endif%}
+		</div>
+	
+		<p><a href="#">Temas Banda</a></p>
+		<div class="temas">
+			{%if  discos.count != 0 %}
+			<div class="elementos">
+				{%for tema_banda in temas_banda%}
+				<div class="elemento-disco">
+					<b>Tema:</b> {{ tema_banda.tema.nombre}}
+					<br/>
+					<b>Duracion:</b> {{ tema_banda.duracion}}
+				</div>
+				{% endfor%}
+			</div>
+			{%else%}
+				<p>La banda no tiene ning&uacute;n tema publicado actualmente</p>
+			{%endif%}
+		</div>
+		<p><a href="#">Negociaciones y Eventos</a></p>
+		<div class="eventos">
+			(FALTA COMPLETAR)
+		</div>
+		<p><a href="#">Noticias</a></p>
+		<div class="noticias">
+		    {%if noticias_banda.count != 0 %}
+			<div class="elementos">
+				{%for noticia in noticias_banda %}
+				<div class="elemento-home-noticia">
+					<p class="fecha-noticia">{{ noticia.fecha_publicacion}}</p>
+					<p class="objeto-noticia">Banda:{{ noticia.banda.nombre}}</p>
+					<p class="titulo-noticia">{{ noticia.titulo}}</p>
+					{% autoescape off %} 
+					{{noticia.contenido|truncatewords:20}} 
+					{% endautoescape %}
+					<a href="/noticia_banda/{{ noticia.id}}/ver/">seguir leyendo</a>
+				</div>
+				{% endfor%}
+			</div>		
+			{%else%}
+				<p>La banda no tiene ninguna noticia publicada actualmente</p>
+			{%endif%}
+		</div>
+		<p><a href="#">Recursos Multimedia</a></p>
+		<div class="recursos">
+			(FALTA COMPLETAR)
+		</div>
+		
+	</div>-->
+{% endblock %}
+

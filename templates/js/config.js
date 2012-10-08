@@ -14,10 +14,9 @@ config.toolbar_Full =
 	['NumberedList','BulletedList','-','Outdent','Indent','Blockquote'],
 	['JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock'],
 	['Link','Unlink','Anchor'],
-	['Image','Flash','Table','HorizontalRule','Smiley','SpecialChar','PageBreak'],
+	['Image','Flash','Table','HorizontalRule','Smiley','SpecialChar','PageBreak','Maximize', 'ShowBlocks','-','About'],
 	['Styles','Format','Font','FontSize'],
 	['TextColor','BGColor'],
-	['Maximize', 'ShowBlocks','-','About']
 	];
 };
 

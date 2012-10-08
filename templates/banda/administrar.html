@@ -1,11 +1,5 @@
 {% extends "base.html" %}
-{% block content%}
-	<script>
-	$(function() {
-		$( "#accordion" ).accordion();
-	});
-	</script>
-	
+{% block content%}	
 	<h2>{{banda.nombre}}</h2>
 	{% if messages %}
 	    {% for message in messages %}
@@ -15,58 +9,70 @@
 		{% endfor %}
 	{% endif %}
     <br/>
-    <b>Fecha Creacion:</b> {{ banda.fecha_creacion}}
-    <br/>
-    <b>Tipo:</b> {{ banda.tipo_banda}}
-    <br/>
-    <b>Generos:</b>
-        {%for genero_banda in generos_banda%}
-            - <a href="/genero/{{genero_banda.genero.id}}/ver">{{ genero_banda.genero.nombre}}</a> 
-        {% endfor%}	
-		
-	<br/>
-	<br/>
-	<div id="accordion">
-		<p><a href="#">Integrantes</a></p>
-		<div class="integrantes">
-			<p><a href="/banda/{{banda.id}}/invitar_musico/">Invitar nuevo Musico</a></p>
+    
+    <div class="detalle-ver detalle">
+    	<p><label>Fecha Creacion:</label> {{ banda.fecha_creacion}}</p>
+    	<p><label>Tipo:</label> {{ banda.tipo_banda}}</p>
+    	<p><label>Generos:</label>
+	        {%for genero_banda in generos_banda%}
+	            - <a href="/genero/{{genero_banda.genero.id}}/ver">{{ genero_banda.genero.nombre}}</a> 
+	        {% endfor%}
+	    </p>
+	    <p>Descripcion:</p>
+	    <div class="descripcion-perfil"> {% autoescape off %} {{ banda.descripcion}}{% endautoescape %}</div>	
+	</div>
+	<div class="avatar-ver">
+        <img src="/media/{{banda.imagen_avatar}}" height=200px width=200px>
+    </div>
+	
+	<h2>Integrantes
+		<a class="accion" href="/banda/{{banda.id}}/invitar_musico/">&raquo; Invitar Musico</a>
+	</h2>
+	
+	<div class="integrantes">
+		{%if  composiciones_banda.count != 0 %}
 			<div class="elementos">
+				
 				{%for composicion_banda in composiciones_banda%}
-				<div class="elemento-musico estado_{{ composicion_banda.estado}}">
-					<p><a href="/musico/{{composicion_banda.musico.id}}/ver/">{{ composicion_banda.musico.first_name}}, {{composicion_banda.musico.last_name}}</a></p>
-					<b>Fecha Inicio:</b> {{ composicion_banda.fecha_inicio}}
-					<br/>
-					<b>Fecha Fin:</b> {{ composicion_banda.fecha_fin}}
-					<br/>
-					<b>Posicion:</b> {{ composicion_banda.posicion}}
-					<br/>
-					<b>Estado:</b> {{composicion_banda.estado}}
-					<br/>
-
-					<br/>
-					<div class="links">
-						{%if composicion_banda.estado.is_pendiente %}
-							<a href="/banda/{{banda.id}}/musico/{{composicion_banda.musico.id}}/confirmar/">Confirmar</a>
-							<a href="/banda/{{banda.id}}/musico/{{composicion_banda.musico.id}}/denegar/">Denegar</a>
-						{%elif composicion_banda.estado.is_confirmado %}
-							<a href="/banda/{{banda.id}}/musico/{{composicion_banda.musico.id}}/denegar/">Denegar</a>
-						{%elif composicion_banda.estado.is_denegado %}
-							<a href="/banda/{{banda.id}}/musico/{{composicion_banda.musico.id}}/confirmar/">Confirmar</a>
-						{%endif %}
-						<br/>
-						<a href="/banda/{{banda.id}}/musico/{{composicion_banda.musico.id}}/modificar/">Modificar</a>
-						<a href="/banda/{{banda.id}}/musico/{{composicion_banda.musico.id}}/eliminar/">Eliminar</a>
-
-
-					</div>
-					<br/>
+				<div class="elemento-musico">
+					<div class="avatar-ver">
+        				<img src="/media/{{composicion_banda.musico.imagen_avatar}}" height=200px width=200px>
+        				<br/><br/>
+		        		<div >
+							{%if composicion_banda.estado.is_pendiente %}
+								<a href="/banda/{{banda.id}}/musico/{{composicion_banda.musico.id}}/confirmar/">Confirmar</a>
+								<a href="/banda/{{banda.id}}/musico/{{composicion_banda.musico.id}}/denegar/">Denegar</a>
+							{%elif composicion_banda.estado.is_confirmado %}
+								<a href="/banda/{{banda.id}}/musico/{{composicion_banda.musico.id}}/denegar/">Denegar</a>
+							{%elif composicion_banda.estado.is_denegado %}
+								<a href="/banda/{{banda.id}}/musico/{{composicion_banda.musico.id}}/confirmar/">Confirmar</a>
+							{%endif %}
+							<br/>
+							<a href="/banda/{{banda.id}}/musico/{{composicion_banda.musico.id}}/modificar/">Modificar</a>
+							<a href="/banda/{{banda.id}}/musico/{{composicion_banda.musico.id}}/eliminar/">Eliminar</a>
+						</div>
+        			</div>
+				    <div class="detalle-ver detalle">
+				    	<p><a href="/musico/{{composicion_banda.musico.id}}/ver/">{{composicion_banda.musico.username}}</a></p>
+					    <p><label>Nombre:</label> {{ composicion_banda.musico.first_name}}</p>
+					    <p><label>Apellido:</label> {{ composicion_banda.musico.last_name}}</p>
+					    <p><label>E-mail:</label> {{ composicion_banda.musico.email}}</p>
+						<p><label>Fecha Inicio:</label> {{ composicion_banda.fecha_inicio}} &nbsp;</p>   
+					    <p><label>Posicion:</label> {{ composicion_banda.posicion}}&nbsp;</p>
+				     </div>
 				</div>
 				{% endfor%}
 			</div>
-		</div>
-		<p><a href="#">Discografia</a></p>
-		<div class="discografia">
-			<a href="/disco/banda/{{banda.id}}/nuevo/"><p>Nuevo Disco</p></a>
+		{%else%}
+			<p>La banda no tiene integrantes actualmente</p>
+			<br/>
+		{%endif%}
+	</div>
+	<h2>Discografia
+		<a class="accion" href="/disco/banda/{{banda.id}}/nuevo/">&raquo; Nuevo</a>
+	</h2>
+	<div class="discografia">
+		{%if  discos.count != 0 %}
 			<div class="elementos">
 				{%for disco in discos%}
 				<div class="elemento-disco">
@@ -86,30 +92,17 @@
 				</div>
 				{% endfor%}
 			</div>
-		</div>
-	
-		<p><a href="#">Temas Banda</a></p>
-		<div class="temas">
-			<p><a href="/tema/banda/{{banda.id}}/nuevo/">Nuevo Tema</a></p>
-			<div class="elementos">
-				{%for tema_banda in temas_banda%}
-				<div class="elemento-disco">
-					<b>Tema:</b> {{ tema_banda.tema.nombre}}
-					<br/>
-					<b>Duracion:</b> {{ tema_banda.duracion}}
-					<br/>
-					<div class="links">
-						<a href="/tema/{{tema_banda.tema.id}}/banda/{{banda.id}}/modificar/">Modificar</a>
-						<a href="/tema/{{tema_banda.tema.id}}/banda/{{banda.id}}/eliminar/">Eliminar</a>
-					</div>
-					<br/>
-				</div>
-				{% endfor%}
-			</div>
-		</div>
-		<p><a href="#">Noticias</a></p>
-		<div class="noticias">
-			<p><a href="/noticia_banda/banda/{{banda.id}}/nuevo/">Nueva Noticia</a></p>
+			{%else%}
+				<p>La banda no tiene ning&uacute;n disco publicado actualmente</p>
+				<br/>
+		{%endif%}
+	</div>
+		
+	<h2>Noticias
+		<a class="accion" href="/noticia_banda/banda/{{banda.id}}/nuevo/">&raquo; Nuevo</a>
+	</h2>
+	<div class="noticias">
+		{%if noticias_banda.count != 0 %}
 			<div class="elementos">
 				{%for noticia in noticias_banda %}
 				<div class="elemento-noticia">
@@ -145,18 +138,45 @@
 					<br/>
 				</div>
 				{% endfor%}
-			</div>		
-		</div>
-		<p><a href="#">Negociaciones y Eventos</a></p>
-		<div class="eventos">
-			(FALTA COMPLETAR) 
-		</div>
-		
-		<p><a href="#">Recursos Multimedia</a></p>
-		<div class="recursos_multimedia">
-			(FALTA COMPLETAR) 
-		</div>
-		
+			</div>
+		{%else%}
+			<p>La banda no tiene ninguna noticia publicada actualmente</p>
+			<br/>
+		{%endif%}		
 	</div>
+		
+	<h2>Negociaciones y Eventos</h2>
+		<div class="eventos">
+			<p>(FALTA COMPLETAR)</p>
+			<br/> 
+	</div>
+		
+	<h2>
+		Recursos Multimedia
+		<a class="accion" href="/multimedia/banda/{{banda.id}}/nuevo">&raquo; Nuevo</a>
+	</h2>
+	<div class="recursos_multimedia">
+		{%if recursos_multimedia.count != 0 %}
+			<div class="elementos">
+				{%for recurso_multimedia in recursos_multimedia%}
+				<div class="elemento-recurso-multimedia">
+					<b>Nombre:</b> {{ recurso_multimedia.nombre}}
+					<br/>
+					<b>Tipo:</b> {{ recurso_multimedia.tipo}}
+					<br/>
+					<div class="links">
+						<a href="/multimedia_banda/{{recurso_multimedia.id}}/modificar">Modificar</a>
+						<a href="/multimedia_banda/{{recurso_multimedia.id}}/eliminar">Eliminar</a>
+					</div>
+					<br/>
+				</div>
+				{% endfor%}
+			</div>
+		{%else%}
+			<p>La banda no tiene ning&uacute;n recurso multimedia</p>
+			<br/>
+		{%endif%}
+	</div>
+		
 {% endblock %}
 

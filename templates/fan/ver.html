@@ -1,18 +1,21 @@
 {% extends "base.html" %}
 {% block content%}
-
-	<script>
-	$(function() {
-		$( "#accordion" ).accordion();
-	});
-	</script>
-	
-    <h2>{{fan.username}} ({{ fan.first_name}}, {{ fan.last_name}})</h2>
-    <br/><br/><br/>
-	<div id="accordion">
-		<p><a href="#">Bandas Suscriptas</a></p>
-		<div class="suscripcion-bandas">
-			{%if  suscripciones_banda.count != 0 %}
+    <h2>Fan: {{fan.username}}</h2>
+    <div class="detalle-ver detalle">
+	    <p><label>Nombre:</label> {{ fan.first_name}}</p>
+	    <p><label>Apellido:</label> {{ fan.last_name}}</p>
+	    <p><label>E-mail:</label> {{ fan.email}}</p>
+	    <p><label>Fecha Nacimiento:</label> {{ fan.fecha_nacimiento}}</p>
+	    <p><label>Direccion:</label> {{ fan.direccion}}</p>
+	    <p>Descripcion:</p>
+	    <div class="descripcion-perfil"> {% autoescape off %} {{ fan.descripcion}}{% endautoescape %}</div>
+    </div>
+    <div class="avatar-ver">
+        <img src="/media/{{fan.imagen_avatar}}" height=200px width=200px>
+    </div>
+    <h2>Bandas Suscriptas</h2>
+    <div class="suscripcion-bandas">
+		{%if  suscripciones_banda.count != 0 %}
 			<div class="elementos">
 				{%for suscripcion_banda in suscripciones_banda%}
 				<div class="elemento-suscripcion-banda">
@@ -22,13 +25,14 @@
 				</div>
 				{% endfor%}
 			</div>
-			{%else%}
-				<p>El fan no tiene suscripciones de bandas</p>
-			{%endif%}
-		</div>
-		<p><a href="#">G&eacute;neros Suscriptos</a></p>
-		<div class="suscripcion-generos">
-			{%if  suscripciones_genero.count != 0 %}
+		{%else%}
+			<p>El m&uacute;sico no tiene suscripciones de bandas</p>
+			<br/>
+		{%endif%}
+	</div>
+	<h2>G&eacute;neros Suscriptos</h2>
+	<div class="suscripcion-generos">
+		{%if  suscripciones_genero.count != 0 %}
 			<div class="elementos">
 				{%for suscripcion_genero in suscripciones_genero%}
 				<div class="elemento-suscripcion-genero">
@@ -38,14 +42,21 @@
 				</div>
 				{% endfor%}
 			</div>
-			{%else%}
-				<p>El fan no tiene suscripciones de g&eacute;neros</p>
-			{%endif%}
-		</div>
-		<p><a href="#">Eventos</a></p>
-		<div class="eventos">
-			(FALTA COMPLETAR)
-		</div>
-	</div>	
+		{%else%}
+			<p>El m&uacute;sico no tiene suscripciones de g&eacute;neros</p>
+			<br/>
+		{%endif%}
+	</div>
+	<h2>Eventos Anteriores</h2>
+	<div class="eventos">
+		<p>Falta Completar</p>
+		<br/>
+	</div>
+	<h2>Pr&oacute;ximos Eventos</h2>
+	<div class="eventos">
+		<p>Falta Completar</p>
+		<br/>
+	</div>
+
 	
 {% endblock %}	

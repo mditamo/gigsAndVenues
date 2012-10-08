@@ -12,13 +12,17 @@
 		{% endfor %}
 	{% endif %}
     
-    <div class="detalle">
-    <p><label>Nombre:</label> {{ complejo.first_name}}</p>
-    <p><label>Apellido:</label> {{ complejo.last_name}}</p>
-    <p><label>Direcci&oacute;n de correo electr&oacute;nico:</label> {{ complejo.email}}</p>
-    <p><label>Fecha Nacimiento:</label> {{ complejo.fecha_nacimiento}}</p>
-    <p><label>Direccion:</label> {{ complejo.direccion}}</p>
-    <p><label>Nombre del Complejo:</label> {{ complejo.nombre}}</p>
-    <br/>
+    <div class="detalle-perfil detalle">
+	    <p><label>Nombre:</label> {{ complejo.first_name}}</p>
+	    <p><label>Apellido:</label> {{ complejo.last_name}}</p>
+	    <p><label>E-mail:</label> {{ complejo.email}}</p>
+	    <p><label>Fecha Nacimiento:</label> {{ complejo.fecha_nacimiento}}</p>
+	    <p><label>Direccion:</label> {{ complejo.direccion}}</p>
+	    <p><label>Nombre del Complejo:</label> {{ complejo.nombre}}</p>
+	    <p>Descripcion:</p>
+	    <div class="descripcion-perfil"> {% autoescape off %} {{ fan.descripcion}}{% endautoescape %}</div>
+    </div>
+     <div class="avatar">
+        <img src="/media/{{complejo.imagen_avatar}}" height=200px width=200px>
     </div>
 {% endblock %}

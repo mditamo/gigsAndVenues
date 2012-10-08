@@ -1,9 +1,56 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-   
+<meta name="viewport" content="width=320;  initial-scale=1.0; minimum-scale=1.0; maximum-scale=1.0; user-scalable=1;">
+<title>Gigs And Venues</title>
+<link rel="stylesheet" href="css/reset.css" type="text/css" media="all">
+<link rel="stylesheet" href="css/base_celular.css" type="text/css" media="all">
+
 </head>
-<body >
-	{% block content %}{% endblock %}
-</body>
+
+<body>
+   
+		<div id="hd">
+        	<h1><a href="/" title="Volver al inicio"></a></h1>
+            <nav>
+                <ul>
+                    <li class="menu"><a href="/celular/noticia/listado/" {% block menu_noticias %}{% endblock %} ><span>Noticias</span></a></li>
+                    <li class="menu last"><a href="/celular/evento/listado/"  {% block menu_eventos %}{% endblock %} ><span>Eventos</span></a></li>
+                       
+                </ul>
+                <ul>
+                 	
+					{%if usuario_registrado.is_fan %}
+                    	<li class="menu"><a href="/celular/cronograma/listado/" {% block menu_cronograma %}{% endblock %}><span>Cronograma</span></a></li>
+                    {%endif%}
+                    {%if usuario_registrado.is_complejo %}
+                    	<li class="menu"><a href="#"><span>--------</span></a></li>
+                    {%endif%}	
+                    {%if usuario_registrado.is_musico %}
+                    	<li class="menu"><a href="#"><span>--------</span></a></li>
+                	{%endif%}  
+                	{%if user.is_authenticated %}
+                    	<li class="menu last"><a href="/usuario/logout/"><span>Salir</span></a></li>
+                    {%else%}
+                    	<li class="menu last"><a href="/celular/usuario/login/" {% block menu_login %}{% endblock %} ><span>Login</span></a></li>
+                	{%endif%}  
+                </ul>
+            </nav>
+
+        </div><!-- end hd -->
+        <div id="bd">
+			{% block content %}{% endblock %}
+		</div>	
+         <!-- end body -->
+	     <footer>    
+	            
+	            <div class="container">
+	                <p >Copyright 2012 - GigsAndVenues.com.ar - All rights reserved</p>
+	            </div>
+	        
+	      </footer>
+	        <!-- end footer -->
+ </body>
 </html>
+
+<!-- This document saved from http://m.clarin.com/ -->

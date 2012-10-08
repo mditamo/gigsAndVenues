@@ -23,5 +23,9 @@ class Direccion(models.Model):
     barrio=models.ForeignKey(Barrio)
     class Meta:
         db_table="DIRECCION"
+    
+    def direccion_mapa(self):
+        return u'Argentina, %s , %s , %s %s' % (self.barrio.provincia, self.barrio, self.calle, self.numero)
+    
     def __unicode__(self):
         return u'%s %s (%s)' % (self.calle, self.numero, self.barrio)

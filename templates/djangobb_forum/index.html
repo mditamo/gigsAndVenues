@@ -48,47 +48,4 @@
 
 {% endfor %}
 
-<br/><br/><br/><br/>
-<h2>{% trans "Board information" %}</h2>
-			<dl>
-				<dt><strong>{% trans "Board statistics" %}</strong></dt>
-				<dd>{% trans "Total number of registered users:" %} <strong>{{ users }}</strong></dd>
-				<dd>{% trans "Total number of topics:" %} <strong>{{ topics }}</strong></dd>
-				<dd>{% trans "Total number of posts:" %} <strong>{{ posts }}</strong></dd>
-			</dl>
-			<dl >
-				<dt><strong>{% trans "User information" %}</strong></dt>
-				<dd>{% trans "Newest registered user:" %} {{ last_user|profile_link }}</dd>
-				<dd>{% trans "Registered users online:" %} <strong>{{ online_count }}</strong></dd>
-				<dd>{% trans "Guests online:" %} <strong>{{ guest_count }}</strong></dd>
-			</dl>
-            {% if online_count %}
-                <dl>
-                    <dt><strong>{% trans "Online:" %} </strong></dt>
-                    {% for online in users_online %}
-                        <dd>{{ online|profile_link }}</dd>
-                    {% endfor %}
-                </dl>
-            {% endif %}
-	
-{% endblock %}
-
-{% block controls %}
-<!--<dl id="searchlinks" class="conl">
-	<dt><strong>{% trans "Search links" %}</strong></dt>
-	<dd><a href="{% url djangobb:search %}?action=show_24h">{% trans "Show recent posts" %}</a></dd>
-	<dd><a href="{% url djangobb:search %}?action=show_unanswered">{% trans "Show unanswered posts" %}</a></dd>
-	{% if user.is_authenticated %}
-		<dd><a href="{% url djangobb:search %}?action=show_subscriptions">{% trans "Show your subscribed topics" %}</a></dd>
-		<dd><a href="{% url djangobb:search %}?action=show_user&amp;user_id={{ request.user.id }}">{% trans "Show your posts" %}</a></dd>
-	{% endif %}
-</dl>-->
-{% endblock %}
-
-{% block lofi %}
-{% if forum_settings.LOFI_SUPPORT %}
-    <p class="lofi">
-        <a href="{% url djangobb:lofi_index %}">Lo-Fi Version</a>
-    </p>
-{% endif %}
 {% endblock %}

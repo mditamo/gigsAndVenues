@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block content%}
+	<h2>Retiro de Entradas</h2>
+	{% if messages %}
+	    {% for message in messages %}
+		    <div class='mensaje_respuesta  ui-corner-all {% if message.tags %} {{ message.tags }}{% endif %}' style='text-align: left'>
+		    	{{ message }}
+		    </div>
+		{% endfor %}
+	{% endif %}
+    <br/>
+	<form class='estiloform' name='formulario' method="post" action="/retiro_entrada/index">
+	 	{% csrf_token %}
+		<p><label>C&oacute;digo de Retiro: </label><input type="text" name="codigo_retiro"></p>
+		<input type="submit" value="Buscar">
+	</form>
+	<br/>
+	<h2>Resultado</h2>
+	{%if cantidad_reservas_evento != 0 %}
+		<div class="elementos">
+			{%for reserva_evento in reservas_evento %}
+	        <div class="elemento-reserva">
+	        	<p><a href="/evento/{{reserva_evento.tipo_entrada.evento.id}}/ver">{{reserva_evento.tipo_entrada.evento.nombre}}</a> ({{reserva_evento.tipo_entrada.evento.fecha}})</p>
+	         	<b>Codigo Reserva:</b> {{reserva_evento.codigo_retiro}}
+	         	<br/>
+	         	<b>Usuario:</b> {{reserva_evento.fan.username}}
+	         	<br/>
+	         	<b>Cantidad de Entradas: </b>{{reserva_evento.cantidad_entradas}}
+	    		<br/>
+	    		<b>Fecha de Vencimiento: </b>{{reserva_evento.fecha_vencimiento}}
+	            <br/> <br/>     
+	            <div class="links">
+					<a href="/retiro_entrada/{{reserva_evento.id}}/confirmar">Confirmar</a>
+				</div>	
+	        </div>
+	        {% endfor%}
+    	</div>
+    {%else%}
+    	{%if cantidad_reservas_evento_buscador == 0 %}
+    		<p>No hubo resultados para la b&uacute;squeada que realizo</p>
+    	{%else%}
+    		<p>No hay reservas pendientes para retirar</p>
+    	{%endif%}			
+	{%endif%}
+       
+{% endblock %}

@@ -4,21 +4,24 @@
 	{%if cantidad_musicos != 0 %}
 	<div class="musicos">
 		{%for musico in musicos%}
-        <div class="elemento-invitacion-musico">
-            <p><a href="/musico/{{musico.id}}/ver/">{{ musico.first_name}}, {{musico.last_name}}</a></p>
-			<b>Direcci&oacute;n de correo electr&oacute;nico:</b> {{ musico.email}}
-	    	<br/>
-	    	<b>Fecha Nacimiento:</b> {{ musico.fecha_nacimiento}}
-	    	<br/>
-	    	<b>Direcci&oacute;n:</b> {{ musico.direccion}}
-	    	<br/>
-	    	<b>Posici&oacute;n:</b> {{ musico.posicion}}
-	    	<br/>
-	    	<b>Estilo:</b> {{ musico.estilo}}
-			<div class="links">
-				<a href="/banda/{{banda_id}}/musico/{{ musico.id}}/enviar_invitacion/">Enviar Invitaci&oacute;n</a>
-			</div>	
-        </div>
+			<div class="elemento-musico">
+				<div class="avatar-ver">
+        			<img src="/media/{{musico.imagen_avatar}}" height=200px width=200px>
+        			<br/><br/><br/><br/>
+        			<div>
+						<a href="/banda/{{banda_id}}/musico/{{ musico.id}}/enviar_invitacion/">Enviar Invitaci&oacute;n</a>
+					</div>	
+        		</div>
+				<div class="detalle-ver detalle">
+					<p><a href="/musico/{{musico.id}}/ver/">{{musico.username}}</a></p>
+					<p><label>Nombre:</label> {{ musico.first_name}}</p>
+					<p><label>Apellido:</label> {{ musico.last_name}}</p>
+					<p><label>E-mail:</label> {{ musico.email}}</p>
+					<p><label>Fecha Nacimiento:</label> {{ musico.fecha_nacimiento}}</p>
+					<p><label>Posicion:</label> {{ musico.posicion}}&nbsp;</p>
+					<p><label>Estilo:</label> {{ musico.estilo}}&nbsp;</p>
+				</div>
+		 </div> 
         {% endfor%}
     </div>
     {%else%}

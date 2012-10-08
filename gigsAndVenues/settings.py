@@ -21,7 +21,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.oracle', # Add 'postgresql_psycopg2', 'mysql', 'oracle'.
         'NAME': '127.0.0.1/XE',                      # Or path to database file if using sqlite3.
-        'USER': 'system',                      # Not used with sqlite3.
+        'USER': 'proyecto',                      # Not used with sqlite3.
         'PASSWORD': 'proyecto',                  # Not used with sqlite3.
         'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
         'PORT': '',# Set to empty string for default. Not used with sqlite3.
@@ -190,11 +190,12 @@ INSTALLED_APPS = (
     'general',
     'suscripcion',
     'fan',
-    'tema',
 	'evento',
     'negociacion',
     'oferta',
-    'condiciones'
+    'condiciones',
+	'entrada',
+    'multimedia'
     )
 
 

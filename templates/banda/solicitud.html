@@ -11,16 +11,20 @@
 	{%if composiciones_banda.count != 0 %}
     <div class="solicitudes">
      	{%for composicion_banda in composiciones_banda%}
-        <div class="elemento-banda">
-            <a href="/banda/{{composicion_banda.banda.id}}/ver/"><p>{{ composicion_banda.banda.nombre}}</p></a>
-			<b>Fecha Creacion:</b> {{ composicion_banda.banda.fecha_creacion}}
-            <br/>
-            <b>Tipo:</b> {{ composicion_banda.banda.tipo_banda}}
-            <br/>
-			<div class="links">
-				<a href="/banda/{{composicion_banda.banda.id}}/confirmar_solicitud/">Confirmar</a>
-			</div>	
-        </div>
+     	<div class="elemento-banda">
+				<div class="detalle-perfil detalle">
+					<p><a href="/banda/{{composicion_banda.banda.id}}/ver/">{{ composicion_banda.banda.nombre}}</a></p>
+				    <p><label>Fecha Creacion:</label> {{composicion_banda.banda.fecha_creacion}}</p>
+				    <p><label>Tipo:</label> {{ composicion_banda.banda.tipo_banda}}</p>
+			    </div>
+			    <div class="avatar-ver">
+			        <img src="/media/{{composicion_banda.banda.imagen_avatar}}" height=200px width=200px>
+			        <br/><br/>
+			        <div>
+			         	<a href="/banda/{{composicion_banda.banda.id}}/confirmar_solicitud/">Confirmar</a>
+			        </div> 	
+			    </div>
+		</div> 
         {% endfor%}
     </div>
     {%else%}

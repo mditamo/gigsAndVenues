@@ -39,6 +39,10 @@ class NoticiaBanda(models.Model):
 
     def __unicode__(self):
             return self.titulo
+    
+    def is_noticia_banda(self):
+            return True    
+        
 
 class NoticiaComplejo(models.Model):
     complejo=models.ForeignKey(Complejo)
@@ -53,3 +57,6 @@ class NoticiaComplejo(models.Model):
     def __unicode__(self):
             return self.titulo
         
+    def is_noticia_banda(self):
+            return False    
+    

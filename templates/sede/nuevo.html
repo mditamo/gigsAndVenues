@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block content%}
 <h2>Nueva Sede</h2>
-<form action="/sede/nuevo" method="post">
+<form action="/sede/nuevo" method="post" enctype="multipart/form-data">
     {% csrf_token %}
     {{ form.as_p }}
     {{ form_dir.as_p }}

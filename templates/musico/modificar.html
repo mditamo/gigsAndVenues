@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block content%}
 <h2>Modificar</h2>
-<form action="/musico/{{musico_id}}/modificar/" method="post">
+<form action="/musico/{{musico_id}}/modificar/" method="post" enctype="multipart/form-data">
     {% csrf_token %}
     {{ form.as_p }}
     {{ form_dir.as_p }}

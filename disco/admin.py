@@ -10,6 +10,6 @@ class DiscoAdmin(admin.ModelAdmin):
     inlines = [ComposicionDiscoInline]
 
 admin.site.register(Disco,DiscoAdmin)
-
+admin.site.register(Tema)
 
 

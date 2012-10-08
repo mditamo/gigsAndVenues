@@ -14,8 +14,12 @@ class UsuarioRegistrado(User):
     fecha_nacimiento=models.DateField()
     tipo_usuario=models.ForeignKey(TipoUsuario)
     direccion=models.OneToOneField(Direccion)
+    avatar=models.ImageField(upload_to="avatar")
+    descripcion=models.TextField()
     class Meta:
         db_table="USUARIO_REGISTRADO"
+    def imagen_avatar(self):
+        return self.avatar or 'avatar/default.jpg'
 
     def is_fan(self):
             return self.tipo_usuario.nombre=="Fan"

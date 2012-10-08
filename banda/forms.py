@@ -12,7 +12,10 @@ class ComposicionBandaForm(ModelForm):
 
 
 class BandaForm(ModelForm):
-    formfield_callback = make_custom_datefield
     class Meta:
         model = Banda
-        exclude = ('musicos')
+        exclude = ('musicos') 
+        widgets={
+                 'descripcion': forms.Textarea(attrs={'cols':10, 'class':'ckeditor', 'width': '500px'}),
+                 'fecha_creacion': forms.TextInput(attrs={'class':'datePicker', 'readonly':'true'})
+        }

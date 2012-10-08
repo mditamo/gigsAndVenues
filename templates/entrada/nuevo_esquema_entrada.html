@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block content%}
+<h2>Nuevo Esquema Entrada</h2>
+<form action="/esquema_entrada/evento/{{evento_id}}/sede/{{sede_id}}/configuracion_sede/{{configuracion_sede_id}}/nuevo" method="post" >
+    {% csrf_token %}
+    <p><label>Nombre Original:</label> {{configuracion_sede.nombre}} </p>
+    {{ form.as_p }}
+    <p><label>Cantidad Entradas Disponibles:</label> {{configuracion_sede.cantidad_entradas_disponibles}} </p>
+    <p><label>Cantidad Entradas Reserva:</label> {{configuracion_sede.cantidad_entradas_reserva}} </p>
+    <input type="submit" value="Agregar" />
+</form>
+<br/>
+{% endblock %}

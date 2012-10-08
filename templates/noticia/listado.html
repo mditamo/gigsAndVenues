@@ -1,40 +1,56 @@
 {% extends "base.html" %}
+{% block menu_noticias %}class="active"{% endblock %}
 {% block content%}
-   <!--<h2>Buscador</h2>
-   <form id="" action="/noticia/buscador/" method="post">
-            		<div style='display:none'>
-	    				{% csrf_token %}
-	    			</div>
-            		<label for="id_username">Titulo:</label> <input type="text" name="titulo" /><br/>
-					<input type="submit" value="Buscar" />
-        </form>
-        <br/><br/>-->
-   <h2>Noticias</h2>
+	<h2>Buscador</h2>
+   	<form action="/noticia/listado/" method="post">
+  		{% csrf_token %}
+  		<p><label>Titulo:</label> <input type="text" name="titulo" /></p>
+		<input type="submit" value="Buscar" />
+   	</form>
+   	<br/><br/>
+   	<h2>Noticias</h2>
 	<div class="noticias">
 		<div class="elementos">
-			{%for noticia in noticias_banda %}
+			{% for noticia in noticias_banda.object_list %}
 				<div class="elemento-home-noticia">
-					<p class="fecha-noticia">{{ noticia.fecha_publicacion}}</p>
-					<p class="objeto-noticia">Banda:{{ noticia.banda.nombre}}</p>
+					<h2>
+						{%if noticia.is_noticia_banda %}
+							Banda: {{ noticia.banda.nombre}}
+						{%else%}
+							Complejo: {{ noticia.complejo.nombre}}
+						{%endif%}
+						<span class="accion">{{ noticia.fecha_publicacion}}</span>
+					</h2>
+					
 					<p class="titulo-noticia">{{ noticia.titulo}}</p>
 					{% autoescape off %} 
 					{{noticia.contenido|truncatewords:30}} 
 					{% endautoescape %}
-					<a href="/noticia_banda/{{ noticia.id}}/ver/">seguir leyendo</a>
+					<div class="links">
+						{%if noticia.is_noticia_banda %}
+							<a class="links" href="/noticia_banda/{{ noticia.id}}/ver/">seguir leyendo</a>
+						{%else%}
+							<a href="/noticia_complejo/{{ noticia.id}}/ver/">VER MAS -></a>
+						{%endif%}
+					</div>
 				</div>
-			{% endfor%}
-			{%for noticia in noticias_complejo %}
-				<div class="elemento-home-noticia">
-					<p class="fecha-noticia">{{ noticia.fecha_publicacion}}</p>
-					<p class="objeto-noticia">Complejo:{{ noticia.complejo.nombre}}</p>
-					<p class="titulo-noticia">{{ noticia.titulo}}</p>
-					{% autoescape off %} 
-					{{noticia.contenido|truncatewords:30}} 
-					{% endautoescape %}
-					<a href="/noticia_complejo/{{ noticia.id}}/ver/">seguir leyendo</a>
-				</div></div>
-			{% endfor%}
-		</div>		
+			{% endfor %}
+		</div>
+		<div class="pagination">
+		    <span class="step-links">
+		        {% if noticias_banda.has_previous %}
+		            <a href="?page={{ noticias_banda.previous_page_number }}">previous</a>
+		        {% endif %}
+		
+		        <span class="current">
+		            Page {{ noticias_banda.number }} of {{ noticias_banda.paginator.num_pages }}.
+		        </span>
+		
+		        {% if noticias_banda.has_next %}
+		            <a href="?page={{ noticias_banda.next_page_number }}">VER MAS -></a>
+		        {% endif %}
+		    </span>
+		</div>
 	</div>
 {% endblock %}
 

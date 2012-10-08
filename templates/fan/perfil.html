@@ -11,12 +11,17 @@
 		{% endfor %}
 	{% endif %}
     
-
-	<div class="detalle">
+	<div class="detalle-perfil detalle">
 	    <p><label>Nombre:</label> {{ fan.first_name}}</p>
 	    <p><label>Apellido:</label> {{ fan.last_name}}</p>
-	    <p><label>Direcci&oacute;n de correo electr&oacute;nico:</label> {{ fan.email}}</p>
+	    <p><label>E-mail:</label> {{ fan.email}}</p>
 	    <p><label>Fecha Nacimiento:</label> {{ fan.fecha_nacimiento}}</p>
 	    <p><label>Direccion:</label> {{ fan.direccion}}</p>
+	    <p>Descripcion:</p>
+	    <div class="descripcion-perfil"> {% autoescape off %} {{ fan.descripcion}}{% endautoescape %}</div>
+    </div>
+   
+    <div class="avatar">
+        <img src="/media/{{fan.imagen_avatar}}" height=200px width=200px>
     </div>
 {% endblock %}

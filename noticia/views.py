@@ -11,6 +11,8 @@ from complejo.models import Complejo
 from datetime import datetime
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.core.paginator import Paginator, InvalidPage, EmptyPage
+from itertools import chain
 
 @login_required(login_url='/usuario/login/')
 def nuevo_noticia_banda(request,banda_id):
@@ -164,7 +166,18 @@ def ver_noticia_complejo(request,noticia_id):
 def listado(request):
     if request.user.is_authenticated():
         usuario_registrado=UsuarioRegistrado.objects.get(pk=request.user.id)
-    noticias_banda=NoticiaBanda.objects.filter(estado=EstadoNoticia.objects.get(nombre="Publicado"))
+    
+    noticias=NoticiaBanda.objects.filter(estado=EstadoNoticia.objects.get(nombre="Publicado"))
     noticias_complejo=NoticiaComplejo.objects.filter(estado=EstadoNoticia.objects.get(nombre="Publicado"))
-    return render_to_response("noticia/listado.html", locals(), context_instance=RequestContext(request))
+    noticias=list(chain(noticias,noticias_complejo))
+    paginator = Paginator(noticias, 3) # Show 25 contacts per page
+    try:
+        page = int(request.GET.get('page', '1'))
+    except ValueError:
+        page = 1
+    try:
+        noticias_banda = paginator.page(page)
+    except (EmptyPage, InvalidPage):
+        noticias_banda = paginator.page(paginator.num_pages)
+    return render_to_response("noticia/listado.html", {"noticias_banda": noticias_banda})
 

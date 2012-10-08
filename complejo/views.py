@@ -5,6 +5,7 @@ from django.core.urlresolvers import reverse
 from django.template.context import RequestContext
 from complejo.models import *
 from complejo.forms import *
+from sede.models import Sede
 from suscripcion.models import SuscripcionComplejo
 from suscripcion.forms import SuscripcionComplejoForm
 from usuario.models import UsuarioRegistrado
@@ -17,9 +18,12 @@ def ver(request,complejo_id):
     if request.user.is_authenticated():
         usuario_registrado=UsuarioRegistrado.objects.get(pk=request.user.id)
     complejo=Complejo.objects.get(pk=complejo_id)
+    sedes=Sede.objects.filter(complejo__id=complejo_id)
     cantidad_like=LikeComplejo.objects.filter(complejo__id=complejo_id, usuario__id=request.user.id).count()
     cantidad_seguidores=LikeComplejo.objects.filter(complejo__id=complejo_id).count()
-    cantidad_suscripcion=SuscripcionComplejo.objects.filter(complejo__id=complejo_id, usuario__id=request.user.id).count()
+    suscripciones=SuscripcionComplejo.objects.filter(complejo__id=complejo_id, usuario__id=request.user.id)
+    if suscripciones.count() == 1:
+        suscripcion=suscripciones[0]
     form_suscripcion = SuscripcionComplejoForm()    
     return render_to_response("complejo/ver.html", locals(), context_instance=RequestContext(request))
 
@@ -37,7 +41,7 @@ def modificar(request,complejo_id):
     complejo=Complejo.objects.get(pk=complejo_id)
     if request.method == 'POST':
         form_dir = DireccionForm(request.POST)
-        form = ComplejoForm(request.POST, instance=complejo)
+        form = ComplejoForm(request.POST,request.FILES, instance=complejo)
         if form.is_valid() and form_dir.is_valid():
             complejo=form.save(commit=False)
             direccion=form_dir.save()

@@ -1,18 +1,12 @@
 {% extends "base.html" %}
 {% block content%}
 
-	<script>
-	$(function() {
-		$( "#accordion" ).accordion();
-	});
-	</script>
-	
     <h2>Genero: {{genero.nombre}}</h2>
     
     <div class="suscripcion">
 		<h2>Suscripcion</h2>
 		
-		{%if cantidad_suscripcion == 0 %}
+		{%if suscripciones.count == 0 %}
 			<form action="/genero/{{genero_id}}/suscribirme/" method="post">
 				{% csrf_token %}
 		   		{{ form_suscripcion.as_p }}
@@ -50,35 +44,39 @@
 	<div id="dialog-message" title="Mensaje">
 	<p>Necesitas estar logueado para poder disponer de estas funciones</p>
 	</div>
-	<br/><br/><br/><br/>
-	<br/><br/><br/><br/>
-	<br/>
-    <div id="accordion">
-		<p><a href="#">Bandas</a></p>
-		<div class="bandas">
-			{%if  bandas_genero.count != 0 %}
+	
+	<h2>Bandas</h2>
+	<div class="bandas">
+		{%if  bandas_genero.count != 0 %}
 			<div class="elementos">
 				{%for banda_genero in bandas_genero%}
 				<div class="elemento-banda">
-					<p><a href="/banda/{{banda_genero.banda.id}}/ver/">{{ banda_genero.banda.nombre}}</a></p>
-					<b>Fecha Creacion:</b> {{ banda_genero.banda.fecha_creacion}}
-            		<br/>
-            		<b>Tipo:</b> {{ banda_genero.banda.tipo_banda}}
+					<div class="detalle-perfil detalle">
+						<p><a href="/banda/{{banda_genero.banda.id}}/ver/">{{ banda_genero.banda.nombre}}</a></p>
+					    <p><label>Fecha Creacion:</label> {{banda_genero.banda.fecha_creacion}}</p>
+					    <p><label>Tipo:</label> {{ banda_genero.banda.tipo_banda}}</p>
+				    </div>
+				     <div class="avatar-ver">
+				        <img src="/media/{{banda_genero.banda.imagen_avatar}}" height=200px width=200px>
+				    </div>
 				</div>
 				{% endfor%}
 			</div>
-			{%else%}
-				<p>No hay bandas que pertenezcan al g&eacute;nero</p>
-			{%endif%}
-		</div>
-		<p><a href="#">Noticias</a></p>
-		<div class="noticias">
-			{%if cantidad_noticias_genero != 0 %}
+		{%else%}
+			<p>No hay bandas que pertenezcan al g&eacute;nero</p>
+			<br/>
+		{%endif%}
+	</div>
+	<h2>Noticias</h2>
+	<div class="noticias">
+		{%if cantidad_noticias_genero != 0 %}
 		    <div class="elementos">
 				{%for noticia in noticias_genero %}
 				<div class="elemento-home-noticia">
-					<p class="fecha-noticia">{{ noticia.fecha_publicacion}}</p>
-					<p class="objeto-noticia">Banda:{{ noticia.banda.nombre}}</p>
+					<h2>
+							Banda: {{ noticia.banda.nombre}}
+							<span class="accion">{{ noticia.fecha_publicacion}}</span>
+					</h2>
 					<p class="titulo-noticia">{{ noticia.titulo}}</p>
 					{% autoescape off %} 
 					{{noticia.contenido|truncatewords:20}} 
@@ -87,15 +85,17 @@
 				</div>
 				{% endfor%}
 			</div>
-			{%else%}
-				<p>No hay noticias publicadas para el g&eacute;nero</p>
-			{%endif%}		
-		</div>
-		<p><a href="#">Eventos</a></p>
-		<div class="eventos">
-			(FALTA COMPLETAR)
-		</div>
+		{%else%}
+			<p>No hay noticias publicadas para el g&eacute;nero</p>
+			<br/>
+		{%endif%}		
 	</div>
+	<h2>Eventos</h2>
+	<div class="eventos">
+		<p>FALTA COMPLETAR</p>
+		<br/>
+	</div>
+
 {% endblock %}
 
 

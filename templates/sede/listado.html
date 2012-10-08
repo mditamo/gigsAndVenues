@@ -15,22 +15,23 @@
     <div class="sedes">
 		{%for sede in sedes%}
         <div class="elemento-sede">
-            <a href="/sede/{{sede.id}}/administrar/"><p>{{ sede.nombre}}</p></a>
-			<b>Direccion:</b> {{ sede.direccion}}
-            <br/>
-            <b>Tipo:</b> {{ sede.tipo_sede}}
-            <br/>
-			<b>Capacidad Maxima de Personas:</b> {{ sede.capaxidad_maxima_personas}}
-            <br/>
-			<b>fecha_habilitacion:</b> {{ sede.fecha_habilitacion}}
-            <br/>
-            <b>Telefono:</b> {{sede.telefono}}
-            <br/>
-			<br/>
-			<div class="links">
-				<a href="/sede/{{sede.id}}/modificar/">Modificar</a>
-				(Falta) <a href="/sede/{{sede.id}}/eliminar/">Eliminar</a>
-			</div>	
+			<div class="detalle-perfil detalle">
+				<p><a href="/sede/{{sede.id}}/administrar/">{{ sede.nombre}}</a></p>
+				<p><label>Direccion:</label> {{ sede.direccion}}</p>
+            	<p><label>Tipo:</label> {{ sede.tipo_sede}}</p>
+            	<p><label>Capacidad Maxima:</label> {{ sede.capaxidad_maxima_personas}}</p>
+            	<p><label>Fecha Habilitacion:</label> {{ sede.fecha_habilitacion}}</p>
+            	<p><label>Telefono:</label> {{sede.telefono}}</p>
+            	<br/><br/><br/>
+		    </div>
+		     <div class="avatar-ver">
+		        <img src="/media/{{sede.imagen_avatar}}" height=200px width=200px>
+		        <br/><br/><br/><br/>
+		        <div >
+					<a href="/sede/{{sede.id}}/modificar/">Modificar</a>
+					(Falta) <a href="/sede/{{sede.id}}/eliminar/">Eliminar</a>
+				</div>	
+		    </div>        
         </div>
         {% endfor%}
     </div>

@@ -1,0 +1,16 @@
+{% extends "base_celular.html" %}
+{% block menu_login %}class="active"{% endblock %} 
+{% block content%}
+	<div class="content-home">
+		<h2>Login</h2>
+		<br/><br/>
+		<form method="post" action="/usuario/login/" id="contacts-form">
+    		{% csrf_token %}
+    		<p><label for="id_username">Nick:</label> <input type="text" maxlength="30" name="username" id="id_username"></p>
+			<p><label for="id_password">Pass:</label> <input type="password" id="id_password" name="password"></p>
+    		<input type="submit" value="Entrar">
+		</form>
+		<br/><br/>
+	</div>
+	
+{% endblock %}

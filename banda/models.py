@@ -17,8 +17,14 @@ class Banda(models.Model):
     fecha_creacion=models.DateField();
     musicos= models.ManyToManyField(Musico, through="ComposicionBanda")
     generos= models.ManyToManyField(Genero, through="BandaGenero")
+    avatar=models.ImageField(upload_to="avatar")
+    descripcion=models.TextField()
     class Meta:
         db_table="BANDA"
+    
+    def imagen_avatar(self):
+        return self.avatar or 'avatar/default.jpg'
+
     def __unicode__(self):
         return self.nombre
 

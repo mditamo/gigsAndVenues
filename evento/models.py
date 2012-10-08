@@ -17,6 +17,9 @@ class Evento(models.Model):
     bandas=models.ManyToManyField(Banda,through="Participacion")
     banda_ex=models.CharField(max_length=500)
 
+    def direccion_sede(self):
+        return self.sede.direccion_mapa();
+
     class Meta:
         db_table="EVENTO"
 
@@ -30,7 +33,7 @@ class Participacion(models.Model):
     estado=models.CharField(max_length=200)
     
     class Meta:
-        db_table="Participacion"    
+        db_table="PARTICIPACION"    
     
     def __unicode__(self):
         return self.nombre

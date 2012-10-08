@@ -16,7 +16,10 @@ def ver(request,genero_id):
     if request.user.is_authenticated():
         usuario_registrado=UsuarioRegistrado.objects.get(pk=request.user.id)
     
-    cantidad_suscripcion=SuscripcionGenero.objects.filter(genero__id=genero_id, usuario__id=request.user.id).count()
+    suscripciones=SuscripcionGenero.objects.filter(genero__id=genero_id, usuario__id=request.user.id)
+    if suscripciones.count() == 1:
+        suscripcion=suscripciones[0]
+    
     form_suscripcion = SuscripcionGeneroForm()    
     genero=Genero.objects.get(pk=genero_id)
     bandas_genero=BandaGenero.objects.filter(genero__id=genero_id)

@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block content%}
+<h2>Modificar Recurso Multimedia</h2>
+<form action="/multimedia_banda/{{recurso_multimedia_id}}/modificar" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Modificar" />
+</form>
+<br/>
+{% endblock %}

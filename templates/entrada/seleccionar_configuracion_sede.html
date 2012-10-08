@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block content%}
+	<h2>Seleccionar Configuraci&oacute;n Sede</h2>
+	<div class="elementos">
+		{%for configuracion_sede in configuraciones_sede%}
+			<div class="elemento-configuracion-sede">
+				<b>Nombre:</b> {{ configuracion_sede.nombre}}
+				<br/>
+				<b>Cantidad Entradas Disponibles:</b> {{ configuracion_sede.cantidad_entradas_disponibles}}
+				<br/>
+				<b>Cantidad Entradas Reserva:</b> {{ configuracion_sede.cantidad_entradas_reserva}}
+				<br/>
+				<div class="links">
+					<a href="/esquema_entrada/evento/{{evento_id}}/sede/{{sede_id}}/configuracion_sede/{{configuracion_sede.id}}/nuevo">Seleccionar</a>
+				</div>
+				<br/>
+			</div>
+		{% endfor%}
+	</div>
+{% endblock %}

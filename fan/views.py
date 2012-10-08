@@ -34,7 +34,7 @@ def modificar(request,fan_id):
     fan=Fan.objects.get(pk=fan_id)
     if request.method == 'POST':
         form_dir = DireccionForm(request.POST)
-        form = FanForm(request.POST, instance=fan)
+        form = FanForm(request.POST,request.FILES, instance=fan)
         if form.is_valid() and form_dir.is_valid():
             fan=form.save(commit=False)
             direccion=form_dir.save()

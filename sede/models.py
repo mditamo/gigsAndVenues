@@ -19,11 +19,19 @@ class Sede(models.Model):
     fecha_habilitacion=models.DateField()
     descripcion=models.TextField()
     telefono=models.CharField(max_length=20)
+    avatar=models.ImageField(upload_to="avatar")
+    def direccion_mapa(self):
+        return self.direccion.direccion_mapa();
+    
     class Meta:
         db_table="SEDE"
+        
     def __unicode__(self):
-        return self.nombre
-
+        return self.nombre    
+    
+    def imagen_avatar(self):
+        return self.avatar or 'avatar/default.jpg'
+    
 class ConfiguracionSede(models.Model):
     sede=models.ForeignKey(Sede)
     nombre=models.CharField(max_length=200)

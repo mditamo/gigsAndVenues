@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% block menu_home %}class="active"{% endblock %}
 {% block content%}
 	<div class="content-home">
 		<h2>Noticias</h2>
@@ -6,26 +7,34 @@
 			<div class="elementos">
 				{%for noticia in noticias_banda %}
 					<div class="elemento-home-noticia">
-						<p class="fecha-noticia">{{ noticia.fecha_publicacion}}</p>
-						<p class="objeto-noticia">Banda:{{ noticia.banda.nombre}}</p>
+						<h2>
+							Banda: {{ noticia.banda.nombre}}
+							<span class="accion">{{ noticia.fecha_publicacion}}</span>
+						</h2>
 						<p class="titulo-noticia">{{ noticia.titulo}}</p>
 						{% autoescape off %} 
 						{{noticia.contenido|truncatewords:30}} 
 						{% endautoescape %}
 						<br/>
-						<a href="/noticia_banda/{{ noticia.id}}/ver/">seguir leyendo</a>
+						<div class="links">
+							<a href="/noticia_banda/{{ noticia.id}}/ver/">VER MAS -></a>
+						</div>
 					</div>
 				{% endfor%}
 				{%for noticia in noticias_complejo %}
 					<div class="elemento-home-noticia">
-						<p class="fecha-noticia">{{ noticia.fecha_publicacion}}</p>
-						<p class="objeto-noticia">Complejo:{{ noticia.complejo.nombre}}</p>
+						<h2>
+							Complejo: {{ noticia.complejo.nombre}}
+							<span class="accion">{{ noticia.fecha_publicacion}}</span>
+						</h2>
 						<p class="titulo-noticia">{{ noticia.titulo}}</p>
 						{% autoescape off %} 
 						{{noticia.contenido|truncatewords:30}} 
 						{% endautoescape %}
 						<br/>
-						<a href="/noticia_complejo/{{ noticia.id}}/ver/">seguir leyendo</a>
+						<div class="links">
+							<a href="/noticia_complejo/{{ noticia.id}}/ver/">VER MAS -></a>
+						</div>	
 					</div>
 				{% endfor%}
 			</div>		
@@ -33,9 +42,28 @@
 		<h2>Proximos Eventos</h2>
 		<div class="proximos-eventos">
 			<div class="elementos">
-				<div class="elemento-home-proximo-evento">
-					<p>FALTA COMPLETAR</p>
-				</div>
+				{%for evento in eventos %}
+			        <div class="elemento-home-proximo-evento">
+						<div class="descripcion-evento">		        
+			         		<h2>{{evento.nombre}}</h2>
+			         		<b>Lugar: </b>{{evento.sede}} <a href="/complejo/{{evento.sede.complejo.id}}/ver">({{evento.sede.complejo}})</a>
+			         		<br/>
+			         		<b>Direccion:</b> {{ evento.sede.direccion}}
+			         		<br/>
+			         		<b>Capacidad Maxima de Personas:</b> {{ evento.sede.capaxidad_maxima_personas}}
+			         		<br/>
+			         		<b>Telefono:</b> {{evento.sede.telefono}}
+			         		<br/>
+			         		<a href="/evento/{{evento.id}}/ver">VER MAS -></a> 
+			         	</div>
+			         	<div class="fecha-evento">
+			         		<h2>Fecha y hora</h2>	
+				             <p>{{ evento.fecha}}</p>
+    	 					 <p>{{ evento.hora_inicio}}</p>
+				        </div>
+				        
+			        </div>
+				{% endfor%}
 			</div>		
 		</div>
 	</div>

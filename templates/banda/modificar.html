@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block content%}
 <h2>Modificar</h2>
-<form action="/banda/{{banda_id}}/modificar/" method="post">
+<form action="/banda/{{banda_id}}/modificar/" method="post" enctype="multipart/form-data">
     {% csrf_token %}
     {{ form.as_p }}
     <input type="submit" value="Modificar" />

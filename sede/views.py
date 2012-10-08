@@ -8,6 +8,8 @@ from sede.models import Sede, ConfiguracionSede
 from sede.forms import SedeForm,ConfiguracionSedeForm
 from direccion.forms import DireccionForm
 from complejo.models import Complejo
+from evento.models import Evento
+from multimedia.models import RecursoMultimediaSede
 from datetime import datetime
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
@@ -25,7 +27,7 @@ def nuevo(request):
     complejo=Complejo.objects.get(pk=request.user.id)
     if request.method == 'POST':
         form_dir = DireccionForm(request.POST)
-        form = SedeForm(request.POST)
+        form = SedeForm(request.POST,request.FILES)
         if form.is_valid() and form_dir.is_valid():
             sede=form.save(commit=False)
             direccion=form_dir.save()
@@ -44,8 +46,8 @@ def modificar(request,sede_id):
     usuario_registrado=UsuarioRegistrado.objects.get(pk=request.user.id)
     sede=Sede.objects.get(pk=sede_id)
     if request.method == 'POST':
-        form_dir = DireccionForm(request.POST, instance=sede.direccion)
-        form = SedeForm(request.POST,instance=sede)
+        form_dir = DireccionForm(request.POST,instance=sede.direccion)
+        form = SedeForm(request.POST,request.FILES, instance=sede)
         if form.is_valid() and form_dir.is_valid():
             sede=form.save(commit=False)
             direccion=form_dir.save()
@@ -63,6 +65,9 @@ def administrar(request,sede_id):
     usuario_registrado=UsuarioRegistrado.objects.get(pk=request.user.id)
     sede=Sede.objects.get(pk=sede_id)
     configuraciones_sede=ConfiguracionSede.objects.filter(sede__id=sede_id)
+    eventos=Evento.objects.filter(sede__id=sede_id)
+    eventos.query.order_by=['fecha']
+    recursos_multimedia=RecursoMultimediaSede.objects.filter(sede__id=sede_id)
     return render_to_response("sede/administrar.html", locals(), context_instance=RequestContext(request))
 
 @login_required(login_url='/usuario/login/')

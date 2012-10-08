@@ -13,7 +13,7 @@ def index(request):
         usuario_registrado=UsuarioRegistrado.objects.get(pk=request.user.id)
     return render_to_response("usuario/index.html", locals(), context_instance=RequestContext(request))
 
-@login_required(login_url='login')
+@login_required(login_url='/usuario/login/')
 def perfil(request):
     usuario_registrado=UsuarioRegistrado.objects.get(pk=request.user.id)
     if usuario_registrado.is_fan():

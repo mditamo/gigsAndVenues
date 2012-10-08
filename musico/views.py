@@ -31,7 +31,9 @@ def ver(request,musico_id):
     composiciones_banda_anteriores=ComposicionBanda.objects.filter(Q(musico__id=musico_id), Q(estado_id=estado_eliminado))
     cantidad_like=LikeMusico.objects.filter(musico__id=musico_id, usuario__id=request.user.id).count()
     cantidad_seguidores=LikeMusico.objects.filter(musico__id=musico_id).count()
-    cantidad_suscripcion=SuscripcionMusico.objects.filter(musico__id=musico_id, usuario__id=request.user.id).count()
+    suscripciones=SuscripcionMusico.objects.filter(musico__id=musico_id, usuario__id=request.user.id)
+    if suscripciones.count() == 1:
+        suscripcion=suscripciones[0]
     generos=Genero.objects.raw('Select distinct g.* from GENERO g join BANDA_GENERO bg ON bg.GENERO_ID=g.ID join COMPOSICION_BANDA cb ON cb.BANDA_ID=bg.BANDA_ID WHERE cb.MUSICO_ID=%s',[musico_id])
     return render_to_response("musico/ver.html", locals(), context_instance=RequestContext(request))
 
@@ -49,7 +51,7 @@ def modificar(request,musico_id):
     musico=Musico.objects.get(pk=musico_id)
     if request.method == 'POST':
         form_dir = DireccionForm(request.POST)
-        form = MusicoForm(request.POST, instance=musico)
+        form = MusicoForm(request.POST,request.FILES, instance=musico)
         if form.is_valid() and form_dir.is_valid():
             musico=form.save(commit=False)
             direccion=form_dir.save()

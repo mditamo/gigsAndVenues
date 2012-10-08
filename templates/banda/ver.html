@@ -1,97 +1,93 @@
 {% extends "base.html" %}
 {% block content%}
 
-	<script>
-	$(function() {
-		$( "#accordion" ).accordion();
-	});
-	</script>
+	
 	
     <h2>{{banda.nombre}}</h2>
     
-    
-    
-	<div class="suscripcion">
-		<h2>Suscripcion</h2>
-		
-		{%if cantidad_suscripcion == 0 %}
-			<form action="/banda/{{banda_id}}/suscribirme/" method="post">
-				{% csrf_token %}
-		   		{{ form_suscripcion.as_p }}
-		   		{%if user.is_authenticated %}
-					<input type="submit" value="Suscribirme" />
-				{%else%}
-					<input class="open-mensaje" type="submit" value="Suscribirme" />
-				{%endif%}
-			</form>
-		{%else%}
-			<form action="/banda/{{banda_id}}/no_suscribirme/" method="post">
-				{% csrf_token %}
-				<p><label for="id_periodicidad">Periodicidad:</label> {{suscripcion.periodicidad.nombre}}</p>
-				<input type="submit" value="Quitar Suscripci&oacute;n" />
-			</form>	
-		{%endif%}
-	</div>	
-	
-    <div class="like">
-    	<h2>Like</h2>
-	    {%if user.is_authenticated %}
-	    	{%if cantidad_like == 0 %}	
-	    		<a href="/banda/{{banda_id}}/like"><img src="images/like.png"/></a>
-	    	{%else%}
-	    		<a href="/banda/{{banda_id}}/no_like"><img src="images/no_like.png"/></a>
-	    	{%endif%}
-		{%else%}
-			<a href="#" class="open-mensaje"><img src="images/like.png"/></a>
-		{%endif%}
-		<br/>
-		<b>Cantidad de Seguidores:</b>  {{cantidad_seguidores}}
-    </div>
-	
-	
-	<div id="dialog-message" title="Mensaje">
-	<p>Necesitas estar logueado para poder disponer de estas funciones</p>
+    <div class="detalle-ver detalle">
+    	<p><label>Fecha Creacion:</label> {{ banda.fecha_creacion}}</p>
+    	<p><label>Tipo:</label> {{ banda.tipo_banda}}</p>
+    	<p><label>Generos:</label>
+	        {%for genero_banda in generos_banda%}
+	            - <a href="/genero/{{genero_banda.genero.id}}/ver">{{ genero_banda.genero.nombre}}</a> 
+	        {% endfor%}
+	    </p>
+	    <p>Descripcion:</p>
+	    <div class="descripcion-perfil"> {% autoescape off %} {{ banda.descripcion}}{% endautoescape %}</div>	
 	</div>
-    
-
-    <br/>
-    <b>Fecha Creacion:</b> {{ banda.fecha_creacion}}
-    <br/><br/>
-    <b>Tipo:</b> {{ banda.tipo_banda}}
-    <br/><br/>
-    <b>Generos:</b>
-        {%for genero_banda in generos_banda%}
-            - <a href="/genero/{{genero_banda.genero.id}}/ver">{{ genero_banda.genero.nombre}}</a>
-        {% endfor%}	
+	<div class="avatar-ver">
+        <img src="/media/{{banda.imagen_avatar}}" height=200px width=200px>
+	    <div>
+			<h2>Suscripcion</h2>
+			
+			{%if suscripciones.count == 0 %}
+				<form action="/banda/{{banda_id}}/suscribirme/" method="post">
+					{% csrf_token %}
+			   		{{ form_suscripcion.as_p }}
+			   		{%if user.is_authenticated %}
+						<input type="submit" value="Suscribirme" />
+					{%else%}
+						<input class="open-mensaje" type="submit" value="Suscribirme" />
+					{%endif%}
+				</form>
+			{%else%}
+				<form action="/banda/{{banda_id}}/no_suscribirme/" method="post">
+					{% csrf_token %}
+					<p><label for="id_periodicidad">Periodicidad:</label> {{suscripcion.periodicidad.nombre}}</p>
+					<input type="submit" value="Quitar Suscripci&oacute;n" />
+				</form>	
+			{%endif%}
+		</div>    
+		<br/><br/>
+		<div>
+	    	<h2>Like</h2>
+		    {%if user.is_authenticated %}
+		    	{%if cantidad_like == 0 %}	
+		    		<a href="/banda/{{banda_id}}/like"><img src="images/like.png"/></a>
+		    	{%else%}
+		    		<a href="/banda/{{banda_id}}/no_like"><img src="images/no_like.png"/></a>
+		    	{%endif%}
+			{%else%}
+				<a href="#" class="open-mensaje"><img src="images/like.png"/></a>
+			{%endif%}
+			<br/>
+			<b>Cantidad de Seguidores:</b>  {{cantidad_seguidores}}
+	    </div>
 		
-	<br/><br/>
-	<br/>
-	<div id="accordion">
-		<p><a href="#">Integrantes</a></p>
-		<div class="integrantes">
+		<div id="dialog-message" title="Mensaje">
+			<p>Necesitas estar logueado para poder disponer de estas funciones</p>
+		</div>
+    </div>
+	<h2>Integrantes</h2>
+	<div class="integrantes">
 			{%if  composiciones_banda.count != 0 %}
 			<div class="elementos">
 				{%for composicion_banda in composiciones_banda%}
-				<div class="elemento-musico estado_{{ composicion_banda.estado}}">
-					<p><a href="/musico/{{composicion_banda.musico.id}}/ver/">{{ composicion_banda.musico.first_name}}, {{composicion_banda.musico.last_name}}</a></p>
-					<b>Fecha Inicio:</b> {{ composicion_banda.fecha_inicio}}
-					<br/>
-					<b>Fecha Fin:</b> {{ composicion_banda.fecha_fin}}
-					<br/>
-					<b>Posicion:</b> {{ composicion_banda.posicion}}
-					<br/>
-					<b>Estado:</b> {{composicion_banda.estado}}
-					<br/>
-				</div>
+				<div class="elemento-musico">
+					<div class="avatar-ver">
+        				<img src="/media/{{composicion_banda.musico.imagen_avatar}}" height=200px width=200px>
+        				<br/><br/>
+        			</div>
+				    <div class="detalle-ver detalle">
+				    	<p><a href="/musico/{{composicion_banda.musico.id}}/ver/">{{composicion_banda.musico.username}}</a></p>
+					    <p><label>Nombre:</label> {{ composicion_banda.musico.first_name}}</p>
+					    <p><label>Apellido:</label> {{ composicion_banda.musico.last_name}}</p>
+					    <p><label>E-mail:</label> {{ composicion_banda.musico.email}}</p>
+						<p><label>Fecha Inicio:</label> {{ composicion_banda.fecha_inicio}} &nbsp;</p>   
+					    <p><label>Posicion:</label> {{ composicion_banda.posicion}}&nbsp;</p>
+				     </div>
+				</div>    
 				{% endfor%}
 			</div>
 			{%else%}
 				<p>La banda no tiene integrantes actualmente</p>
+				<br/>
 			{%endif%}
-		</div>
-		<p><a href="#">Discografia</a></p>
-		<div class="discografia">
-			{%if  discos.count != 0 %}
+	</div>
+	<h2>Discografia</h2>
+	<div class="discografia">
+		{%if  discos.count != 0 %}
 			<div class="elementos">
 				{%for disco in discos%}
 				<div class="elemento-disco">
@@ -104,34 +100,14 @@
 				</div>
 				{% endfor%}
 			</div>
-			{%else%}
-				<p>La banda no tiene ning&uacute;n disco publicado actualmente</p>
-			{%endif%}
-		</div>
-	
-		<p><a href="#">Temas Banda</a></p>
-		<div class="temas">
-			{%if  discos.count != 0 %}
-			<div class="elementos">
-				{%for tema_banda in temas_banda%}
-				<div class="elemento-disco">
-					<b>Tema:</b> {{ tema_banda.tema.nombre}}
-					<br/>
-					<b>Duracion:</b> {{ tema_banda.duracion}}
-				</div>
-				{% endfor%}
-			</div>
-			{%else%}
-				<p>La banda no tiene ning&uacute;n tema publicado actualmente</p>
-			{%endif%}
-		</div>
-		<p><a href="#">Negociaciones y Eventos</a></p>
-		<div class="eventos">
-			(FALTA COMPLETAR)
-		</div>
-		<p><a href="#">Noticias</a></p>
-		<div class="noticias">
-		    {%if noticias_banda.count != 0 %}
+		{%else%}
+			<p>La banda no tiene ning&uacute;n disco publicado actualmente</p>
+			<br/>
+		{%endif%}
+	</div>
+	<h2>Noticias</h2>
+	<div class="noticias">
+	    {%if noticias_banda.count != 0 %}
 			<div class="elementos">
 				{%for noticia in noticias_banda %}
 				<div class="elemento-home-noticia">
@@ -145,14 +121,35 @@
 				</div>
 				{% endfor%}
 			</div>		
-			{%else%}
-				<p>La banda no tiene ninguna noticia publicada actualmente</p>
-			{%endif%}
-		</div>
-		<p><a href="#">Recursos Multimedia</a></p>
-		<div class="recursos">
-			(FALTA COMPLETAR)
-		</div>
+		{%else%}
+			<p>La banda no tiene ninguna noticia publicada actualmente</p>
+			<br/>
+		{%endif%}
+	</div>
+		
+	<h2>Negociaciones y Eventos</h2>
+	<div class="eventos">
+		<p>(FALTA COMPLETAR)</p>
+		<br/> 
+	</div>
+		
+	<h2>Recursos Multimedia</h2>
+	<div class="recursos_multimedia">
+		{%if recursos_multimedia.count != 0 %}
+			<div class="elementos">
+				{%for recurso_multimedia in recursos_multimedia%}
+				<div class="elemento-recurso-multimedia">
+					<b>Nombre:</b> {{ recurso_multimedia.nombre}}
+					<br/>
+					<b>Tipo:</b> {{ recurso_multimedia.tipo}}
+				</div>
+				{% endfor%}
+			</div>
+		{%else%}
+			<p>La banda no tiene ning&uacute;n recurso multimedia</p>
+			<br/>
+		{%endif%}
+	</div>
 		
 	</div>
 {% endblock %}
