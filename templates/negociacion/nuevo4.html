@@ -5,7 +5,8 @@
 <form action="/condiciones/{{negociacion_id}}/agregarCondicion"" method="post" >
     {% csrf_token %}
     {{ form.as_p }}
-    <input type="submit" value="Finalizar" />
+    <input name='submit' type="submit" value="Agregar" />
+    <input name='submit' type="submit" value="Finalizar" />
 </form>
 <br/>
 {% endblock %}
