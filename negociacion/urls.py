@@ -11,4 +11,7 @@ urlpatterns = patterns('',
     url(r'^negociacion/(?P<negociacion_id>\d+)/ver/$','negociacion.views.ver_negociacion_complejo'),
     #url(r'^negociacion/(?P<negociacion_id>\d+)/generarOferta/$','negociacion.views.generarOferta'),
     url(r'^negociacion/negociacion_banda/listado','negociacion.views.ver_negociacion_banda'),
+#    url(r'^negociacion/negociacion_banda/listado','negociacion.views.ver_negociacion_banda'),
+    url(r'^negociacion/(?P<negociacion_id>\d+)/confirmar_banda/(?P<negociacionBanda_id>\d+)/$','negociacion.views.confirmar_negociacion_banda'),
+    url(r'^negociacion/(?P<negociacion_id>\d+)/rechazar_banda/(?P<negociacionBanda_id>\d+)/$','negociacion.views.rechazar_negociacion_banda'),
 )

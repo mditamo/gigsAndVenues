@@ -15,16 +15,16 @@
             <br/> 
             <b>Estado:</b> {{negociacion.estado}}
             <br/> 
-			<div class="links">
-				{%if negociacion.estado.is_pendiente %}
-					<a href="/negociacion/{{negociacion.id}}/confirmar/">Confirmar</a>
-					<a href="/negociacion/{{negociacion.id}}/rechazar/">Rechazar</a>
-					
-				<br/>
-				<a href="/negociacion/{{negociacion.id}}/generar_oferta/">Crear Oferta</a>
-				<a href="/negociacion/{{negociacion.id}}/ver/">Detalle</a>
-				{%endif %}
+            {%if negociacion.inicio_negociacion == 'B' %}
+            	<b>Inicio Negociacion: Banda</b> 
+			{% endif %}   
+			{%if negociacion.inicio_negociacion == 'C' %}
+            	<b>Inicio Negociacion: Complejo</b>  
+			{% endif %}   
+			<br/><div class="links">
+				<a href="/negociacion/{{negociacion.id}}/ver/">Detalle</a>				
 			</div>
+
 			<br/>        
         </div>
         {% endfor%}

@@ -4,6 +4,9 @@
 
 <form action="/negociacion/{{negociacion_id}}/paso2/" method="post" >
     {% csrf_token %}
+    {% if usuario_registrado.is_musico %}
+    	<b>Complejo: </b> {{negociacion.complejo}}<br>
+    {% endif %}
     {{ form.as_p }}
     <input type="submit" value="Siguiente" />
 </form>

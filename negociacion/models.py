@@ -27,13 +27,14 @@ class Negociacion(models.Model):
     inicio_negociacion=models.CharField(max_length=1)
     fecha=models.DateField(null=True)    
     hora=models.CharField(max_length=10);
-    bandas=models.ManyToManyField(Banda,null=True,through="NegociacionBanda")
+    bandas=models.ManyToManyField(Banda,null=True,through="NegociacionBanda",related_name='bandas')
     condiciones=models.ManyToManyField(CondicionUnitaria,null=True,through="CondicionNegociacion")
     complejo=models.ForeignKey(Complejo,null=True)
     sede=models.ForeignKey(Sede,null=True)
     evento=models.ForeignKey(Evento,null=True)
     monto=models.DecimalField('Monto',None, 10, 2,null=True)
     estado=models.ForeignKey(EstadoNegociacion,null=True)
+    banda=models.ForeignKey(Banda,null=True,related_name='banda')
 
     class Meta:
         db_table="NEGOCIACION"
@@ -47,7 +48,7 @@ class CondicionNegociacion(models.Model):
 
 class NegociacionBanda(models.Model):
     negociacion=models.ForeignKey(Negociacion)
-    banda=models.ForeignKey(Banda)
+    banda=models.ForeignKey(Banda,null=True)
     estado=models.ForeignKey(EstadoNegociacion,null=True)
     
     class Meta:

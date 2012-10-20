@@ -5,46 +5,80 @@
 	{% autoescape off %} 
 		<p class="fecha-noticia">{{ negociacion.fecha}}</p>					
 		<p class="titulo-noticia">{{negociacion.nombre}}</p>
-		<p class="titulo-noticia">{{negociacion.complejo}}</p>
-		<p class="titulo-noticia">{{negociacion.sede}}</p>
-	    <div class="elementos"> 
-            <b>Estado:</b> {{negociacion.estado}}
-            <br/> <br/>
-            <div class="elemento-noticia">
-            <h3>Bandas</h3>
-            {%for banda in negociacion.bandas.all %}
-            	<b>Banda:</b> {{banda.nombre}}            	
-            	{%for estado in banda.negociacionbanda_set.all %}
-            		<b>Estado:</b> {{estado.estado}}
-            	{% endfor %}
-            	
-            	{%if banda in bandasMusico %}
-					<div class="links">
-						{%if negociacion.estado.is_pendiente %}
-							<a href="/negociacion/{{negociacion.id}}/confirmar/">Confirmar</a>
-							<a href="/negociacion/{{negociacion.id}}/rechazar/">Rechazar</a>
+		{% if negociacion.inicio_negociacion == 'B' %}
+			<p class="titulo-noticia">{{negociacion.banda}}</p>
+		{% endif %}
+		
+		{% if negociacion.inicio_negociacion == 'C' %}
+			<p class="titulo-noticia">{{negociacion.complejo}}</p>
+			<p class="titulo-noticia">{{negociacion.sede}}</p>
+		{% endif %}
+		
+	     
+        <b>Estado:</b> {{negociacion.estado}}
+        <br/> <br/>
+        
+        <div class="elemento-noticia"> 
+        {% if negociacion.inicio_negociacion == 'C' %} 
+	        <h3>Bandas</h3>	
+	            {% for banda in negociacion.bandas.all %}
+	            <div class="ver-noticia">
+	            	<b>Banda:</b> {{banda.nombre}}            	
+	        		{% if usuario_registrado.is_musico %} 
+		            	{% for negociacionBanda in nBandas.all %}  
+		          			{% if negociacionBanda.banda_id == banda.id %}
+		          				 <br/><b>Estado:</b> {{negociacionBanda.estado}}
+			            		{% for bandaMusico in bandasMusicos.all %}
+			            			{% if bandaMusico.banda == negociacionBanda.banda %}
+			            			<div class="links">
+										{% if negociacion.estado.is_pendiente and negociacionBanda.estado.is_pendiente %}
+											<a href="/negociacion/{{negociacion.id}}/confirmar_banda/{{negociacionBanda.id}}/">Confirmar</a>
+											<a href="/negociacion/{{negociacion.id}}/rechazar_banda/{{negociacionBanda.id}}/">Rechazar</a>
+											<br/>
+											<a href="/negociacion/{{negociacion.id}}/generar_oferta/">Crear Oferta</a>
+										{% endif %}
+									</div>			
+			            			{% endif %}	            			
+			            		{% endfor %}	
+			        		{% endif %}    			
+		            	{% endfor %}
+		        	{% endif %}
+	           	</div>	
+	            {% endfor %}
+	            
+
+	            
+    	{% endif %}
+    	
+    	{%if negociacion.inicio_negociacion == 'B' %}
+    		<h3>Complejo</h3>
+    		<b>Complejo:</b> {{negociacion.complejo}}
+    		<br></br><b>Sede:</b> {{negociacion.sede}}
+    			<div class="links">
+					{%if negociacion.estado.is_pendiente %}
+						<a href="/negociacion/{{negociacion.id}}/confirmar/">Generar Evento</a>
+						<a href="/negociacion/{{negociacion.id}}/rechazar/">Rechazar</a>
 						<br/>
 						<a href="/negociacion/{{negociacion.id}}/generar_oferta/">Crear Oferta</a>
-						{%endif %}
-					</div>            		
-            	{% endif %}
-      	
-            {% endfor%}
-            </div>
-            <div class="elemento-noticia">
-            <h3>Condiciones</h3>
-         	{%for condicion in negociacion.condiciones.all %}
-            	<b>Descripcion:</b> {{condicion.descripcion}}  
-            	<br/>
-            	<b>Tipo:</b> {{condicion.tipoCondicion}}  
-            	<br/>
-            	<b>Valor:</b> {{condicion.valor}}  
-            	<br/><br/>
-            {% endfor%}
-         	</div>       	 
-            <br/><br/>   
+					{%endif %}
+				</div>	
+    	{% endif %}   
+    	</div>
+    
+    
+    <div class="elemento-noticia">        
+    <h3>Condiciones</h3>
+    	{%for condicion in negociacion.condiciones.all %}
+           	<b>Descripcion:</b> {{condicion.descripcion}}  
+           	<br/>
+           	<b>Tipo:</b> {{condicion.tipoCondicion}}  
+           	<br/>
+           	<b>Valor:</b> {{condicion.valor}}  
+           	<br/><br/>
+        {% endfor%}
+    </div>  
+    <br/> <br/>
 	{% endautoescape %}
-	</div>
 <br/>
 {% endblock %}
 
