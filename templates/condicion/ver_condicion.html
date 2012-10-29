@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block content%}
+
+<form action="/condiciones/{{negociacion_id}}/verCondiciones/{{negociacionBanda_id}}/" method="post" >
+    {% csrf_token %}
+    {{ formset.management_form }}  
+    {{ formset.management_form }} 
+       
+    {% if lengthOfertas > 0 %}
+    	{{ formsetInicial.management_form }} 
+    <h2>Condicion Anterior</h2>
+    {% for formI in formsetInicial %}
+    	{{ formI.as_p }} </br></br></br></br>
+    {% endfor %}
+    {% endif %}
+    <h2>Ultima Oferta</h2>
+        <br/> 
+    {% for form in formset %}
+    	{{ form.as_p }} </br></br></br></br>
+    {% endfor %}
+    <input name='submit' type="submit" value="Finalizar" />
+</form>
+<br/>
+{% endblock %}

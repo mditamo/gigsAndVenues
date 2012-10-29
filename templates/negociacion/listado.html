@@ -3,6 +3,14 @@
 	<h2>Negociaciones</h2>
 	<a href="/negociacion/nuevo"><p>Nueva Negociacion</p></a>
     <div class="elementos">
+    {% if messages %}
+	    {% for message in messages %}
+		    <div class='mensaje_respuesta  ui-corner-all {% if message.tags %} {{ message.tags }}{% endif %}' style='text-align: left'>
+		    	{{ message }}
+		    </div>
+		{% endfor %}
+	{% endif %}
+
 		{%for negociacion in negociaciones %}
         <div class="elemento-noticia">    
          	<b>Nombre:</b> {{negociacion.nombre}}

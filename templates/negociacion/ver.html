@@ -24,29 +24,31 @@
 	            {% for banda in negociacion.bandas.all %}
 	            <div class="ver-noticia">
 	            	<b>Banda:</b> {{banda.nombre}}            	
-	        		{% if usuario_registrado.is_musico %} 
 		            	{% for negociacionBanda in nBandas.all %}  
 		          			{% if negociacionBanda.banda_id == banda.id %}
 		          				 <br/><b>Estado:</b> {{negociacionBanda.estado}}
-			            		{% for bandaMusico in bandasMusicos.all %}
-			            			{% if bandaMusico.banda == negociacionBanda.banda %}
-			            			<div class="links">
-										{% if negociacion.estado.is_pendiente and negociacionBanda.estado.is_pendiente %}
-											<a href="/negociacion/{{negociacion.id}}/confirmar_banda/{{negociacionBanda.id}}/">Confirmar</a>
-											<a href="/negociacion/{{negociacion.id}}/rechazar_banda/{{negociacionBanda.id}}/">Rechazar</a>
-											<br/>
-											<a href="/negociacion/{{negociacion.id}}/generar_oferta/">Crear Oferta</a>
-										{% endif %}
-									</div>			
-			            			{% endif %}	            			
-			            		{% endfor %}	
+			            		{% if usuario_registrado.is_musico %}
+				            		{% for bandaMusico in bandasMusicos.all %}
+				            			{% if bandaMusico.banda == negociacionBanda.banda %}
+				            			<div class="links">
+											{% if negociacion.estado.is_pendiente and negociacionBanda.estado.is_pendiente %}
+												<a href="/negociacion/{{negociacion.id}}/confirmar_banda/{{negociacionBanda.id}}/">Confirmar</a>
+												<a href="/negociacion/{{negociacion.id}}/rechazar_banda/{{negociacionBanda.id}}/">Rechazar</a>
+												<br/>
+
+												<a href="/condiciones/{{negociacion.id}}/verCondiciones/{{negociacionBanda.id}}/">Crear Oferta</a>
+												<a href="#">Ver Ofertas</a>
+												
+											{% endif %}
+										</div>			
+				            			{% endif %}	            			
+				            		{% endfor %}
+			            		{% endif %}	
 			        		{% endif %}    			
 		            	{% endfor %}
-		        	{% endif %}
 	           	</div>	
 	            {% endfor %}
 	            
-
 	            
     	{% endif %}
     	
@@ -55,12 +57,15 @@
     		<b>Complejo:</b> {{negociacion.complejo}}
     		<br></br><b>Sede:</b> {{negociacion.sede}}
     			<div class="links">
+    				{% for negociacionBanda in negociacionBanda.all %} 
 					{%if negociacion.estado.is_pendiente %}
 						<a href="/negociacion/{{negociacion.id}}/confirmar/">Generar Evento</a>
 						<a href="/negociacion/{{negociacion.id}}/rechazar/">Rechazar</a>
 						<br/>
-						<a href="/negociacion/{{negociacion.id}}/generar_oferta/">Crear Oferta</a>
-					{%endif %}
+						<a href="/condiciones/{{negociacion.id}}/verCondiciones/{{negociacionBanda.id}}/">Crear Oferta</a>
+					{%endif %}    					
+    				{% endfor %}
+
 				</div>	
     	{% endif %}   
     	</div>
@@ -78,6 +83,12 @@
         {% endfor%}
     </div>  
     <br/> <br/>
+    {% if negociacion.inicio_negociacion == 'C' and usuario_registrado.is_complejo%} 
+    	<a href="/negociacion/{{negociacion.id}}/confirmar/">Generar Evento</a>
+		<a href="/negociacion/{{negociacion.id}}/rechazar/">Rechazar</a>
+		<a href="	">Crear Oferta</a>
+    {% endif %} 
+    
 	{% endautoescape %}
 <br/>
 {% endblock %}

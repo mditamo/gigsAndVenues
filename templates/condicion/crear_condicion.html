@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block content%}
+<h2>Nueva Negociacion</h2>
+<a href="/condiciones/{{negociacion_id}}/agregarCondicion"><p>Nueva Condicion</p></a>
+<form action="/condiciones/{{negociacion_id}}/agregarCondicion"" method="post" >
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input name='submit' type="submit" value="Agregar" />
+    <input name='submit' type="submit" value="Finalizar" />
+</form>
+<br/>
+{% endblock %}

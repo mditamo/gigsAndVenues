@@ -13,6 +13,8 @@ class CondicionUnitaria(models.Model):
     descripcion=models.CharField(max_length=50)
     tipoCondicion=models.ForeignKey(Tipo_Condicion)
     valor=models.CharField(max_length=50)
+    negociacion_id=models.IntegerField()
+    oferta_id=models.IntegerField()
     
     class Meta:
         db_table="CONDICION_UNITARIA"    

@@ -5,6 +5,7 @@ from sede.models import Sede
 from evento.models import Evento
 from condiciones.models import CondicionUnitaria
 
+
 class EstadoNegociacion(models.Model):
     nombre=models.CharField(max_length=200)
     class Meta:
@@ -35,6 +36,7 @@ class Negociacion(models.Model):
     monto=models.DecimalField('Monto',None, 10, 2,null=True)
     estado=models.ForeignKey(EstadoNegociacion,null=True)
     banda=models.ForeignKey(Banda,null=True,related_name='banda')
+    #ofertas=models.ManyToManyField(Oferta,null=True,through="CondicionNegociacion")
 
     class Meta:
         db_table="NEGOCIACION"
@@ -56,4 +58,11 @@ class NegociacionBanda(models.Model):
     
     def __unicode__(self):
         return self.nombre
+    
+"""class OfertaNegociacion(models.Model):
+    negociacion=models.ForeignKey(Negociacion)
+    oferta=models.ForeignKey(Oferta)
+    
+    class Meta:
+        db_table="OFERTA_NEGOCIACION"   """   
     

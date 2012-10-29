@@ -2,42 +2,33 @@ from django.db import models
 from complejo.models import Complejo
 from banda.models import Banda
 from sede.models import Sede
-from evento.models import Evento
+from negociacion.models import EstadoNegociacion,Negociacion
+from condiciones.models import CondicionUnitaria
 
-
-class Estado(models.Model):
-    nombre=models.CharField(max_length=15)
-
-    class Meta:
-        db_table="Estado"
 
 class Oferta(models.Model):
-    motivo_rechazo=models.CharField(max_length=200)
-    inicio_negociacion=models.CharField(max_length=1)
-    monto=models.DecimalField('',None, 10, 2)
-    fecha=models.DateField()
-    hora=models.CharField(max_length=10);
-    banda=models.ForeignKey(Banda)
-    complejo=models.ForeignKey(Complejo)
-    sede=models.ForeignKey(Sede)
-    estado=models.ForeignKey(Estado)
+    monto=models.DecimalField('',None, 10, 2,null=True)
+    fecha=models.DateField(null=True)
+    descripcion=models.CharField(max_length=200)
+    usuario_oferta=models.CharField(max_length=1,null=True)
+    is_ultima_oferta=models.IntegerField(max_length=1,null=True)
+    is_penultima_oferta=models.IntegerField(max_length=1,null=True)
+    banda=models.ForeignKey(Banda,null=True)
+    complejo=models.ForeignKey(Complejo,null=True)
+    sede=models.ForeignKey(Sede,null=True)
+    negociacion=models.ForeignKey(Negociacion,null=True)
+    
+    estado=models.ForeignKey(EstadoNegociacion,null=True)
+    condiciones=models.ManyToManyField(CondicionUnitaria,null=True,through="CondicionOferta") 
 
     class Meta:
-        db_table="Negociacion"
+        db_table="OFERTA"
 
 class CondicionOferta(models.Model):
-    valor=models.CharField(max_length=200)
-    banda=models.ForeignKey(Banda)
-    complejo=models.ForeignKey(Complejo)
-    sede=models.ForeignKey(Sede)
     oferta=models.ForeignKey(Oferta)
+    condicionUnitaria=models.ForeignKey(CondicionUnitaria)
     
     class Meta:
-        db_table="Condicion_Oferta"
+        db_table="CONDICION_OFERTA"
 
-"""class TipoCondicion(models.Model):
-    nombre=models.CharField(max_length=20)
-    
-    class Meta:
-        db_table="Tipo_Condicion"""
 

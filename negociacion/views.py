@@ -122,7 +122,8 @@ def ver_negociacion_complejo(request,negociacion_id):
         usuario_registrado=UsuarioRegistrado.objects.get(pk=request.user.id)
     negociacion=Negociacion.objects.get(pk=negociacion_id)
     bandasMusicos=ComposicionBanda.objects.filter(musico_id=request.user.id)
-    #negociacionesBanda=NegociacionBanda.objects.filter(negociacion_id=negociacion_id)
+    #Se agrega para el caso de que inicie la banda*/
+    negociacionBanda=NegociacionBanda.objects.filter(negociacion_id=negociacion_id)
     nBandas=NegociacionBanda.objects.filter(negociacion_id=negociacion_id)    
     
     return render_to_response("negociacion/ver.html", locals(), context_instance=RequestContext(request))
@@ -138,7 +139,7 @@ def ver_negociacion_banda(request):
                                             inner join composicion_banda cb on (b.id = cb.banda_id)
                                         where cb.musico_id = %s and nb.estado_id<>%s
                                         group by n.nombre,n.inicio_negociacion,n.fecha,n.hora,n.complejo_id,n.sede_id,n.evento_id,n.monto,n.estado_id
-                                        ''',[request.user.id,estadoRechazado.id])                               
+                                        ''',[request.user.id,estadoRechazado.id])                            
     return render_to_response("negociacion/listado.html", locals(), context_instance=RequestContext(request))
 
 def confirmar_negociacion(request,negociacion_id):
